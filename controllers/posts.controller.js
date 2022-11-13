@@ -10,6 +10,9 @@ class PostController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const { title, content, category } = req.body;
+      if (!title || !content || !category) {
+        throw new InvalidParamsError('내용을 입력해주세요');
+      }
       const post = await this.postService.createPost({
         groupId,
         userId,
