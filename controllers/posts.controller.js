@@ -9,7 +9,14 @@ class PostController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const post = await this.postService.createPost({ groupId, userId });
+      const { title, content, category } = req.body;
+      const post = await this.postService.createPost({
+        groupId,
+        userId,
+        title,
+        content,
+        category,
+      });
       res.status(200).json({
         ok: true,
         postId: post.postId,
