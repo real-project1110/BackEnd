@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("GroupUsers", {
+    await queryInterface.createTable('GroupUsers', {
       groupUserId: {
         allowNull: false,
         autoIncrement: true,
@@ -15,17 +15,9 @@ module.exports = {
       groupAvatarImg: {
         type: Sequelize.STRING,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("GroupUsers");
+    await queryInterface.dropTable('GroupUsers');
   },
 };
