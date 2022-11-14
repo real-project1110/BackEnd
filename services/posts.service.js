@@ -54,6 +54,10 @@ class PostService {
     if (findGroupUserId.userId !== userId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
+    const existsPost = await this.postRepository.existsPost({ postId });
+    if (!existsPost) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     const updatPost = await this.postRepository.updatPost({
       postId,
       title,
