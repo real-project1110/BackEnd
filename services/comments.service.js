@@ -55,5 +55,20 @@ class CommentService {
     });
     return updatComment;
   };
+
+  //*댓글 삭제
+  deletComment = async (commentId, userId) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const deletComment = await this.commentRepository.deletComment({
+      commentId,
+      groupUserId: findGroupUserId.groupUserId,
+    });
+    return deletComment;
+  };
 }
 module.exports = CommentService;
