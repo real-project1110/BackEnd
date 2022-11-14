@@ -87,6 +87,7 @@ class PostService {
       postId,
       groupUserId: findGroupUserId.groupUserId,
     });
+    return deletPost;
   };
 }
 module.exports = PostService;
