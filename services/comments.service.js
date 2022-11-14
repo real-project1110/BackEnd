@@ -35,5 +35,25 @@ class CommentService {
     });
     return findAllComment;
   };
+
+  //*댓글 수정
+  updatComment = async (commentId, comment, userId) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findComment = await this.commentRepository.findComment({ commentId });
+    if (!findComment) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const updatComment = await this.commentRepository.updatComment({
+      commentId,
+      comment,
+      groupUserId: findGroupUserId.groupUserId,
+    });
+    return updatComment;
+  };
 }
 module.exports = CommentService;
