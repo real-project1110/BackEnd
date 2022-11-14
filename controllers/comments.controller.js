@@ -25,5 +25,26 @@ class CommentController {
       next(error);
     }
   };
+
+  //*댓글 전체 조회
+  findAllComment = async (req, res, next) => {
+    try {
+      const { postId } = req.params;
+      const { userId } = res.locals.user;
+      if (!postId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const findAllComment = await this.commentService.findAllComment({
+        postId,
+        userId,
+      });
+      res.status(200).json({
+        ok: true,
+        data: findAllComment,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 module.exports = CommentController;
