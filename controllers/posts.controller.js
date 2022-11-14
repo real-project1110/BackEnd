@@ -28,6 +28,29 @@ class PostController {
       next(error);
     }
   };
+  //*게시글 전체 조회
+  // 그룹아바타이미지 추가해야함
+  findAllPost = async (req, res, next) => {
+    try {
+      const { groupId } = req.params;
+      const { category } = req.query;
+      const { userId } = res.locals.user;
+      const findAllPost = await this.postService.findAllPost({
+        groupId,
+        category,
+        userId,
+      });
+      if (!findAllPost) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      res.status(200).json({
+        ok: true,
+        data: findAllPost,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = PostController;
