@@ -22,6 +22,7 @@ class PostService {
     const createPost = await this.postRepository.createPost({ post });
     return createPost;
   };
+  //*게시글 전체 조회
   findAllPost = async ({ groupId, category }) => {
     const findAllPost = await this.postRepository.findAllPost({
       groupId,
@@ -40,6 +41,26 @@ class PostService {
       throw new ValidationError('잘못된 요청입니다.');
     }
     return findPost;
+  };
+
+  //*게시글 수정
+  updatPost = async ({ postId, userId, title, content, category }) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    if (findGroupUserId.userId !== userId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const updatPost = await this.postRepository.updatPost({
+      postId,
+      title,
+      content,
+      category,
+    });
+    return updatPost;
   };
 }
 module.exports = PostService;
