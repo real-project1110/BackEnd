@@ -22,7 +22,7 @@ class PostService {
     const createPost = await this.postRepository.createPost({ post });
     return createPost;
   };
-  findAllPost = async ({ groupId, userId, category }) => {
+  findAllPost = async ({ groupId, category }) => {
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }

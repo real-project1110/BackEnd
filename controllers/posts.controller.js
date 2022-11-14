@@ -34,11 +34,9 @@ class PostController {
     try {
       const { groupId } = req.params;
       const { category } = req.query;
-      const { userId } = res.locals.user;
       const findAllPost = await this.postService.findAllPost({
         groupId,
         category,
-        userId,
       });
       if (!findAllPost) {
         throw new InvalidParamsError('잘못된 요청입니다.');
