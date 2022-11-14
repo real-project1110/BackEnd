@@ -16,5 +16,23 @@ class CommentRepository extends Comment {
     });
     return createComment;
   };
+
+  //*댓글 전체 조회
+  findAllComment = async ({ postId }) => {
+    const findAllComment = await Comment.findAll({
+      where: { postId },
+      attributes: [
+        commentId,
+        comment,
+        createdAt,
+        [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
+        [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
+        // [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+      ],
+      include: [{ model: GroupUser }],
+      order: ['createdAt', 'DESC'],
+    });
+    return findAllComment;
+  };
 }
 module.exports = CommentRepository;
