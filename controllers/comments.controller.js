@@ -65,5 +65,21 @@ class CommentController {
       data: updatComment,
     });
   };
+
+  //*댓글 삭제
+  deletComment = async (req, res, next) => {
+    const { commentId } = req.params;
+    const { userId } = res.locals.user;
+    if (!commentId || !userId) {
+      throw new InvalidParamsError('잘못된 요청입니다.');
+    }
+    const deletComment = await this.commentService.deletComment({
+      commentId,
+      userId,
+    });
+    res.status(200).json({
+      ok: true,
+    });
+  };
 }
 module.exports = CommentController;
