@@ -20,7 +20,7 @@ class PostController {
         content,
         category,
       });
-      res.status(200).json({
+      res.status(201).json({
         ok: true,
         postId: post.postId,
       });
@@ -62,6 +62,24 @@ class PostController {
       res.status(200).json({
         ok: true,
         data: findPost,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //*게시글 수정
+  updatPost = async (req, res, next) => {
+    try {
+      const { postId } = req.params;
+      const { userId } = res.locals.user;
+      if (!postId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const updatPost = await this.postService.updatPost({ postId, userId });
+      res.status(200).json({
+        ok: true,
+        data: updatPost,
       });
     } catch (error) {
       next(error);
