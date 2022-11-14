@@ -12,23 +12,15 @@ module.exports = {
       comment: {
         type: Sequelize.STRING,
       },
-       createdAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-<<<<<<< HEAD
         defaultValue: Sequelize.fn('NOW'),
-=======
-        defaultValue: Sequelize.fn("NOW"),
->>>>>>> 83a610d4126d7f447f81c82f1026dce5ecc90bbe
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-<<<<<<< HEAD
         defaultValue: Sequelize.fn('NOW'),
-=======
-        defaultValue: Sequelize.fn("NOW"),
->>>>>>> 83a610d4126d7f447f81c82f1026dce5ecc90bbe
       },
     });
   },
