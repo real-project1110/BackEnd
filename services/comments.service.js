@@ -19,6 +19,7 @@ class CommentService {
       comment,
       groupUserId: findGroupUserId.groupUserId,
     });
+    await this.commentRepository.upCount({ postId });
     return createComment;
   };
 
@@ -68,6 +69,7 @@ class CommentService {
       commentId,
       groupUserId: findGroupUserId.groupUserId,
     });
+    await this.commentRepository.downCount({ postId });
     return deletComment;
   };
 }
