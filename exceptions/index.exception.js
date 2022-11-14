@@ -15,4 +15,4 @@ class ValidationError extends Error {
   }
 }
 
-module.exports = { InvalidParamsError, ValidationError, DuplicateDBDataError };
+module.exports = { InvalidParamsError, ValidationError};
