@@ -13,7 +13,7 @@ class CommentController {
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const createComment = await this.commentService.createComment({
+      await this.commentService.createComment({
         postId,
         userId,
         comment,
@@ -73,7 +73,7 @@ class CommentController {
     if (!commentId || !userId) {
       throw new InvalidParamsError('잘못된 요청입니다.');
     }
-    const deletComment = await this.commentService.deletComment({
+    await this.commentService.deletComment({
       commentId,
       userId,
     });

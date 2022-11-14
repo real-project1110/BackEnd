@@ -101,7 +101,7 @@ class PostController {
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const deletPost = await this.postService.deletPost({ postId, userId });
+      await this.postService.deletPost({ postId, userId });
       res.status(200).json({
         ok: true,
         msg: '삭제 성공',
