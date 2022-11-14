@@ -63,8 +63,30 @@ class PostService {
       title,
       content,
       category,
+      groupUserId: findGroupUserId.groupUserId,
     });
     return updatPost;
+  };
+
+  //*게시글 삭제
+  deletPost = async ({ postId, userId }) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    if (findGroupUserId.userId !== userId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const existsPost = await this.postRepository.existsPost({ postId });
+    if (!existsPost) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const deletPost = await this.postRepository.deletPost({
+      postId,
+      groupUserId: findGroupUserId.groupUserId,
+    });
   };
 }
 module.exports = PostService;
