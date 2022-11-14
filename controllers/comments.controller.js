@@ -46,5 +46,24 @@ class CommentController {
       next(error);
     }
   };
+
+  //*댓글 수정
+  updatComment = async (req, res, next) => {
+    const { commentId } = req.params;
+    const { userId } = res.locals.user;
+    const { comment } = req.body;
+    if (!commentId || !userId) {
+      throw new InvalidParamsError('잘못된 요청입니다.');
+    }
+    const updatComment = await this.commentService.updatComment({
+      commentId,
+      comment,
+      userId,
+    });
+    res.status(200).json({
+      ok: true,
+      data: updatComment,
+    });
+  };
 }
 module.exports = CommentController;
