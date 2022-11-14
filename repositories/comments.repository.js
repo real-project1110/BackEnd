@@ -8,3 +8,4 @@ class CommentRepository extends Comment {
     super();
   }
 }
+module.exports = CommentRepository;
