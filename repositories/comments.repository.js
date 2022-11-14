@@ -17,6 +17,15 @@ class CommentRepository extends Comment {
     return createComment;
   };
 
+  //*게시글 카운트 증가
+  upCount = async ({ postId }) => {
+    const upCount = await Post.increment(
+      { commentCount: 1 },
+      { where: { postId } },
+    );
+    return upCount;
+  };
+
   //*댓글 전체 조회
   findAllComment = async ({ postId }) => {
     const findAllComment = await Comment.findAll({
@@ -56,6 +65,15 @@ class CommentRepository extends Comment {
       where: { commentId, groupUserId },
     });
     return deletComment;
+  };
+
+  //*게시글 카운드 감소
+  downCount = async ({ postId }) => {
+    const downCount = await Post.increment(
+      { commentCount: -1 },
+      { where: { postId } },
+    );
+    return downCount;
   };
 }
 module.exports = CommentRepository;
