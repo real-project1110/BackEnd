@@ -6,7 +6,9 @@ class PostService {
 
   //*게시글 작성
   createPost = async ({ groupId, userId, title, content, category }) => {
-    const findGroupUserId = await this.PostService.findGroupUserId({ userId });
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
@@ -15,10 +17,20 @@ class PostService {
       title,
       content,
       category,
-      groupUser: findGroupUserId,
+      groupUser: findGroupUserId.groupUserId,
     };
-    const createPost = await this.PostService.createPost({ post });
+    const createPost = await this.postRepository.createPost({ post });
     return createPost;
+  };
+  findAllPost = async ({ groupId, userId, category }) => {
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findAllPost = await this.postRepository.findAllPost({
+      groupId,
+      category,
+    });
+    return findAllPost;
   };
 }
 module.exports = PostService;
