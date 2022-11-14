@@ -59,12 +59,19 @@ class PostRepository extends Post {
     return existsPost;
   };
   //*게시글 수정
-  updatPost = async ({ postId, title, content, category }) => {
+  updatPost = async ({ postId, title, content, category, groupUserId }) => {
     const updatPost = await Post.update(
       { title, content, category },
-      { where: { postId } },
+      { where: { [Op.and]: [{ postId }, { groupUserId }] } },
     );
     return updatPost;
+  };
+  //*게시글 삭제
+  deletPost = async ({ postId, groupUserId }) => {
+    const deletPost = await Post.destroy({
+      where: { [Op.and]: [{ postId }, { groupUserId }] },
+    });
+    return deletPost;
   };
 }
 module.exports = PostRepository;
