@@ -14,3 +14,5 @@ class ValidationError extends Error {
     this.name = 'ValidationError';
   }
 }
+
+module.exports = { InvalidParamsError, ValidationError };
