@@ -11,6 +11,7 @@ const routes = require('./routes');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', routes);
 app.use(errorLogger);
