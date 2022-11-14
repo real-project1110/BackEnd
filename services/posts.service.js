@@ -23,14 +23,23 @@ class PostService {
     return createPost;
   };
   findAllPost = async ({ groupId, category }) => {
-    if (!findGroupUserId) {
-      throw new ValidationError('잘못된 요청입니다.');
-    }
     const findAllPost = await this.postRepository.findAllPost({
       groupId,
       category,
     });
+    if (!findAllPost) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     return findAllPost;
+  };
+
+  //*게시글 상세 조회
+  findPost = async ({ postId }) => {
+    const findPost = await this.postRepository.findPost({ postId });
+    if (!findPost) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    return findPost;
   };
 }
 module.exports = PostService;
