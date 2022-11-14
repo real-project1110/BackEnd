@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
-class CommentRepository extends Post {
+class CommentRepository extends Comment {
   constructor() {
     super();
   }
