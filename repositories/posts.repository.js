@@ -53,5 +53,18 @@ class PostRepository extends Post {
     });
     return findPost;
   };
+  //*게시글 찾기
+  existsPost = async ({ postId }) => {
+    const existsPost = await Post.findByPk(postId);
+    return existsPost;
+  };
+  //*게시글 수정
+  updatPost = async ({ postId, title, content, category }) => {
+    const updatPost = await Post.update(
+      { title, content, category },
+      { where: { postId } },
+    );
+    return updatPost;
+  };
 }
 module.exports = PostRepository;
