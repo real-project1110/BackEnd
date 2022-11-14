@@ -28,6 +28,7 @@ class PostController {
       next(error);
     }
   };
+
   //*게시글 전체 조회
   // 그룹아바타이미지 추가해야함
   findAllPost = async (req, res, next) => {
@@ -41,13 +42,26 @@ class PostController {
         groupId,
         category,
       });
-
-      if (!findAllPost) {
-        throw new InvalidParamsError('잘못된 요청입니다.');
-      }
       res.status(200).json({
         ok: true,
         data: findAllPost,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //*게시글 상세 조회
+  findPost = async (req, res, next) => {
+    try {
+      const { postId } = req.params;
+      if (!postId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const findPost = await this.postService.findPost({ postId });
+      res.status(200).json({
+        ok: true,
+        data: findPost,
       });
     } catch (error) {
       next(error);
