@@ -49,5 +49,13 @@ class CommentRepository extends Comment {
     );
     return updatComment;
   };
+
+  //*댓글 삭제
+  deletComment = async ({ commentId, groupUserId }) => {
+    const deletComment = await Comment.destroy({
+      where: { commentId, groupUserId },
+    });
+    return deletComment;
+  };
 }
 module.exports = CommentRepository;
