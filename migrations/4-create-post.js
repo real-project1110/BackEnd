@@ -24,13 +24,15 @@ module.exports = {
       commentCount: {
         type: Sequelize.INTEGER,
       },
-      createdAt: {
+       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
