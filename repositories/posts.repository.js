@@ -1,4 +1,5 @@
 const { Post, GroupUser } = require('../models');
+const { Op } = require('sequelize');
 
 class PostRepository extends Post {
   constructor() {
@@ -13,8 +14,20 @@ class PostRepository extends Post {
     const findGroupUserId = await GroupUser.findByPk(userId);
     return findGroupUserId;
   };
-  findAllPost = async ({ groupId }) => {
-    const findAllPost = await Post.findAll({ where: { groupId } });
+  findAllPost = async ({ groupId, category }) => {
+    const findAllPost = await Post.findAll({
+      where: { [Op.and]: [{ groupId }, { category }] },
+      attributes: [
+        postId,
+        title,
+        commentCount,
+        createdAt,
+        [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
+        // [Sequelize.col('GroupUser.groupAvatarimg'), 'groupAvatarimg'],
+      ],
+      include: [{ model: GroupUser }],
+      order: ['createdAt', 'DESC'],
+    });
     return findAllPost;
   };
 }
