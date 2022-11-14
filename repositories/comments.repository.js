@@ -34,5 +34,20 @@ class CommentRepository extends Comment {
     });
     return findAllComment;
   };
+
+  //*댓글 찾기
+  findComment = async ({ commentId }) => {
+    const findComment = await Comment.findByPk(commentId);
+    return findComment;
+  };
+
+  //*댓글 수정
+  updatComment = async ({ commentId, comment, groupUserId }) => {
+    const updatComment = await Comment.update(
+      { comment },
+      { where: { [Op.and]: [{ commentId, groupUserId }] } },
+    );
+    return updatComment;
+  };
 }
 module.exports = CommentRepository;
