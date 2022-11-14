@@ -73,13 +73,38 @@ class PostController {
     try {
       const { postId } = req.params;
       const { userId } = res.locals.user;
+      const { title, content, category } = req.body;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const updatPost = await this.postService.updatPost({ postId, userId });
+      const updatPost = await this.postService.updatPost({
+        postId,
+        userId,
+        title,
+        content,
+        category,
+      });
       res.status(200).json({
         ok: true,
         data: updatPost,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //*게시글 삭제
+  deletPost = async (req, res, next) => {
+    try {
+      const { postId } = req.params;
+      const { userId } = res.locals.user;
+      if (!postId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const deletPost = await this.postService.deletPost({ postId, userId });
+      res.status(200).json({
+        ok: true,
+        msg: '삭제 성공',
       });
     } catch (error) {
       next(error);
