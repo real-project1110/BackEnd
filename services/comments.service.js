@@ -21,5 +21,19 @@ class CommentService {
     });
     return createComment;
   };
+
+  //*댓글 전체 조회
+  findAllComment = async (postId, userId) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findAllComment = await this.commentRepository.findAllComment({
+      postId,
+    });
+    return findAllComment;
+  };
 }
 module.exports = CommentService;
