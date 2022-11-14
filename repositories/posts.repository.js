@@ -11,7 +11,11 @@ class PostRepository extends Post {
   };
   findGroupUserId = async ({ userId }) => {
     const findGroupUserId = await GroupUser.findByPk(userId);
-    return findGroupUserId.groupUserId;
+    return findGroupUserId;
+  };
+  findAllPost = async ({ groupId }) => {
+    const findAllPost = await Post.findAll({ where: { groupId } });
+    return findAllPost;
   };
 }
 module.exports = PostRepository;
