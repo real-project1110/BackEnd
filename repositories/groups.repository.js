@@ -36,6 +36,12 @@ class GroupRepository{
             return updateNic;
     }
 
+    getprofile = async(userId,groupId)=>{
+        const getprofile = await GroupUser.findOne({where : {userId,groupId}})
+        return getprofile
+    }
+
+
 }
 
 module.exports = GroupRepository

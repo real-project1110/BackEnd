@@ -32,10 +32,18 @@ class GroupService {
         await this.groupRepository.destroyGroup(groupId)
     }
 
-    updateNic =async(userId,groupId,groupUserNickname)=>{
+    updateNic = async(userId,groupId,groupUserNickname)=>{
         const updateNic = await this.groupRepository.updateNic(userId,groupId,groupUserNickname)
         return{
             groupUserNickname : updateNic.groupUserNickname
+        }
+    }
+
+    getProfile = async(userId,groupId)=>{
+        const getprofile = await this.groupRepository.getprofile(userId,groupId)
+        return{
+            groupUserNickname : getprofile.groupUserNickname,
+            groupAvatarImg  : getprofile.groupAvatarImg
         }
     }
 }
