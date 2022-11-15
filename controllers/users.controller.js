@@ -64,8 +64,19 @@ class UserController{
         }catch(error){
             next(error);
         }
-
+    
     }
+
+    certification = async(req,res,next)=>{
+        try{
+            const {email, number} = req.body;
+            await this.userService.certification(email,number);
+            res.status(200).json({message : '인증 확인되었습니다'})
+        }catch(error){
+            next(error)
+        }
+    }
+
 
     myprofile =async(req,res,next)=>{
         try{
@@ -77,5 +88,15 @@ class UserController{
         }
     }
 
+    updateNic = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user
+            const {nickname} = req.body;
+            const changeNic = await this.userService.changeNic(userId,nickname)
+            res.status(200).json({data:changeNic,message:"닉네임 수정 완료"}) 
+        }catch(error){
+            next(error);
+        }
+    }
 }
 module.exports = UserController;

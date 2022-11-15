@@ -8,5 +8,7 @@ const userController = new UserController();
 router.post('/signup', authlogin,userController.signup);
 router.post('/login', authlogin,userController.login);
 router.post('/emailcheck',userController.emailCheck);
+router.post('/emailcheck/auth',userController.certification)
 router.get('/myprofile',auth,userController.myprofile);
+router.put('/nickname',auth,userController.updateNic)
 module.exports = router;

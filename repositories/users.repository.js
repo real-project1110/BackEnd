@@ -1,5 +1,5 @@
 const {User,Certification} = require('../models');
-const certification = require('../models/certification');
+
 class UserRepository{
     createUser = async ({email,nickname,password})=>{
         const createUser = await User.create({email,nickname,password})
@@ -28,6 +28,14 @@ class UserRepository{
         return findGroupUserId
     };
 
+    changeNic = async(userId,nickname)=>{
+        const changeNic = await User.update(
+            {nickname : nickname},
+            {where : {userId}}
+        );
+        return changeNic;
+    }
+
     //----------------------------------------------------------------------------------
     authEmail = async(email)=>{
         const authEmail = await Certification.findByPk(email)
@@ -39,5 +47,14 @@ class UserRepository{
             {where:{email}})
         return destroyEmail;
     }
+
+    emailCheck = async(email)=>{
+        const emailCheck = await Certification.update(
+            {certificationCheck:true},
+            {where : {email}})
+        return emailCheck
+    }
+
+    
 }
 module.exports = UserRepository
