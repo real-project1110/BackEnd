@@ -76,6 +76,17 @@ class GroupController{
             next(error)
         }
     }
+
+    findGroupProfile = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} = req.params;
+            const getProfile = await this.groupService.getProfile(userId,groupId)
+            res.status(200).json({data:getProfile})
+        }catch(error){
+            next(error)
+        }
+    }
 }
 
 module.exports = GroupController

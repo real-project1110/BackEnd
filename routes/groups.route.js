@@ -12,7 +12,7 @@ router.put('/:groupId/groupUserNickname',auth,groupcontroller.updateGroupNic)
 
 router.get('/:groupId',auth,groupcontroller.findAllGroup)
 router.get('/',auth,groupcontroller.findOneGroup)
-
+router.get('/:groupId/profile',auth,groupcontroller.findGroupProfile)
 router.delete('/:groupId',auth,groupcontroller.destroyGroup)
 
 module.exports = router;
