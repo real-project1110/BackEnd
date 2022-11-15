@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     /**
@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Group, {
-        foreignKey: "groupId",
-        targetKey: "groupId",
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
       });
       this.belongsTo(models.GroupUser, {
-        foreignKey: "groupUserId",
-        targetKey: "groupUserId",
+        foreignKey: 'groupUserId',
+        targetKey: 'groupUserId',
       });
       this.hasMany(models.Comment, {
-        foreignKey: "postId",
-        sourceKey: "postId",
+        foreignKey: 'postId',
+        sourceKey: 'postId',
       });
     }
   }
@@ -35,17 +35,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "Group",
-          key: "groupId",
+          model: 'Group',
+          key: 'groupId',
         },
-        onDelete: "cascade",
+        onDelete: 'cascade',
       },
       groupUserId: {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "GroupUser",
-          key: "groupUserId",
+          model: 'GroupUser',
+          key: 'groupUserId',
         },
       },
       title: {
@@ -80,8 +80,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Post",
-    }
+      modelName: 'Post',
+    },
   );
   return Post;
 };
