@@ -3,7 +3,7 @@ const {Certification} = require('../models');
 
 const authEmail = (email)=>{
 
-    const certificationNum = Math.floor(Math.random()*1000000);
+    const certificationNum = Math.floor(Math.random()*100000000);
     const configOptions = {
         service : process.env.NODEMAILER_SERVICE,
         host: process.env.NODEMAILER_HOST,
