@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const passwordRegEx = /^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+const passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
 module.exports = {
     signupSchema : Joi.object({
         email:Joi.string()

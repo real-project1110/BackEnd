@@ -56,19 +56,26 @@ class UserController{
         }
     }
 
-    // //email 중복검사
-    // emailCheck = async (req,res,next)=>{
-    //     try{
-    //         const {email} = req.body;
-    //         const emailCheck = await this.userService.emailDuplicate(email);   
-    //         if(emailCheck){
-    //             throw new Error('이미 등록된 이메일입니다')
-    //         }
-    //         res.status(200).send({message: '사용가능한 이메일입니다'})
-    //     }catch(error){
-    //     next(error);
-    //     }
-    // }
+    emailCheck = async(req,res,next)=>{
+        try{
+            const {email} =req.body;
+            await this.userService.emailCheck(email);
+        res.status(200).send({message : '인증 메일이 발송되었습니다.'})
+        }catch(error){
+            next(error);
+        }
+
+    }
+
+    myprofile =async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user
+            const user =await this.userService.myprofile(userId)
+            res.status(200).json({data:user,message:"프로필 조회 성공"})
+        }catch(error){
+            next(error);
+        }
+    }
 
 }
 module.exports = UserController;
