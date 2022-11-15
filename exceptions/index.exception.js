@@ -15,4 +15,5 @@ class ValidationError extends Error {
   }
 }
 
-module.exports = {InvalidParamsError, ValidationError};
+module.exports = { InvalidParamsError, ValidationError };
+
