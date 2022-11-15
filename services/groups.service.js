@@ -1,4 +1,4 @@
-const GroupRepository = require('../repositories/group.repository')
+const GroupRepository = require('../repositories/groups.repository')
 
 class GroupService {
     groupRepository = new GroupRepository()
@@ -30,6 +30,13 @@ class GroupService {
 
     destroyGroup = async (groupId)=>{
         await this.groupRepository.destroyGroup(groupId)
+    }
+
+    updateNic =async(userId,groupId,groupUserNickname)=>{
+        const updateNic = await this.groupRepository.updateNic(userId,groupId,groupUserNickname)
+        return{
+            groupUserNickname : updateNic.groupUserNickname
+        }
     }
 }
 

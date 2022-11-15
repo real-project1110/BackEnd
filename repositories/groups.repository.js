@@ -1,4 +1,4 @@
-const {Group} = require('../models')
+const {Group,GroupUser} = require('../models')
 
 class GroupRepository{
 
@@ -28,6 +28,13 @@ class GroupRepository{
         await Group.destroy({where:{groupId}})
     }
 
+    updateNic = async(userId,groupId,groupUserNickname)=>{
+        const updateNic = await GroupUser.update(
+            {groupUserNickname:groupUserNickname},
+            {where:{userId,groupId}}
+            );
+            return updateNic;
+    }
 
 }
 
