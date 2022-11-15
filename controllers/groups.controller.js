@@ -1,4 +1,4 @@
-const GroupService = require('../services/group.service')
+const GroupService = require('../services/groups.service')
 
 class GroupController{
     groupService = new GroupService()
@@ -62,6 +62,18 @@ class GroupController{
             res.status(200).json({data:destroygroup})
         }catch(err){
             res.status(400).json(err)
+        }
+    }
+
+    updateGroupNic=async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} =req.params;
+            const {groupUserNickname} =req.body;
+            const updateNic = await this.groupService.updateNic(userId,groupId,groupUserNickname)
+            res.status(200).json({data:updateNic})
+        }catch(error){
+            next(error)
         }
     }
 }
