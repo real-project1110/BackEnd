@@ -2,6 +2,7 @@ const UserRepository = require('../repositories/users.repository')
 require('dotenv').config();
 const jwt =require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const authEmail = require("../util/nodeMailer");
 
 class UserService {
     userRepository = new UserRepository();
@@ -41,6 +42,31 @@ class UserService {
         await this.userRepository.refreshT(user,refreshToken)
         
         return {user,accessToken,refreshToken};
+    }
+
+    emailCheck = async(email)=>{
+        const emailDuplicate = await this.userRepository.findByEmail(email);
+        if(emailDuplicate){
+            throw new Error('이미 가입된 이메일입니다.');
+        }
+        const emailVerified = await this.userRepository.authEmail(email);
+        if(emailVerified){
+            await this.userRepository.deleteEmail(email)
+        }
+        authEmail(email)
+    }
+
+    myprofile = async(userId)=>{
+        const myprofile = await this.userRepository.findByUser(userId)
+        if(!myprofile)
+        throw new Error('가입되지 않은 회원입니다.')
+        return {
+            userId : myprofile.userId,
+            email : myprofile.email,
+            nickname : myprofile.nickname,
+            avatarImg : myprofile.avatarImg,
+            currentPage : myprofile.currentPage
+        }
     }
 
 }
