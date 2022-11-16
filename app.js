@@ -9,7 +9,10 @@ const {
 } = require('./middlewares/error-handler.middleware');
 const routes = require('./routes');
 
+const morganMiddleware = require('./middlewares/morganMiddleware');
+
 app.use(cors());
+app.use(morganMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

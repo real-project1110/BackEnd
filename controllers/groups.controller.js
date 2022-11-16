@@ -1,4 +1,4 @@
-const GroupService = require('../services/group.service')
+const GroupService = require('../services/groups.service')
 
 class GroupController{
     groupService = new GroupService()
@@ -62,6 +62,51 @@ class GroupController{
             res.status(200).json({data:destroygroup})
         }catch(err){
             res.status(400).json(err)
+        }
+    }
+
+    updateGroupNic=async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} =req.params;
+            const {groupUserNickname} =req.body;
+            const updateNic = await this.groupService.updateNic(userId,groupId,groupUserNickname)
+            res.status(200).json({data:updateNic})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    findGroupProfile = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} = req.params;
+            const getProfile = await this.groupService.getProfile(userId,groupId)
+            res.status(200).json({data:getProfile})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    findGroupUser = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupUserId} = req.params;
+            const getUser = await this.groupService.getUser(userId,groupUserId)
+            res.status(200).json({data:getUser})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    findAllGroupUser = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} = req.params;
+            const findAllGU = await this.groupService.findAllGU(userId,groupId)
+            res.status(200).json({data:findAllGU})
+        }catch(error){
+            next(error)
         }
     }
 }

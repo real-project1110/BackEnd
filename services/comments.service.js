@@ -45,6 +45,9 @@ class CommentService {
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
+    if (findGroupUserId.userId !== userId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     const findComment = await this.commentRepository.findComment({ commentId });
     if (!findComment) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -63,6 +66,15 @@ class CommentService {
       userId,
     });
     if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    if (findGroupUserId.userId !== userId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findComment = await this.commentRepository.existComment({
+      commentId,
+    });
+    if (!findComment) {
       throw new ValidationError('잘못된 요청입니다.');
     }
     const deletComment = await this.commentRepository.deletComment({
