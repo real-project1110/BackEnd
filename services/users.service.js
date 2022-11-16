@@ -56,22 +56,26 @@ class UserService {
         authEmail(email)
     }
 
-    certification = async(email, number)=>{
+    certification = async(email, certificationNum)=>{
         const checkEmail = await this.userRepository.authEmail(email);
         if(!checkEmail){
             throw new Error("email 정보가 존재하지 않습니다")
         }
-        if(checkEmail.certificationNum !==number){
+        console.log('1111111111111111', certificationNum,checkEmail.certificationNum)
+        if(checkEmail.certificationNum !==certificationNum){
             throw new Error("인증번호가 일치하지 않습니다")
         }
-        console.log('11111111',authEmail.certificationNum)
-        const auth = await this.userRepository.emailCheck(email)
-        return {
-            certificationId : auth.certificationId,
-            email : auth.email,
-            certificationNum : auth.certificationNum,
-            certificationCheck : auth.certificationCheck
+        if(checkEmail.certificationNum ===certificationNum){
+            const auth = await this.userRepository.emailCheck(email)
+            return {
+                certificationId : auth.certificationId,
+                email : auth.email,
+                certificationNum : auth.certificationNum,
+                certificationCheck : auth.certificationCheck
+            }
         }
+        // console.log('11111111',authEmail.certificationNum)
+       
     }
 
     myprofile = async(userId)=>{
@@ -94,5 +98,11 @@ class UserService {
             nickname : changeNic.nickname
         }
     }
+
+    // changePw = async(userId,password,newpassword,confirm)=>{
+    //     const changePw = await this.userRepository.changePw(userId,password,newpassword,confirm)
+    //     if(changePw.password === newpassword)
+    //     return message:
+    // }
 }
 module.exports = UserService;

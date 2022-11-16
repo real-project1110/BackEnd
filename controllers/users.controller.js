@@ -69,8 +69,8 @@ class UserController{
 
     certification = async(req,res,next)=>{
         try{
-            const {email, number} = req.body;
-            await this.userService.certification(email,number);
+            const {email, certificationNum} = req.body;
+            await this.userService.certification(email,certificationNum);
             res.status(200).json({message : '인증 확인되었습니다'})
         }catch(error){
             next(error)

@@ -36,9 +36,17 @@ class UserRepository{
         return changeNic;
     }
 
+    changePw = async(userId,password,newpassword)=>{
+        const changePw = await User.update(
+            {newpassword},
+            {where :{userId,password}}
+        )
+        return changePw
+    }
+
     //----------------------------------------------------------------------------------
     authEmail = async(email)=>{
-        const authEmail = await Certification.findByPk(email)
+        const authEmail = await Certification.findOne({where:{email}})
         return authEmail;
     }
     
