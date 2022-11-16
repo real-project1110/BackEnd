@@ -87,6 +87,24 @@ class GroupController{
             next(error)
         }
     }
+
+    findGroupUser = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupUserId} = req.params;
+            const getUser = await this.groupService.getUser(userId,groupUserId)
+            res.status(200).json({data:getUser})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    // findAllGroupUser = async(req,res,next)=>{
+    //     try{
+    //         const {userId} = res.locals.user;
+    
+    //     }
+    // }
 }
 
 module.exports = GroupController
