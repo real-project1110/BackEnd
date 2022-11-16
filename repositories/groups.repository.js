@@ -7,11 +7,11 @@ class GroupRepository{
     };
 
     updateGroupName = async (groupId,groupName)=>{
-        await Group.upadte({groupName},{where:{groupId}})
+        await Group.update({groupName},{where:{groupId}})
     }
 
     updateGroupImg = async (groupId,groupImg)=>{
-        await Group.upadte({groupImg},{where:{groupId}})
+        await Group.update({groupImg},{where:{groupId}})
     }
 
     findOneGroup = async (groupId)=>{
