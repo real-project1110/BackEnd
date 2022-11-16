@@ -1,4 +1,4 @@
-const ScheduleService = require('../services/schedule.service')
+const ScheduleService = require('../services/schedules.service')
 
 class ScheduleController{
     scheduleController = new ScheduleController()

@@ -1,4 +1,4 @@
-const ScheduleRepository = require('../repositories/schedule.repository')
+const ScheduleRepository = require('../repositories/schedules.repository')
 
 class ScheduleService {
     scheduleRepository = new ScheduleRepository()

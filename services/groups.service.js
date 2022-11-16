@@ -4,8 +4,8 @@ const GroupRepository = require('../repositories/groups.repository')
 class GroupService {
     groupRepository = new GroupRepository()
 
-    createGroup = async(groupName,groupImg)=>{
-        await this.groupRepository.createGroup(groupName,groupImg)
+    createGroup = async(groupName,groupImg,userId)=>{
+        await this.groupRepository.createGroup(groupName,groupImg,userId)
         return {message:"그룹이 생성되었습니다."}
     }
 

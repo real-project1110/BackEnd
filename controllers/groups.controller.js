@@ -6,7 +6,9 @@ class GroupController{
     createGroup = async(req,res)=>{
         try{
         const {groupName,groupImg}= req.body
-        const creategroup = await this.groupService.createGroup(groupName,groupImg)
+        const {user} =req.locals
+        const userId = user.userId
+        const creategroup = await this.groupService.createGroup(groupName,groupImg,userId)
         res.status(201).json({data:creategroup})
         }catch(err){
             res.status(400).json(err)
