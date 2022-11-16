@@ -41,6 +41,10 @@ class GroupRepository{
         return getprofile
     }
 
+    getUser = async(userId,groupUserId)=>{
+        const getUser = await GroupUser.findOne({where : {userId,groupUserId}})
+        return getUser
+    }
 
 }
 
