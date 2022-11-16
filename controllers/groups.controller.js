@@ -99,12 +99,16 @@ class GroupController{
         }
     }
 
-    // findAllGroupUser = async(req,res,next)=>{
-    //     try{
-    //         const {userId} = res.locals.user;
-    
-    //     }
-    // }
+    findAllGroupUser = async(req,res,next)=>{
+        try{
+            const {userId} = res.locals.user;
+            const {groupId} = req.params;
+            const findAllGU = await this.groupService.findAllGU(userId,groupId)
+            res.status(200).json({data:findAllGU})
+        }catch(error){
+            next(error)
+        }
+    }
 }
 
 module.exports = GroupController

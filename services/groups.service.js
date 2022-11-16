@@ -63,6 +63,18 @@ class GroupService {
             groupAvatarImg : getUser.groupAvatarImg
         }
     }
+
+    findAllGU = async(userId,groupId)=>{
+        const findAllGU = await this.groupRepository.findAllGU(userId,groupId)
+        if(!findAllGU){
+            throw new Error('정보가 존재하지 않습니다.')
+        }
+        return {
+            groupUserId : findAllGU.groupUserId,
+            groupUserNickname : findAllGU.groupUserNickname,
+            groupAvatarImg : findAllGU.groupAvatarImg
+        }
+    }
 }
 
 module.exports = GroupService

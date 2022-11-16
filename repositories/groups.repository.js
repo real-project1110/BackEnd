@@ -46,6 +46,14 @@ class GroupRepository{
         return getUser
     }
 
+    findAllGU = async(userId,groupId)=>{
+        const findAllGU = await GroupUser.findAll({
+        where:{[Op.and]:[{userId},{groupId}]},
+        order :[['groupUserId','desc']]
+    });
+        return findAllGU
+    }
+
 }
 
 module.exports = GroupRepository
