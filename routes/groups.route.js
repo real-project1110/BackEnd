@@ -13,6 +13,9 @@ router.put('/:groupId/groupUserNickname',auth,groupcontroller.updateGroupNic)
 router.get('/:groupId',auth,groupcontroller.findAllGroup)
 router.get('/',auth,groupcontroller.findOneGroup)
 router.get('/:groupId/profile',auth,groupcontroller.findGroupProfile)
+router.get('/:groupUserId',auth,groupcontroller.findGroupUser)
+router.get('/:groupId/groupUsers',auth,groupcontroller.findAllGU)
+
 router.delete('/:groupId',auth,groupcontroller.destroyGroup)
 
 module.exports = router;
