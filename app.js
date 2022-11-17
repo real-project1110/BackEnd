@@ -8,9 +8,26 @@ const {
   errorHandler,
 } = require('./middlewares/error-handler.middleware');
 const routes = require('./routes');
-
+const session = require('cookie-session');
+const passport = require('passport');
+const passportConfig = require('./passport');
+passportConfig();
 const morganMiddleware = require('./middlewares/morganMiddleware');
 
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: [process.env.KAKAO_SECRET],
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(morganMiddleware);
 app.use(express.json());
