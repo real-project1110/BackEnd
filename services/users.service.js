@@ -75,7 +75,7 @@ class UserService {
             }
         }
         // console.log('11111111',authEmail.certificationNum)
-       
+
     }
 
     myprofile = async(userId)=>{
@@ -99,10 +99,18 @@ class UserService {
         }
     }
 
-    // changePw = async(userId,password,newpassword,confirm)=>{
-    //     const changePw = await this.userRepository.changePw(userId,password,newpassword,confirm)
-    //     if(changePw.password === newpassword)
-    //     return message:
-    // }
+    changePw = async(userId,password,newpassword)=>{
+        const user = await this.userRepository.findByUserId(userId)
+        console.log('11111111',user)
+        if(user.password ===newpassword){
+            throw new Error('기존 비밀번호와 다르게 설정해주세요')
+        }
+        const comparePw = await bcrypt.compare(user.password,newpassword)
+        
+        console.log('22222222222222',comparePw,user.password,newpassword)
+        newpassword = await bcrypt.hash(newpassword, 12)
+        const changePw = await this.userRepository.changePw(userId,newpassword)
+        return changePw
+    }
 }
 module.exports = UserService;
