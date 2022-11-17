@@ -98,5 +98,16 @@ class UserController{
             next(error);
         }
     }
+
+    updatePw = async(req,res,next)=>{
+        // try{
+            const {userId} = res.locals.user
+            const {password,newpassword} = req.body;
+            const changePw = await this.userService.changePw(userId,password,newpassword)
+            res.status(200).json({data:changePw,message:"비밀번호가 변경되었습니다"})
+        // }catch(error){
+        //     next(error);
+        // }
+    }
 }
 module.exports = UserController;
