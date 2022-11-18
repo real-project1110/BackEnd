@@ -12,7 +12,7 @@ router.get('/:groupId/posts', auth, postController.findAllPost);
 //*게시글 상세 조회
 router.get('/posts/:postId', auth, postController.findPost);
 //*공지/자유로 등록
-router.put('/groups/posts/:postId', auth, postController.updatCategory);
+router.put('/posts/:postId', auth, postController.updatCategory);
 //*게시글 수정
 router.put('/posts/:postId', auth, postController.updatPost);
 //*게시글 삭제
