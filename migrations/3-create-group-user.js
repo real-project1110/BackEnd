@@ -32,6 +32,12 @@ module.exports = {
       groupAvatarImg: {
         type: Sequelize.STRING,
       },
+      status: {
+        type: Sequelize.INTEGER,
+      },
+      statusMessage: {
+        type: Sequelize.STRING,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
