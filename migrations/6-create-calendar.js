@@ -1,13 +1,22 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Calendars", {
+    await queryInterface.createTable('Calendars', {
       calendarId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
       },
       calendarName: {
         type: Sequelize.STRING,
@@ -23,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Calendars");
+    await queryInterface.dropTable('Calendars');
   },
 };

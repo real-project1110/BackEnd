@@ -9,8 +9,9 @@ class PostController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const { title, content, category } = req.body;
-      if (!title || !content || !category) {
+      const { title, content } = req.body;
+      const category = 0;
+      if (!title || !content) {
         throw new InvalidParamsError('내용을 입력해주세요');
       }
       const post = await this.postService.createPost({
@@ -23,6 +24,26 @@ class PostController {
       res.status(201).json({
         ok: true,
         postId: post.postId,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //*공지/자유로 등록
+  updatCategory = async (req, res, next) => {
+    try {
+      const { postId } = req.params;
+      const { userId } = res.locals.user;
+      if (!postId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      await this.postService.updatCategory({
+        postId,
+        userId,
+      });
+      res.status(200).json({
+        ok: true,
       });
     } catch (error) {
       next(error);
