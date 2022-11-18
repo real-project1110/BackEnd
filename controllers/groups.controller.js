@@ -6,12 +6,14 @@ class GroupController{
     createGroup = async(req,res)=>{
         try{
         const {groupName,groupImg}= req.body
-        const {user} =req.locals
+        const {user} =res.locals
         const userId = user.userId
         const creategroup = await this.groupService.createGroup(groupName,groupImg,userId)
         res.status(201).json({data:creategroup})
         }catch(err){
+        console.log("아래")
             res.status(400).json(err)
+        
         }
     }
 
