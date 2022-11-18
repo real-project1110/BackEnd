@@ -5,5 +5,6 @@ router.use('/groups', require('./comments.route'));
 router.use('/groups', require('./posts.route'));
 router.use('/groups', require('./groups.route'));
 router.use('/users', require('./users.route'));
+router.use('/', require('./searches.route'));
 
 module.exports = router;
