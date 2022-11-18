@@ -6,9 +6,9 @@ class GroupRepository {
     await GroupList.create({ groupName, groupImg });
   };
 
-    createGroup = async (groupName,groupImg)=>{
-        await Group.create({groupName,groupImg})
-    };
+  updateGroupName = async (groupId, groupName) => {
+    await GroupList.update({ groupName }, { where: { groupId } });
+  };
 
   updateGroupImg = async (groupId, groupImg) => {
     await GroupList.update({ groupImg }, { where: { groupId } });
