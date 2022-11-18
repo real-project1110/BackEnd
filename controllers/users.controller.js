@@ -69,8 +69,8 @@ class UserController{
 
     certification = async(req,res,next)=>{
         try{
-            const {email, number} = req.body;
-            await this.userService.certification(email,number);
+            const {email, certificationNum} = req.body;
+            await this.userService.certification(email,certificationNum);
             res.status(200).json({message : '인증 확인되었습니다'})
         }catch(error){
             next(error)
@@ -97,6 +97,17 @@ class UserController{
         }catch(error){
             next(error);
         }
+    }
+
+    updatePw = async(req,res,next)=>{
+        // try{
+            const {userId} = res.locals.user
+            const {password,newpassword} = req.body;
+            const changePw = await this.userService.changePw(userId,password,newpassword)
+            res.status(200).json({data:changePw,message:"비밀번호가 변경되었습니다"})
+        // }catch(error){
+        //     next(error);
+        // }
     }
 }
 module.exports = UserController;

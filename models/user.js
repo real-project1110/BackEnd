@@ -29,15 +29,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       nickname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       refreshToken: {
         type: DataTypes.STRING,
@@ -50,6 +50,14 @@ module.exports = (sequelize, DataTypes) => {
       currentPage: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      snsId : {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      provider : {
+        type: DataTypes.STRING,
+        allowNull : true,
       },
     },
     {

@@ -27,6 +27,12 @@ module.exports = {
       currentPage: {
         type: Sequelize.STRING,
       },
+      snsId:{
+        type: Sequelize.STRING,
+      },
+      provider:{
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

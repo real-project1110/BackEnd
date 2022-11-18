@@ -1,3 +1,4 @@
+
 const { GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
@@ -49,6 +50,7 @@ class GroupRepository {
     const findAllGU = await GroupUser.findAll({
       where: { [Op.and]: [{ userId }, { groupId }] },
       order: [['groupUserId', 'desc']],
+
     });
     return findAllGU;
   };
