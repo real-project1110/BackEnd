@@ -8,7 +8,7 @@ const {User} =require('../models')
 const kakaoCallback = (req,res,next)=>{
 try{
     passport.authenticate(
-    'kakao',
+        'kakao',
     {failureRedirect :'/users/login'},
     async(err, user, info)=>{
         if(err)return next(err);

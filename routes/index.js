@@ -8,5 +8,8 @@ router.use('/groups', require('./groups.route'));
 router.use('/users', require('./users.route'));
 router.use('/', require('./searches.route'));
 router.use('/', require('./kakao.route'));
+router.use('/', require('./google.route'));
+
+
 
 module.exports = router;
