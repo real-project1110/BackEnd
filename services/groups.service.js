@@ -4,8 +4,8 @@ const GroupRepository = require('../repositories/groups.repository')
 class GroupService {
     groupRepository = new GroupRepository()
 
-    createGroup = async(groupName,groupImg)=>{
-        await this.groupRepository.createGroup(groupName,groupImg)
+    createGroup = async(groupName,groupImg,userId)=>{
+        await this.groupRepository.createGroup(groupName,groupImg,userId)
         return {message:"그룹이 생성되었습니다."}
     }
 
@@ -20,13 +20,13 @@ class GroupService {
     }
 
     findOneGroup = async (groupId)=>{
-        await this.groupRepository.findOneGroup(groupId)
-        return {message:"검색이 완료되었습니다."}
+        const groups= await this.groupRepository.findOneGroup(groupId)
+        return groups
     }
 
     findAllGroup = async()=>{
-        await this.groupRepository.findAllGroup()
-        return {message:"검색이 완료되었습니다."}
+        const groups=await this.groupRepository.findAllGroup()
+        return groups
     }
 
     destroyGroup = async (groupId)=>{
