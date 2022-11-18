@@ -22,6 +22,28 @@ class PostService {
     const createPost = await this.postRepository.createPost({ post });
     return createPost;
   };
+
+  //*공지/자유로 변경
+  updatCategory = async ({ postId, userId }) => {
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const existsPost = await this.postRepository.existsPost({ postId });
+    if (!existsPost) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    if (existsPost.category == 0) {
+      const category = 1;
+      return await this.postRepository.noticePost({ postId, category });
+    } else if (existsPost.category == 1) {
+      const category = 0;
+      return await this.postRepository.freePost({ postId, category });
+    }
+  };
+
   //*게시글 전체 조회
   findAllPost = async ({ groupId, category }) => {
     const findAllPost = await this.postRepository.findAllPost({

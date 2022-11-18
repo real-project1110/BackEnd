@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Calendar extends Model {
     /**
@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Group, {
-        foreignKey: "groupId",
-        targetKey: "groupId",
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
       });
     }
   }
@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "Group",
-          key: "groupId",
+          model: 'GroupList',
+          key: 'groupId',
         },
-        onDelete: "cascade",
+        onDelete: 'cascade',
       },
       calendarName: {
         type: DataTypes.STRING,
@@ -47,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Calendar",
-    }
+      modelName: 'Calendar',
+    },
   );
   return Calendar;
 };
