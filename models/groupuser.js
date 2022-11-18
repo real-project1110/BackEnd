@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class GroupUser extends Model {
     /**
@@ -10,20 +10,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.User, {
-        foreignKey: "userId",
-        targetKey: "userId",
+        foreignKey: 'userId',
+        targetKey: 'userId',
       });
-      this.belongsTo(models.Group, {
-        foreignKey: "groupId",
-        targetKey: "groupId",
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
       });
       this.hasMany(models.Post, {
-        foreignKey: "groupUserId",
-        sourceKey: "groupUserId",
+        foreignKey: 'groupUserId',
+        sourceKey: 'groupUserId',
       });
       this.hasMany(models.Comment, {
-        foreignKey: "groupUserId",
-        sourceKey: "groupUserId",
+        foreignKey: 'groupUserId',
+        sourceKey: 'groupUserId',
       });
     }
   }
@@ -39,18 +39,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "User",
-          key: "userId",
+          model: 'User',
+          key: 'userId',
         },
       },
       groupId: {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "Group",
-          key: "groupId",
+          model: 'Group',
+          key: 'groupId',
         },
-        onDelete: "cascade",
+        onDelete: 'cascade',
       },
       groupUserNickname: {
         type: DataTypes.STRING,
@@ -60,12 +60,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      status: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      statusMessage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,
-      modelName: "GroupUser",
+      modelName: 'GroupUser',
       timestamps: false,
-    }
+    },
   );
   return GroupUser;
 };

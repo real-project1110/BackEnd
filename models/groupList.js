@@ -1,7 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
+  class GroupList extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,24 +10,24 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.User, {
-        foreignKey: "userId",
-        targetKey: "userId",
+        foreignKey: 'userId',
+        targetKey: 'userId',
       });
       this.hasMany(models.GroupUser, {
-        foreignKey: "groupId",
-        sourceKey: "groupId",
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
       });
       this.hasMany(models.Calendar, {
-        foreignKey: "groupId",
-        sourceKey: "groupId",
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
       });
       this.hasMany(models.Post, {
-        foreignKey: "groupId",
-        sourceKey: "groupId",
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
       });
     }
   }
-  Group.init(
+  GroupList.init(
     {
       groupId: {
         allowNull: false,
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: "User",
-          key: "userId",
+          model: 'User',
+          key: 'userId',
         },
       },
       groupName: {
@@ -59,9 +59,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Group",
+      modelName: 'GroupList',
       timestamps: false,
-    }
+    },
   );
-  return Group;
+  return GroupList;
 };
