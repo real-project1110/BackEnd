@@ -6,9 +6,7 @@ const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models/index');
 
 class SearchRepository {
-  constructor() {
-    super();
-  }
+  constructor() {}
   findUserNickname = async ({ keyword }) => {
     const findUserNickname = await GroupUser.findOne({ where: { keyword } });
     return findUserNickname;
@@ -31,8 +29,6 @@ class SearchRepository {
     return userPostSearch;
   };
   postSearch = async ({ keyword, groupId }) => {
-    const keyword = keyword;
-    const groupId = groupId;
     // const postSearch = await Post.findAll({
     //   where: {
     //     title: {
