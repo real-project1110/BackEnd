@@ -14,7 +14,7 @@ module.exports=()=>{
                     const exUser = await User.findOne({
                         where : {snsId:profile.id, provider : 'kakao'},
                     });
-
+                    console.log('aaaaaaaaaaaa',profile)
                     if(exUser) {
                         done(null,exUser);
                         console.log(exUser, '카카오 로그인 성공!');
