@@ -30,7 +30,6 @@ class SearchRepository {
     return userPostSearch;
   };
   postSearch = async ({ keyword, groupId }) => {
-
     // const postSearch = await Post.findAll({
     //   where: {
     //     title: {
