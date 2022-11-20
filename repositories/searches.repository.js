@@ -6,7 +6,8 @@ const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models/index');
 
 class SearchRepository {
-  constructor() {}
+  constructor() {
+  }
   findUserNickname = async ({ keyword }) => {
     const findUserNickname = await GroupUser.findOne({ where: { keyword } });
     return findUserNickname;
@@ -38,9 +39,9 @@ class SearchRepository {
     // });
     // return postSearch;
     const query = `SELECT p.postId,p.groupId,p.title,p.content,p.postImg,p.commentCount,p.createdAt,gu.groupUserId,gu.groupUserNickname,gu.groupAvatarImg 
-                   FROM posts p 
-                   INNER JOIN groupusers gu ON ${groupId} = gu.groupId 
-                   WHERE p.title LIKE %${keyword}%`;
+                  FROM posts p 
+                  INNER JOIN groupusers gu ON ${groupId} = gu.groupId 
+                  WHERE p.title LIKE %${keyword}%`;
     const result = await sequelize.query(query, { type: QueryTypes.SELECT });
 
     return result;

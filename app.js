@@ -33,7 +33,7 @@ app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: [process.env.KAKAO_SECRET, process.env.GOOGLE_SECRET],
+    secret: [process.env.KAKAO_SECRET,process.env.GOOGLE_SECRET,process.env.NAVER_SECRET],
     cookie: {
       httpOnly: true,
       secure: false,
