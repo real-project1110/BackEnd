@@ -3,16 +3,16 @@ const GroupService = require('../services/groups.service')
 class GroupController{
     groupService = new GroupService()
 
-    createGroup = async(req,res)=>{
+    createGroup = async(req,res,next)=>{
         try{
-        const {groupName,groupImg}= req.body
+        const {groupName}= req.body
         const {user} =res.locals
         const userId = user.userId
-        const creategroup = await this.groupService.createGroup(groupName,groupImg,userId)
-        res.status(201).json({data:creategroup})
-        }catch(err){
-            res.status(400).json(err)
-        
+
+        const createGroup = await this.groupService.createGroup(groupName,userId)
+        res.status(201).json({data:createGroup.groupId})
+        }catch(error){
+            next(error)
         }
     }
 

@@ -55,27 +55,6 @@ app.use(cookieParser());
 app.use('/', routes);
 app.use(errorLogger);
 app.use(errorHandler);
-// https
-//   .createServer(
-//     {
-//       key: fs.readFileSync(__dirname + '/key.pem', 'utf-8'),
-//       cert: fs.readFileSync(__dirname + '/cert.pem', 'utf-8'),
-//     },
-//     function (req, res) {
-//       res.write('Congrats! You made https server now :)');
-//       res.end();
-//     },
-//   )
-//   .listen(4000);
-// app.listen(port, () => {
-//   console.log('Hi server open :', port);
-// });
-// //*https 오픈
-// https.createServer(options, app).listen(port, () => {
-//   console.log(`HTTPS server started on port 4000`);
-// });
-// 운영 환경일때만 적용
-// if (process.env.NODE_ENV == 'production') {
   try {
     const option = {
       ca: fs.readFileSync(
@@ -91,15 +70,9 @@ app.use(errorHandler);
       console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
     });
   } catch (error) {
-    // console.log('HTTPS 서버가 실행되지 않습니다.');
-    // console.log(error);
     app.listen(port, () => {
       console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
     });
   }
 
-// } else {
-//   app.listen(port, () => {
-//     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
-//   });
-// }
+
