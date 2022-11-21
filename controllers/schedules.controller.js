@@ -1,12 +1,13 @@
 const ScheduleService = require('../services/schedules.service')
 
 class ScheduleController{
-    scheduleController = new ScheduleController()
+    scheduleService = new ScheduleService()
 
     createSchedule = async(req,res)=>{
         try{
-        const {title,description,start,end,colorId}= req.body
-        const createschedule = await this.scheduleService.createSchedule(title,description,start,end,colorId)
+        const {title,description,start,end,colorId,groupUserId,groupId}= req.body
+        
+        const createschedule = await this.scheduleService.createSchedule(title,description,start,end,colorId,groupUserId,groupId)
         res.status(201).json({data:createschedule})
         }catch(err){
             res.status(400).json(err)

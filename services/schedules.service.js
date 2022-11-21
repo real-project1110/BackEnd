@@ -3,8 +3,9 @@ const ScheduleRepository = require('../repositories/schedules.repository')
 class ScheduleService {
     scheduleRepository = new ScheduleRepository()
 
-    createSchedule = async(title,description,start,end,colorId)=>{
-        await this.ScheduleRepository.createSchedule(title,description,start,end,colorId)
+    createSchedule = async(title,description,start,end,colorId,groupUserId,groupId)=>{
+        
+        await this.scheduleRepository.createSchedule(title,description,start,end,colorId,groupUserId,groupId)
         return {message:"일정이 생성되었습니다."}
     }
 

@@ -2,8 +2,9 @@ const {Schedule} = require('../models')
 
 class ScheduleRepository{
 
-    createSchedule = async (title,description,start,end,colorId)=>{
-        await Schedule.create({title,description,start,end,colorId})
+    createSchedule = async (title,description,start,end,colorId,groupUserId,groupId)=>{
+        console.log(title,description,start,end,colorId)
+        await Schedule.create({title,description,start,end,colorId,groupUserId,groupId})
     };
 
     updateSchedule = async (title,description,start,end,colorId,scheduleId)=>{
