@@ -73,5 +73,15 @@ class PostRepository extends Post {
     });
     return deletPost;
   };
+  //*공지로 변경
+  noticePost = async ({ postId, category }) => {
+    const noticePost = await Post.update({ category }, { where: { postId } });
+    return noticePost;
+  };
+  //*자유로 변경
+  freePost = async ({ postId, category }) => {
+    const freePost = await Post.update({ category }, { where: { postId } });
+    return freePost;
+  };
 }
 module.exports = PostRepository;

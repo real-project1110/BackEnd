@@ -11,4 +11,5 @@ router.post('/emailcheck',userController.emailCheck);
 router.post('/emailcheck/auth',userController.certification)
 router.get('/myprofile',auth,userController.myprofile);
 router.put('/nickname',auth,userController.updateNic)
+router.put('/password',auth,userController.updatePw)
 module.exports = router;

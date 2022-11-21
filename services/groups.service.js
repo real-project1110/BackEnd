@@ -20,13 +20,13 @@ class GroupService {
     }
 
     findOneGroup = async (groupId)=>{
-        await this.groupRepository.findOneGroup(groupId)
-        return {message:"검색이 완료되었습니다."}
+        const groups= await this.groupRepository.findOneGroup(groupId)
+        return groups
     }
 
     findAllGroup = async()=>{
-        await this.groupRepository.findAllGroup()
-        return {message:"검색이 완료되었습니다."}
+        const groups=await this.groupRepository.findAllGroup()
+        return groups
     }
 
     destroyGroup = async (groupId)=>{
