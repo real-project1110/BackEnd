@@ -113,6 +113,30 @@ class GroupController{
             next(error)
         }
     }
+
+    postStatus =async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId} = req.params;
+            const {status,statusMessage}=req.body
+            const poststatus = await this.groupService.postStatus(userId,groupId,status,statusMessage)
+            res.status(201).json({data:poststatus})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    changeStatus = async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId}=req.params;
+            const {status,statusMessage}=req.body;
+            const updateStatus = await this.groupService.updateStatus(userId,groupId,status,statusMessage)
+            res.status(201).json({data:updateStatus})
+        }catch(error){
+            next(error)
+        }
+    }
 }
 
 module.exports = GroupController

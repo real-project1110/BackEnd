@@ -54,6 +54,19 @@ class GroupRepository {
     });
     return findAllGU;
   };
+
+  postStatus = async (status,statusMessage)=>{
+    const poststatus = await GroupUser.create({status,statusMessage})
+    return poststatus;
+  }
+
+  updateStatus = async(userId,groupId,status,statusMessage)=>{
+    const updatestatus = await GroupUser.update(
+      {status,statusMessage},
+      {where:{userId,groupId}}
+    )
+    return updatestatus;
+  }
 }
 
 module.exports = GroupRepository;

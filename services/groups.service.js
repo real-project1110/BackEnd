@@ -75,6 +75,22 @@ class GroupService {
             groupAvatarImg : findAllGU.groupAvatarImg
         }
     }
+
+    postStatus = async(userId,groupId,status,statusMessage)=>{
+        const poststatus = await this.groupRepository.postStatus(userId,groupId,status,statusMessage)
+        return {
+            status : poststatus.status,
+            statusMessage: poststatus.statusMessage
+        }
+    }
+
+    updateStatus = async(userId,groupId,status,statusMessage)=>{
+        const updatestatus = await this.groupRepository.updateStatus(userId,groupId,status,statusMessage)
+        return {
+            status : updatestatus.status,
+            statusMessage : updatestatus.status
+        }
+    }
 }
 
 module.exports = GroupService

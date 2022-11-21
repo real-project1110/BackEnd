@@ -5,14 +5,14 @@ const google = require('./google');
 const naver = require('./naver')
 
 module.exports = () => {
-  passport.serializeUser((user, done) => {
-    done(null, user);
-  });
-  passport.deserializeUser((user, done) => {
-    done(null, user);
-  });
-    kakao();
-    google();
-    naver();
+    passport.serializeUser((user, done) => {
+        done(null, user);
+    });
+    passport.deserializeUser((user, done) => {
+        done(null, user);
+    });
+        kakao();
+        google();
+        naver();
 }
 
