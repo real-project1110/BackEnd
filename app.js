@@ -11,12 +11,6 @@ const HTTPS = require('https');
 // const https = require('https');
 // const fs = require('fs');
 
-// //* ccertificate와 private key 가져오기
-// const options = {
-//   // ca: fs.readFileSync('./ca.key'),
-//   key: fs.readFileSync('./cert.key'),
-//   cert: fs.readFileSync('./cert.crt'),
-// };
 const cors = require('cors');
 const {
   errorLogger,
@@ -33,7 +27,11 @@ app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: [process.env.KAKAO_SECRET,process.env.GOOGLE_SECRET,process.env.NAVER_SECRET],
+    secret: [
+      process.env.KAKAO_SECRET,
+      process.env.GOOGLE_SECRET,
+      process.env.NAVER_SECRET,
+    ],
     cookie: {
       httpOnly: true,
       secure: false,
@@ -55,24 +53,21 @@ app.use(cookieParser());
 app.use('/', routes);
 app.use(errorLogger);
 app.use(errorHandler);
-  try {
-    const option = {
-      ca: fs.readFileSync(
-        '/etc/letsencrypt/live/hyunjin9603.shop/fullchain.pem',
-      ),
-      key: fs.readFileSync(
-        '/etc/letsencrypt/live/hyunjin9603.shop/privkey.pem',
-      ),
-      cert: fs.readFileSync('/etc/letsencrypt/live/hyunjin9603.shop/cert.pem'),
-    };
 
-    HTTPS.createServer(option, app).listen(port, () => {
-      console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
-    });
-  } catch (error) {
-    app.listen(port, () => {
-      console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
-    });
-  }
 
+try {
+  const option = {
+    ca: fs.readFileSync(process.env.CA_URL),
+    key: fs.readFileSync(process.env.KEY_URL),
+    cert: fs.readFileSync(process.env.CERT_URL),
+  };
+
+  HTTPS.createServer(option, app).listen(port, () => {
+    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+  });
+} catch (error) {
+  app.listen(port, () => {
+    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
+  });
+}
 
