@@ -22,12 +22,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       colorId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       groupUserId: {
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       groupId: {
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -3,17 +3,16 @@ const GroupService = require('../services/groups.service')
 class GroupController{
     groupService = new GroupService()
 
-    createGroup = async(req,res)=>{
+    createGroup = async(req,res,next)=>{
         try{
-        const {groupName,groupImg}= req.body
+        const {groupName}= req.body
         const {user} =res.locals
         const userId = user.userId
-        const creategroup = await this.groupService.createGroup(groupName,groupImg,userId)
-        res.status(201).json({data:creategroup})
-        }catch(err){
-        console.log("아래")
-            res.status(400).json(err)
-        
+
+        const createGroup = await this.groupService.createGroup(groupName,userId)
+        res.status(201).json({data:createGroup.groupId})
+        }catch(error){
+            next(error)
         }
     }
 
@@ -109,6 +108,30 @@ class GroupController{
             const {groupId} = req.params;
             const findAllGU = await this.groupService.findAllGU(userId,groupId)
             res.status(200).json({data:findAllGU})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    postStatus =async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId} = req.params;
+            const {status,statusMessage}=req.body
+            const poststatus = await this.groupService.postStatus(userId,groupId,status,statusMessage)
+            res.status(201).json({data:poststatus})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    changeStatus = async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId}=req.params;
+            const {status,statusMessage}=req.body;
+            const updateStatus = await this.groupService.updateStatus(userId,groupId,status,statusMessage)
+            res.status(201).json({data:updateStatus})
         }catch(error){
             next(error)
         }

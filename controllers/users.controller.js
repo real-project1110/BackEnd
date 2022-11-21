@@ -49,6 +49,7 @@ class UserController {
         nickname: user.user.nickname,
         accessToken: user.accessToken,
         refreshToken: user.refreshToken,
+        currentPage :user.currentPage
       });
       console.log(
         user.user.userId,
