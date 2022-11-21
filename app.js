@@ -4,6 +4,9 @@ const port = 4000;
 const expressSanitizer = require('express-sanitizer');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const fs = require('fs');
+const HTTPS = require('https');
+
 // //*fs and https 모듈 가져오기
 // const https = require('https');
 // const fs = require('fs');
@@ -30,12 +33,12 @@ app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: [process.env.KAKAO_SECRET,process.env.GOOGLE_SECRET],
+    secret: [process.env.KAKAO_SECRET,process.env.GOOGLE_SECRET,process.env.NAVER_SECRET],
     cookie: {
       httpOnly: true,
       secure: false,
     },
-  })
+  }),
 );
 
 app.use(passport.initialize());
@@ -64,10 +67,35 @@ app.use(errorHandler);
 //     },
 //   )
 //   .listen(4000);
-app.listen(port, () => {
-  console.log('Hi server open :', port);
-});
+// app.listen(port, () => {
+//   console.log('Hi server open :', port);
+// });
 // //*https 오픈
 // https.createServer(options, app).listen(port, () => {
 //   console.log(`HTTPS server started on port 4000`);
 // });
+// 운영 환경일때만 적용
+if (process.env.NODE_ENV == 'production') {
+  try {
+    const option = {
+      ca: fs.readFileSync(
+        '/etc/letsencrypt/live/{rlawjdgus.shop}/fullchain.pem',
+      ),
+      key: fs.readFileSync(
+        '/etc/letsencrypt/live/{rlawjdgus.shop}/privkey.pem',
+      ),
+      cert: fs.readFileSync('/etc/letsencrypt/live/{rlawjdgus.shop}/cert.pem'),
+    };
+
+    HTTPS.createServer(option, app).listen(port, () => {
+      console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+    });
+  } catch (error) {
+    console.log('HTTPS 서버가 실행되지 않습니다.');
+    console.log(error);
+  }
+} else {
+  app.listen(port, () => {
+    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
+  });
+}

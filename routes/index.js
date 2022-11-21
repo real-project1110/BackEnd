@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport =require('passport')
+const passport = require('passport');
 
 router.use('/groups', require('./groups.route'));
 router.use('/groups', require('./comments.route'));
@@ -12,6 +12,6 @@ router.use('/', require('./searches.route'));
 router.use('/', require('./kakao.route'));
 router.use('/', require('./google.route'));
 router.use('/invites',require('./invites.route'))
-
+router.use('/',require('./naver.route'));
 
 module.exports = router;

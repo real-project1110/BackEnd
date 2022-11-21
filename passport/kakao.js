@@ -1,6 +1,6 @@
 const passport = require('passport');
-const {User}=require('../models')
-const kakaoStrategy = require('passport-kakao').Strategy
+const { User } = require('../models');
+const kakaoStrategy = require('passport-kakao').Strategy;
 require('dotenv').config();
 module.exports=()=>{
     passport.use(
@@ -14,7 +14,7 @@ module.exports=()=>{
                     const exUser = await User.findOne({
                         where : {snsId:profile.id, provider : 'kakao'},
                     });
-
+                    console.log('aaaaaaaaaaaa',profile)
                     if(exUser) {
                         done(null,exUser);
                         console.log(exUser, '카카오 로그인 성공!');
