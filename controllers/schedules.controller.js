@@ -1,12 +1,15 @@
 const ScheduleService = require('../services/schedules.service')
 
 class ScheduleController{
-    scheduleController = new ScheduleController()
+    scheduleService = new ScheduleService()
 
     createSchedule = async(req,res)=>{
         try{
         const {title,description,start,end,colorId}= req.body
-        const createschedule = await this.scheduleService.createSchedule(title,description,start,end,colorId)
+        const {user}=res.local
+        const groupUserId=user.groupUserId
+        const {groupId}=req.params
+        const createschedule = await this.scheduleService.createSchedule(title,description,start,end,colorId,groupUserId,groupId)
         res.status(201).json({data:createschedule})
         }catch(err){
             res.status(400).json(err)
@@ -26,7 +29,19 @@ class ScheduleController{
 
     findAllSchedule = async(req,res)=>{
         try{
-            const findschedule = await this.scheduleService.findAllSchedule()
+            const {groupId}=req.params
+            const findschedule = await this.scheduleService.findAllSchedule(groupId)
+            res.status(200).json({data:findschedule})
+        }catch(err){
+            res.status(400).json(err)
+        }
+    }
+
+    
+    findOneSchedule = async(req,res)=>{
+        try{
+            const {groupId,scheduleId}=req.params
+            const findschedule = await this.scheduleService.findOneSchedule(scheduleId,groupId)
             res.status(200).json({data:findschedule})
         }catch(err){
             res.status(400).json(err)

@@ -8,6 +8,7 @@ class GroupController{
         const {groupName}= req.body
         const {user} =res.locals
         const userId = user.userId
+
         const createGroup = await this.groupService.createGroup(groupName,userId)
         res.status(201).json({data:createGroup.groupId})
         }catch(error){
