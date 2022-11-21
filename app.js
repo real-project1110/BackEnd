@@ -83,12 +83,12 @@ if (process.env.NODE_ENV == 'production') {
   try {
     const option = {
       ca: fs.readFileSync(
-        `/etc/letsencrypt/live/${rlawjdgus.shop}/fullchain.pem`,
+        `/etc/letsencrypt/live/{rlawjdgus.shop}/fullchain.pem`,
       ),
       key: fs.readFileSync(
-        `/etc/letsencrypt/live/${rlawjdgus.shop}/privkey.pem`,
+        `/etc/letsencrypt/live/{rlawjdgus.shop}/privkey.pem`,
       ),
-      cert: fs.readFileSync(`/etc/letsencrypt/live/${rlawjdgus.shop}/cert.pem`),
+      cert: fs.readFileSync(`/etc/letsencrypt/live/{rlawjdgus.shop}/cert.pem`),
     };
 
     HTTPS.createServer(option, app).listen(port, () => {
