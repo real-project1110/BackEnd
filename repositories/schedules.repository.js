@@ -3,7 +3,6 @@ const {Schedule} = require('../models')
 class ScheduleRepository{
 
     createSchedule = async (title,description,start,end,colorId,groupUserId,groupId)=>{
-        console.log(title,description,start,end,colorId)
         await Schedule.create({title,description,start,end,colorId,groupUserId,groupId})
     };
 
@@ -11,9 +10,16 @@ class ScheduleRepository{
         await Schedule.upadte({title,description,start,end,colorId},{where:{scheduleId}})
     }
 
-    findAllSchedule = async ()=>{
-        const findAllSchedule = await Schedule.findAll()
+    findAllSchedule = async (groupId)=>{
+        console.log(groupId)
+        const findAllSchedule = await Schedule.findAll({where:{groupId}})
         return findAllSchedule
+    }
+    
+    findOneSchedule = async (groupId,scheduleId)=>{
+        console.log(groupId,scheduleId)
+        const findOneSchedule = await Schedule.findOne({where:{groupId,scheduleId}})
+        return findOneSchedule
     }
 
     destroySchedule = async (scheduleId)=>{

@@ -10,17 +10,25 @@ class ScheduleService {
     }
 
     updateSchedule =async(title,description,start,end,colorId,scheduleId)=>{
-        await this.ScheduleRepository.updateSchedule(title,description,start,end,colorId,scheduleId)
+        await this.scheduleRepository.updateSchedule(title,description,start,end,colorId,scheduleId)
         return {message:"수정이 완료되었습니다."}
     }
 
-    findAllSchedule = async()=>{
-        await this.ScheduleRepository.findAllSchedule()
-        return {message:"검색이 완료되었습니다."}
+    findAllSchedule = async(groupId)=>{
+        console.log(2)
+        const schedule=await this.scheduleRepository.findAllSchedule(groupId)
+        return schedule
     }
 
+    
+    findOneSchedule = async(groupId,scheduleId)=>{
+        const schedule=await this.scheduleRepository.findOneSchedule(scheduleId,groupId)
+        return schedule
+    }
+
+
     destroySchedule = async (scheduleId)=>{
-        await this.ScheduleRepository.destroySchedule(scheduleId)
+        await this.scheduleRepository.destroySchedule(scheduleId)
     }
 }
 

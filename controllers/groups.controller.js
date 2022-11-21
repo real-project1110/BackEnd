@@ -11,7 +11,6 @@ class GroupController{
         const creategroup = await this.groupService.createGroup(groupName,groupImg,userId)
         res.status(201).json({data:creategroup})
         }catch(err){
-        console.log("아래")
             res.status(400).json(err)
         
         }
