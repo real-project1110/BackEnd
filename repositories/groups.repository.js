@@ -2,8 +2,8 @@
 const { GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
-  createGroup = async (groupName, groupImg) => {
-    await GroupList.create({ groupName, groupImg });
+  createGroup = async (groupName, groupImg,userId) => {
+    await GroupList.create({ groupName, groupImg,userId });
   };
 
   updateGroupName = async (groupId, groupName) => {
