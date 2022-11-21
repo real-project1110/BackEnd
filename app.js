@@ -24,8 +24,8 @@ const {
 } = require('./middlewares/error-handler.middleware');
 const routes = require('./routes');
 const session = require('cookie-session');
-const passport = require('passport');
-const passportConfig = require('./passport');
+// const passport = require('passport');
+// const passportConfig = require('./passport');
 // passportConfig();
 const morganMiddleware = require('./middlewares/morganMiddleware');
 
@@ -83,12 +83,12 @@ if (process.env.NODE_ENV == 'production') {
   try {
     const option = {
       ca: fs.readFileSync(
-        '/etc/letsencrypt/live/{rlawjdgus.shop}/fullchain.pem',
+        `/etc/letsencrypt/live/${rlawjdgus.shop}/fullchain.pem`,
       ),
       key: fs.readFileSync(
-        '/etc/letsencrypt/live/{rlawjdgus.shop}/privkey.pem',
+        `/etc/letsencrypt/live/${rlawjdgus.shop}/privkey.pem`,
       ),
-      cert: fs.readFileSync('/etc/letsencrypt/live/{rlawjdgus.shop}/cert.pem'),
+      cert: fs.readFileSync(`/etc/letsencrypt/live/${rlawjdgus.shop}/cert.pem`),
     };
 
     HTTPS.createServer(option, app).listen(port, () => {
