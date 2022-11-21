@@ -27,7 +27,6 @@
     "prettier": "^2.7.1",
     "sequelize": "^6.25.6",
     "sequelize-cli": "^6.5.2",
-    "sharp": "^0.31.2",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1"
   },
