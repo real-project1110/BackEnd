@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+    this.belongsTo(models.User,{
+      foreignKey:'userId',
+      targetKey:'userId',
+    })
+    this.belongsTo(models.GroupList,{
+      foreignKey:'groupId',
+      targetKey:'groupId',
+    });
+
     }
   }
   Invite.init({
@@ -24,19 +33,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: 'Users',
+        model: 'User',
         key: 'userId',
       },
       onDelete: 'cascade',
     },
-    groupName:{
+    groupId:{
       allowNull:false,
-      type:DataTypes.STRING
+      type:DataTypes.INTEGER,
+      references:{
+        model : 'GroupList',
+        key :'groupId',
+      },
+      onDelete: 'cascade',
     },
-    groupImg:{
-      allowNull:true,
-      type:DataTypes.STRING
-    }
   }, {
     sequelize,
     modelName: 'Invite',
