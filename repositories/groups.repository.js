@@ -21,13 +21,15 @@ class GroupRepository {
 
   findGroupUser = async(userId)=>{
     const findGroupUser = await GroupUser.findAll({where:{userId}})
-    // const {groupId} = findGroupUser.groupId
-    console.log(findGroupUser)
-    return findGroupUser
+    const groupIds=[]
+    for (let i in findGroupUser){
+      groupIds.push(findGroupUser[i].groupId)
+    }
+    return {groupIds}
   }
 
   findAllGroup = async (gorupId) => {
-    const findAllGroup = await GroupList.findAll({where:{gorupId}});
+    const findAllGroup = await GroupList.findOne({where:{gorupId}});
     return findAllGroup;
   };
 
@@ -76,7 +78,8 @@ class GroupRepository {
   }
 
   createGroupUser = async(userId,groupId)=>{
-    const creategroupuser = await creategroupuser.create({userId,groupId})
+    const groupUserNickname = "test"
+    const creategroupuser = await GroupUser.create({userId,groupId,groupUserNickname})
     return creategroupuser;
   }
 }

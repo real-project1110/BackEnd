@@ -52,8 +52,9 @@ class GroupController{
         try{
             const {user} = res.locals
             const userId = user.userId
-            const findgroup = await this.groupService.findAllGroup(userId)
-            res.status(200).json({data:findgroup})
+            const findgroup = await this.groupService.findGroupUser(userId)
+            const groupList = await this.groupService.findAllGroup(findgroup)
+            res.status(200).json({data:groupList})
         }catch(error){
             next(error)
         }
