@@ -36,12 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type:DataTypes.STRING
     },
-    colorId: {
+    color: {
       allowNull: false,
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       references: {
         model: "Color",
-        key: "colorId",
+        key: "color",
       }
     },
     groupUserId:{
