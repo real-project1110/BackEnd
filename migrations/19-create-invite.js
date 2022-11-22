@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         allowNull: false,
@@ -18,21 +18,24 @@ module.exports = {
         },
         onDelete: 'cascade',
       },
-      groupName:{
+      groupId:{
         allowNull:false,
-        type:Sequelize.STRING
-      },
-      groupImg:{
-        allowNull:true,
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER,
+        references:{
+          model : 'GroupLists',
+          key :'groupId',
+        },
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
       }
     });
   },

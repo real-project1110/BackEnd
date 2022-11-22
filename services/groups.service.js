@@ -24,8 +24,18 @@ class GroupService {
         return groups
     }
 
-    findAllGroup = async()=>{
-        const groups=await this.groupRepository.findAllGroup()
+    findGroupUser = async(userId)=>{
+        const findGroupUser= await this.groupRepository.findGroupUser(userId)
+        return findGroupUser
+    }
+
+    findAllGroup = async ({groupIds})=>{
+        console.log(groupIds)
+        const groups=[] 
+        for(let i in groupIds){
+        groups.push(await this.groupRepository.findOneGroup(i))
+        }
+        console.log('11111111111',groups)
         return groups
     }
 
@@ -89,6 +99,25 @@ class GroupService {
         return {
             status : updatestatus.status,
             statusMessage : updatestatus.status
+        }
+    }
+
+    createGroupUser = async(userId,groupId)=>{
+        const user = await this.groupRepository.findOneId(userId)
+        if(!user){
+            throw new Error('유저 정보가 없습니다.')
+        }
+        const groupuserdup = await this.groupRepository.groupuserdup(userId,groupId)
+        if(!groupuserdup){
+            const groupUser = {
+            groupUserNickname:user.nickname,
+            userId,
+            groupId
+        }
+        return await this.groupRepository.createGroupUser(groupUser)
+        }
+        else{
+            return;
         }
     }
 }

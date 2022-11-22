@@ -1,9 +1,8 @@
-
-const { GroupList, GroupUser } = require('../models');
+const { User,GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
   createGroup = async (groupName, userId) => {
-    await GroupList.create({ groupName, userId });
+    return await GroupList.create({ groupName,userId });
   };
 
   updateGroupName = async (groupId, groupName) => {
@@ -19,8 +18,18 @@ class GroupRepository {
     return findOneGroup;
   };
 
-  findAllGroup = async () => {
-    const findAllGroup = await GroupList.findAll();
+  findGroupUser = async(userId)=>{
+    const findGroupUser = await GroupUser.findAll({where:{userId}})
+    const groupIds=[]
+    for (let i in findGroupUser){
+      groupIds.push(findGroupUser[i].groupId)
+    }
+    console.log(groupIds)
+    return {groupIds}
+  }
+
+  findAllGroup = async (groupId) => {
+    const findAllGroup = await GroupList.findOne({where:{groupId}});
     return findAllGroup;
   };
 
@@ -66,6 +75,22 @@ class GroupRepository {
       {where:{userId,groupId}}
     )
     return updatestatus;
+  }
+
+  createGroupUser = async(groupUser)=>{
+
+    console.log('안녕',groupUser)
+    return await GroupUser.create(groupUser)
+  }
+
+  findOneId = async(userId)=>{
+    const findOneId = await User.findByPk(userId);
+    return findOneId
+  }
+
+  groupuserdup = async(userId,groupId)=>{
+    const groupuserdup = await GroupUser.findOne({where:{userId,groupId}})
+    return groupuserdup
   }
 }
 
