@@ -3,7 +3,7 @@ const { GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
   createGroup = async (groupName, userId) => {
-    await GroupList.create({ groupName, userId });
+    return await GroupList.create({ groupName, userId });
   };
 
   updateGroupName = async (groupId, groupName) => {
@@ -19,8 +19,15 @@ class GroupRepository {
     return findOneGroup;
   };
 
-  findAllGroup = async () => {
-    const findAllGroup = await GroupList.findAll();
+  findGroupUser = async(userId)=>{
+    const findGroupUser = await GroupUser.findAll({where:{userId}})
+    // const {groupId} = findGroupUser.groupId
+    console.log(findGroupUser)
+    return findGroupUser
+  }
+
+  findAllGroup = async (gorupId) => {
+    const findAllGroup = await GroupList.findAll({where:{gorupId}});
     return findAllGroup;
   };
 

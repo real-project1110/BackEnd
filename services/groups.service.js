@@ -24,9 +24,11 @@ class GroupService {
         return groups
     }
 
-    findAllGroup = async()=>{
-        const groups=await this.groupRepository.findAllGroup()
-        return groups
+    findAllGroup = async(userId)=>{
+        const findGroupUser= this.groupRepository.findGroupUser(userId)
+        console.log({message:findGroupUser})
+        // const groups=await this.groupRepository.findAllGroup(userId)
+        return findGroupUser
     }
 
     destroyGroup = async (groupId)=>{
