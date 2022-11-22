@@ -5,6 +5,7 @@ class PostController {
   postService = new PostService();
 
   //*게시글 작성
+
   createPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
