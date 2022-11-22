@@ -9,11 +9,13 @@ class GroupController {
       const { user } = res.locals;
       const userId = user.userId;
       const { nickname } = res.locals.user;
-      const createGroup = await this.groupService.createGroup(
+      console.log('real', groupName, userId);
+      const createGroup = await this.groupService.createGroup({
         groupName,
         userId,
         nickname,
-      );
+      });
+      console.log(createGroup);
       res.status(201).json({ data: createGroup.groupId });
     } catch (error) {
       next(error);

@@ -5,7 +5,8 @@ const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
   createGroup = async ({ groupUserNickname, groupName, userId }) => {
-    const createGroup = await GroupList.create(groupName, userId);
+    console.log(userId, groupName);
+    const createGroup = await GroupList.create({ groupName, userId });
     const groupId = createGroup.groupId;
     const userCount = 1;
     await GroupUser.create({
@@ -14,6 +15,7 @@ class GroupRepository {
       groupUserNickname,
       userCount,
     });
+    return createGroup;
   };
 
   updateGroupName = async (groupId, groupName) => {
