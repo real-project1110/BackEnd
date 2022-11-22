@@ -74,6 +74,11 @@ class GroupRepository {
     )
     return updatestatus;
   }
+
+  createGroupUser = async(userId,groupId)=>{
+    const creategroupuser = await creategroupuser.create({userId,groupId})
+    return creategroupuser;
+  }
 }
 
 module.exports = GroupRepository;

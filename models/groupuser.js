@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'Group',
+          model: 'GroupList',
           key: 'groupId',
         },
         onDelete: 'cascade',

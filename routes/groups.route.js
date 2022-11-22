@@ -6,11 +6,13 @@ const groupcontroller = new GroupController();
 
 router.post('/',auth,groupcontroller.createGroup)
 router.post('/:groupId/groupUser/status',auth,groupcontroller.postStatus)
+router.post('/groupUsers',auth,groupcontroller.createGroupUser)
 
 router.put('/:groupId',auth,groupcontroller.updateGroupName)
 router.put('/:groupId/groupImg',auth,groupcontroller.updateGroupImg)
 router.put('/:groupId/groupUserNickname',auth,groupcontroller.updateGroupNic)
 router.put('/:groupId/groupUser/status',auth,groupcontroller.changeStatus)
+
 
 router.get('/',auth,groupcontroller.findAllGroup)
 router.get('/:groupId',auth,groupcontroller.findOneGroup)
