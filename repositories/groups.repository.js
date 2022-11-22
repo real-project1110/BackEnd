@@ -1,5 +1,5 @@
 const { User,GroupList, GroupUser } = require('../models');
-
+const { Op } = require('sequelize');
 class GroupRepository {
   createGroup = async (groupName, userId) => {
     return await GroupList.create({ groupName,userId });
@@ -55,14 +55,14 @@ class GroupRepository {
     return getUser;
   };
 
-  findAllGU = async (userId, groupId) => {
-    const findAllGU = await GroupUser.findAll({
-      where: { [Op.and]: [{ userId }, { groupId }] },
-      order: [['groupUserId', 'desc']],
-
-    });
-    return findAllGU;
-  };
+  findAllGU=async(groupId)=>{
+    console.log('groupId : ', groupId)
+      const findAllGU= await GroupUser.findAll({
+      where:{groupId},
+      order:[['groupUserId', 'desc']]
+    })
+      return findAllGU
+  }
 
   postStatus = async (status,statusMessage)=>{
     const poststatus = await GroupUser.create({status,statusMessage})
