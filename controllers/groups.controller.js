@@ -8,9 +8,8 @@ class GroupController{
         const {groupName}= req.body
         const {user} =res.locals
         const userId = user.userId
-
         const createGroup = await this.groupService.createGroup(groupName,userId)
-        res.status(201).json({data:createGroup.groupId})
+        res.status(201).json({data:createGroup})
         }catch(error){
             next(error)
         }
@@ -49,12 +48,12 @@ class GroupController{
         }
     }
 
-    findAllGroup = async(req,res)=>{
+    findAllGroup = async(req,res,next)=>{
         try{
             const findgroup = await this.groupService.findAllGroup()
             res.status(200).json({data:findgroup})
-        }catch(err){
-            res.status(400).json(err)
+        }catch(error){
+            next(error)
         }
     }
 
@@ -74,7 +73,7 @@ class GroupController{
             const {groupId} =req.params;
             const {groupUserNickname} =req.body;
             const updateNic = await this.groupService.updateNic(userId,groupId,groupUserNickname)
-            res.status(200).json({data:updateNic})
+            res.status(200).json({data:updateNic.groupUserNickname,message:"그룹내 닉네임 변경완료"})
         }catch(error){
             next(error)
         }
@@ -132,6 +131,17 @@ class GroupController{
             const {status,statusMessage}=req.body;
             const updateStatus = await this.groupService.updateStatus(userId,groupId,status,statusMessage)
             res.status(201).json({data:updateStatus})
+        }catch(error){
+            next(error)
+        }
+    }
+
+    createGroupUser = async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId} = req.body;
+            const creategroupuser = await this.groupService.createGroupUser(userId,groupId)
+            res.status(201).json({data:creategroupuser})
         }catch(error){
             next(error)
         }

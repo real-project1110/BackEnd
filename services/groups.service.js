@@ -91,6 +91,14 @@ class GroupService {
             statusMessage : updatestatus.status
         }
     }
+
+    createGroupUser = async(userId,groupId)=>{
+        const creategroupuser = await this.groupRepository.createGroupUser(userId,groupId)
+        return {
+            userId : creategroupuser.userId,
+            groupId : creategroupuser.groupId
+        }
+    }
 }
 
 module.exports = GroupService
