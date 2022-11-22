@@ -144,7 +144,7 @@ class GroupController{
             const {userId} = res.locals.user;
             const {groupId} = req.body;
             const creategroupuser = await this.groupService.createGroupUser(userId,groupId)
-            res.status(200).json({data:creategroupuser})
+            res.status(201).json({data:creategroupuser})
         }catch(error){
             next(error)
         }
