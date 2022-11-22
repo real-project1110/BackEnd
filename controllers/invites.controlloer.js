@@ -14,15 +14,14 @@ class InviteController {
         }
     }
 
-    findInvite = async(req,res)=>{
+    findInvite = async(req,res,next)=>{
         try{
             const {user}=res.locals
             const userId=user.userId
             const invite = await this.inviteService.findInvite(userId)
-
             res.status(200).json({data:invite})
-        }catch(err){
-            res.status(400).json(err)
+        }catch(error){
+            next(error)
         }
     }
 }
