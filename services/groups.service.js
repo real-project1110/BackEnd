@@ -35,6 +35,7 @@ class GroupService {
         for(let i in groupIds){
         groups.push(await this.groupRepository.findOneGroup(i))
         }
+        console.log('11111111111',groups)
         return groups
     }
 
@@ -106,13 +107,18 @@ class GroupService {
         if(!user){
             throw new Error('유저 정보가 없습니다.')
         }
-        const groupUser = {
+        const groupuserdup = await this.groupRepository.groupuserdup(userId,groupId)
+        if(!groupuserdup){
+            const groupUser = {
             groupUserNickname:user.nickname,
             userId,
             groupId
         }
-        
         return await this.groupRepository.createGroupUser(groupUser)
+        }
+        else{
+            return;
+        }
     }
 }
 

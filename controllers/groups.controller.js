@@ -42,6 +42,7 @@ class GroupController{
         try{
             const {groupId} = req.params
             const findgroup = await this.groupService.findOneGroup(groupId)
+            console.log('33333333333',findgroup)
             res.status(200).json({data:findgroup})
         }catch(err){
             res.status(400).json(err)
