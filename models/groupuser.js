@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       groupUserNickname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       groupAvatarImg: {
         type: DataTypes.STRING,
