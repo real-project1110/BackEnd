@@ -27,21 +27,26 @@ class GroupService {
     const groups = await this.groupRepository.findOneGroup(groupId);
     return groups;
   };
-
-  findGroupUser = async (userId) => {
-    const findGroupUser = await this.groupRepository.findGroupUser(userId);
-    return findGroupUser;
+  findAllGroupList = async ({ userId }) => {
+    const findGroupUserId = await this.groupRepository.findGroupUserId({
+      userId,
+    });
+    const findGroup = await this.groupRepository.findGroup({ findGroupUserId });
+    return findGroup;
   };
+  //   findGroupUser = async (userId) => {
+  //     const findGroupUser = await this.groupRepository.findGroupUser(userId);
+  //     return findGroupUser;
+  //   };
 
-  findAllGroup = async ({ groupIds }) => {
-    console.log(groupIds);
-    const groups = [];
-    for (let i in groupIds) {
-      groups.push(await this.groupRepository.findOneGroup(i));
-    }
-    console.log('11111111111', groups);
-    return groups;
-  };
+  //   findAllGroup = async ({ groupIds }) => {
+  //     console.log(groupIds);
+  //     const groups = [];
+  //     for (let i in groupIds) {
+  //       groups.push(await this.groupRepository.findOneGroup(i));
+  //     }
+  //     return groups;
+  //   };
 
   destroyGroup = async (groupId) => {
     await this.groupRepository.destroyGroup(groupId);

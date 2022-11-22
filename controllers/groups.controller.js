@@ -58,18 +58,28 @@ class GroupController {
       res.status(400).json(err);
     }
   };
-
-  findAllGroup = async (req, res, next) => {
+  findAllGroupList = async (req, res, next) => {
     try {
-      const { user } = res.locals;
-      const userId = user.userId;
-      const findgroup = await this.groupService.findGroupUser(userId);
-      const groupList = await this.groupService.findAllGroup(findgroup);
-      res.status(200).json({ data: groupList });
+      const { userId } = res.locals.user;
+      const findAllGroupList = await this.groupService.findAllGroupList({
+        userId,
+      });
+      res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
     }
   };
+  //   findAllGroup = async (req, res, next) => {
+  //     try {
+  //       const { user } = res.locals;
+  //       const userId = user.userId;
+  //       const findgroup = await this.groupService.findGroupUser(userId);
+  //       const groupList = await this.groupService.findAllGroup(findgroup);
+  //       res.status(200).json({ data: groupList });
+  //     } catch (error) {
+  //       next(error);
+  //     }
+  //   };
 
   destroyGroup = async (req, res) => {
     try {

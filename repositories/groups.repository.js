@@ -5,15 +5,15 @@ const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
   createGroup = async ({ groupUserNickname, groupName, userId }) => {
-    const createGroup = await GroupList.create({
-      where: { [Op.and]: [{ groupName }, { userId }] },
-    });
+    const createGroup = await GroupList.create(groupName, userId);
+    const groupId = createGroup.groupId;
+    const userCount = 1;
     await GroupUser.create({
       userId,
       groupId,
       groupUserNickname,
+      userCount,
     });
-    return createGroup;
   };
 
   updateGroupName = async (groupId, groupName) => {
@@ -28,21 +28,37 @@ class GroupRepository {
     const findOneGroup = await GroupList.findOne({ where: { groupId } });
     return findOneGroup;
   };
-
-  findGroupUser = async (userId) => {
-    const findGroupUser = await GroupUser.findAll({ where: { userId } });
-    const groupIds = [];
-    for (let i in findGroupUser) {
-      groupIds.push(findGroupUser[i].groupId);
+  findGroupUserId = async ({ userId }) => {
+    const findGroupUserId = await GroupUser.findAll({ where: { userId } });
+    const getGroupId = findGroupUserId.map((a) => {
+      return a.groupId;
+    });
+    return getGroupId;
+  };
+  findGroup = async ({ findGroupUserId }) => {
+    const findGroup = [];
+    for (let i = 0; i < findGroupUserId.length; i++) {
+      const find = await GroupList.findOne({
+        where: { groupId: findGroupUserId[i] },
+      });
+      const { groupId, groupName, groupImg } = find;
+      findGroup.push({ groupId, groupName, groupImg });
     }
-    console.log(groupIds);
-    return { groupIds };
+    return findGroup;
   };
+  // findGroupUser = async (userId) => {
+  //   const findGroupUser = await GroupUser.findAll({ where: { userId } });
+  //   const groupIds = [];
+  //   for (let i in findGroupUser) {
+  //     groupIds.push(findGroupUser[i].groupId);
+  //   }
+  //   return { groupIds };
+  // };
 
-  findAllGroup = async (groupId) => {
-    const findAllGroup = await GroupList.findOne({ where: { groupId } });
-    return findAllGroup;
-  };
+  // findAllGroup = async (groupId) => {
+  //   const findAllGroup = await GroupList.findOne({ where: { groupId } });
+  //   return findAllGroup;
+  // };
 
   destroyGroup = async (groupId) => {
     await GroupList.destroy({ where: { groupId } });
