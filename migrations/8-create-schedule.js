@@ -21,7 +21,7 @@ module.exports = {
       end: {
         type: Sequelize.STRING
       },
-      colorId: {
+      color: {
         type: Sequelize.STRING
       },
       groupUserId: {
