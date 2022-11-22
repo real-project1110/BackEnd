@@ -107,7 +107,7 @@ class UserController {
       const { userId } = res.locals.user;
       const { nickname } = req.body;
       const changeNic = await this.userService.changeNic(userId, nickname);
-      res.status(200).json({ data: changeNic, message: '닉네임 수정 완료' });
+      res.status(200).json({ data: changeNic.nickname, message: '닉네임 수정 완료' });
     } catch (error) {
       next(error);
     }
