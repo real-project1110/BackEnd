@@ -134,14 +134,15 @@ class GroupController {
     }
   };
 
-  findAllGroupUser = async (req, res, next) => {
-    try {
-      const { userId } = res.locals.user;
-      const { groupId } = req.params;
-      const findAllGU = await this.groupService.findAllGU(userId, groupId);
-      res.status(200).json({ data: findAllGU });
-    } catch (error) {
-      next(error);
+    findAllGroupUser = async(req,res,next)=>{
+        try{
+            const {groupId} = req.params;
+            const findAllGU = await this.groupService.findAllGU(groupId)
+            console.log(findAllGU)
+            res.status(200).json({data:findAllGU})
+        }catch(error){
+            next(error)
+        }
     }
   };
 
@@ -162,20 +163,16 @@ class GroupController {
     }
   };
 
-  changeStatus = async (req, res, next) => {
-    try {
-      const { userId } = res.locals.user;
-      const { groupId } = req.params;
-      const { status, statusMessage } = req.body;
-      const updateStatus = await this.groupService.updateStatus(
-        userId,
-        groupId,
-        status,
-        statusMessage,
-      );
-      res.status(201).json({ data: updateStatus });
-    } catch (error) {
-      next(error);
+    changeStatus = async(req,res,next)=>{
+        try{
+            const {userId}=res.locals.user;
+            const {groupId}=req.params;
+            const {status,statusMessage}=req.body;
+            const updateStatus = await this.groupService.updateStatus(userId,groupId,status,statusMessage)
+            res.status(200).json({data:updateStatus.statusMessage,message:"상태변경완료"})
+        }catch(error){
+            next(error)
+        }
     }
   };
 

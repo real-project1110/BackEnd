@@ -60,10 +60,19 @@ class GroupService {
     if (!updateNic) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
-    return {
-      groupUserNickname: updateNic.groupUserNickname,
-    };
-  };
+
+    updateNic = async(userId,groupId,groupUserNickname)=>{
+        const updateNic = await this.groupRepository.updateNic(userId,groupId,groupUserNickname)
+        if(!updateNic){
+            throw new Error('유저 정보가 존재하지 않습니다')
+        }
+        if(!updateNic.groupId){
+            throw new Error('소속되지 않은 그룹입니다')
+        }
+        return{
+            groupUserNickname : updateNic.groupUserNickname
+        }
+  }
 
   getProfile = async (userId, groupId) => {
     const getprofile = await this.groupRepository.getprofile(userId, groupId);
@@ -87,16 +96,22 @@ class GroupService {
     };
   };
 
-  findAllGU = async (userId, groupId) => {
-    const findAllGU = await this.groupRepository.findAllGU(userId, groupId);
-    if (!findAllGU) {
-      throw new Error('정보가 존재하지 않습니다.');
-    }
-    return {
-      groupUserId: findAllGU.groupUserId,
-      groupUserNickname: findAllGU.groupUserNickname,
-      groupAvatarImg: findAllGU.groupAvatarImg,
-    };
+    findAllGU = async(groupId)=>{
+        const findAllGU = await this.groupRepository.findAllGU(groupId)
+        if(!findAllGU){
+            throw new Error('정보가 존재하지 않습니다.')
+        }
+       const result = findAllGU.map((x)=>
+        {
+        return {
+            groupUserId : x.groupUserId,
+            groupUserNickname : x.groupUserNickname,
+            groupAvatarImg : x.groupAvatarImg,
+            status : x.status,
+            statusMessage : x.statusMessage
+        }
+        })
+        return result
   };
 
   postStatus = async (userId, groupId, status, statusMessage) => {
