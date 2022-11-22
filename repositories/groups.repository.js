@@ -4,7 +4,7 @@ const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
-  createGroup = async ({ groupName, userId }) => {
+  createGroup = async ({ groupUserNickname, groupName, userId }) => {
     const createGroup = await GroupList.create({
       where: { [Op.and]: [{ groupName }, { userId }] },
     });
