@@ -1,5 +1,4 @@
-
-const { GroupList, GroupUser } = require('../models');
+const { User,GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
   createGroup = async (groupName, userId) => {
@@ -78,9 +77,14 @@ class GroupRepository {
   }
 
   createGroupUser = async(userId,groupId)=>{
-    const groupUserNickname = "test"
-    const creategroupuser = await GroupUser.create({userId,groupId,groupUserNickname})
+
+    const creategroupuser = await GroupUser.create({userId,groupId})
     return creategroupuser;
+  }
+
+  findOneId = async(userId)=>{
+    const findOneId = await User.findByPk(userId);
+    return findOneId
   }
 }
 
