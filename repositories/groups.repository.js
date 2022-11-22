@@ -2,8 +2,8 @@
 const { GroupList, GroupUser } = require('../models');
 
 class GroupRepository {
-  createGroup = async (groupName, groupImg,userId) => {
-    await GroupList.create({ groupName, groupImg,userId });
+  createGroup = async (groupName, userId) => {
+    await GroupList.create({ groupName, userId });
   };
 
   updateGroupName = async (groupId, groupName) => {
@@ -54,6 +54,19 @@ class GroupRepository {
     });
     return findAllGU;
   };
+
+  postStatus = async (status,statusMessage)=>{
+    const poststatus = await GroupUser.create({status,statusMessage})
+    return poststatus;
+  }
+
+  updateStatus = async(userId,groupId,status,statusMessage)=>{
+    const updatestatus = await GroupUser.update(
+      {status,statusMessage},
+      {where:{userId,groupId}}
+    )
+    return updatestatus;
+  }
 }
 
 module.exports = GroupRepository;

@@ -9,10 +9,10 @@ const kakaoCallback = (req,res,next)=>{
 try{
     passport.authenticate(
         'kakao',
-    {failureRedirect :'/users/login'},
-    async(err, user, info)=>{
-        if(err)return next(err);
-        const {userId,email} = user;
+        {failureRedirect :'/users/login'},
+        async(err, user, info)=>{
+            if(err)return next(err);
+            const {userId,email} = user;
 
         const accessToken = jwt.sign(
         {userId:user.userId},

@@ -11,12 +11,6 @@ const HTTPS = require('https');
 // const https = require('https');
 // const fs = require('fs');
 
-// //* ccertificate와 private key 가져오기
-// const options = {
-//   // ca: fs.readFileSync('./ca.key'),
-//   key: fs.readFileSync('./cert.key'),
-//   cert: fs.readFileSync('./cert.crt'),
-// };
 const cors = require('cors');
 const {
   errorLogger,
@@ -33,7 +27,11 @@ app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: [process.env.KAKAO_SECRET,process.env.GOOGLE_SECRET,process.env.NAVER_SECRET],
+    secret: [
+      process.env.KAKAO_SECRET,
+      process.env.GOOGLE_SECRET,
+      process.env.NAVER_SECRET,
+    ],
     cookie: {
       httpOnly: true,
       secure: false,
@@ -55,47 +53,21 @@ app.use(cookieParser());
 app.use('/', routes);
 app.use(errorLogger);
 app.use(errorHandler);
-// https
-//   .createServer(
-//     {
-//       key: fs.readFileSync(__dirname + '/key.pem', 'utf-8'),
-//       cert: fs.readFileSync(__dirname + '/cert.pem', 'utf-8'),
-//     },
-//     function (req, res) {
-//       res.write('Congrats! You made https server now :)');
-//       res.end();
-//     },
-//   )
-//   .listen(4000);
-// app.listen(port, () => {
-//   console.log('Hi server open :', port);
-// });
-// //*https 오픈
-// https.createServer(options, app).listen(port, () => {
-//   console.log(`HTTPS server started on port 4000`);
-// });
-// 운영 환경일때만 적용
-if (process.env.NODE_ENV == 'production') {
-  try {
-    const option = {
-      ca: fs.readFileSync(
-        '/etc/letsencrypt/live/{rlawjdgus.shop}/fullchain.pem',
-      ),
-      key: fs.readFileSync(
-        '/etc/letsencrypt/live/{rlawjdgus.shop}/privkey.pem',
-      ),
-      cert: fs.readFileSync('/etc/letsencrypt/live/{rlawjdgus.shop}/cert.pem'),
-    };
 
-    HTTPS.createServer(option, app).listen(port, () => {
-      console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
-    });
-  } catch (error) {
-    console.log('HTTPS 서버가 실행되지 않습니다.');
-    console.log(error);
-  }
-} else {
+
+try {
+  const option = {
+    ca: fs.readFileSync(process.env.CA_URL),
+    key: fs.readFileSync(process.env.KEY_URL),
+    cert: fs.readFileSync(process.env.CERT_URL),
+  };
+
+  HTTPS.createServer(option, app).listen(port, () => {
+    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+  });
+} catch (error) {
   app.listen(port, () => {
     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
   });
 }
+
