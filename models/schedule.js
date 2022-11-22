@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Schedule extends Model {
     /**
@@ -13,56 +11,59 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Schedule.init({
-    scheduleId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
+  Schedule.init(
+    {
+      scheduleId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      title: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      description: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      start: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      end: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      colorId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Color',
+          key: 'colorId',
+        },
+      },
+      groupUserId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupUser',
+          key: 'groupuserId',
+        },
+      },
+      groupId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupList',
+          key: 'groupId',
+        },
+      },
     },
-    title: {
-      allowNull: false,
-      type:DataTypes.STRING
+    {
+      sequelize,
+      modelName: 'Schedule',
     },
-    description: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    start: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    end: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    colorId: {
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "Color",
-        key: "colorId",
-      }
-    },
-    groupUserId:{
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "GroupUser",
-        key: "groupuserId",
-      }
-    },
-    groupId:{
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "Group",
-        key: "groupId",
-      }
-    },
-  }, {
-    sequelize,
-    modelName: 'Schedule',
-  });
+  );
   return Schedule;
 };
