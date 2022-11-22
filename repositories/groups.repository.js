@@ -76,10 +76,10 @@ class GroupRepository {
     return updatestatus;
   }
 
-  createGroupUser = async(userId,groupId)=>{
+  createGroupUser = async(groupUser)=>{
 
-    const creategroupuser = await GroupUser.create({userId,groupId})
-    return creategroupuser;
+    console.log('안녕',groupUser)
+    return await GroupUser.create(groupUser)
   }
 
   findOneId = async(userId)=>{

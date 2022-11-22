@@ -106,12 +106,13 @@ class GroupService {
         if(!user){
             throw new Error('유저 정보가 없습니다.')
         }
-        const creategroupuser = await this.groupRepository.createGroupUser(userId,groupId)
-        return {
-            userId : creategroupuser.userId,
-            groupUserNickname : user.nickname,
-            groupId : creategroupuser.groupId
+        const groupUser = {
+            groupUserNickname:user.nickname,
+            userId,
+            groupId
         }
+        
+        return await this.groupRepository.createGroupUser(groupUser)
     }
 }
 
