@@ -1,34 +1,63 @@
-const {Schedule,GroupUser} = require('../models')
+const { Schedule, GroupUser } = require('../models');
+const { Op } = require('sequelize');
+const Sq = require('sequelize');
+const Sequelize = Sq.Sequelize;
 
-class ScheduleRepository{
-    findGroupUserId = async(userId,groupId)=>{
-       const groupuser= await GroupUser.findOne({where:userId,groupId})
-       return {groupUserId:groupuser.groupUserId}
-    }
-    createSchedule = async (title,description,start,end,color,groupUserId,groupId)=>{
-        await Schedule.create({title,description,start,end,color,groupUserId,groupId})
-    };
+class ScheduleRepository {
+  findGroupUserId = async (userId, groupId) => {
+    const groupuser = await GroupUser.findOne({ where: userId, groupId });
+    return { groupUserId: groupuser.groupUserId };
+  };
+  createSchedule = async (
+    title,
+    description,
+    start,
+    end,
+    color,
+    groupUserId,
+    groupId,
+  ) => {
+    await Schedule.create({
+      title,
+      description,
+      start,
+      end,
+      color,
+      groupUserId,
+      groupId,
+    });
+  };
 
-    updateSchedule = async (scheduleId,title,description,start,end,color,groupId)=>{
-        await Schedule.update({title,description,start,end,color},{where:{scheduleId,groupId}})
-        
-    }
+  updateSchedule = async (
+    scheduleId,
+    title,
+    description,
+    start,
+    end,
+    color,
+    groupId,
+  ) => {
+    await Schedule.update(
+      { title, description, start, end, color },
+      { where: { [Op.and]: [{ scheduleId }, { groupId }] } },
+    );
+  };
 
-    findAllSchedule = async (groupId)=>{
-        const findAllSchedule = await Schedule.findAll({where:{groupId}})
-        return findAllSchedule
-    }
-    
-    findOneSchedule = async (scheduleId,groupId)=>{
-        const findOneSchedule = await Schedule.findOne({where:{scheduleId,groupId}})
-        return findOneSchedule
-    }
+  findAllSchedule = async (groupId) => {
+    const findAllSchedule = await Schedule.findAll({ where: { groupId } });
+    return findAllSchedule;
+  };
 
-    destroySchedule = async (scheduleId,groupId)=>{
-        await Schedule.destroy({where:{scheduleId,groupId}})
-    }
+  findOneSchedule = async (scheduleId, groupId) => {
+    const findOneSchedule = await Schedule.findOne({
+      where: { scheduleId, groupId },
+    });
+    return findOneSchedule;
+  };
 
-
+  destroySchedule = async (scheduleId) => {
+    await Schedule.destroy({ where: { scheduleId } });
+  };
 }
 
-module.exports = ScheduleRepository
+module.exports = ScheduleRepository;
