@@ -8,10 +8,10 @@ router.post('/:groupId', scheduleController.createSchedule);
 
 router.get('/:groupId', scheduleController.findAllSchedule);
 
-router.put('/:schduleId', scheduleController.updateSchedule);
+router.put('/:scheduleId', scheduleController.updateSchedule);
 
-router.delete('/:schduleId', scheduleController.destroySchedule);
+router.delete('/:scheduleId', scheduleController.destroySchedule);
 
-router.get('/:groupId/:schduleId', auth, scheduleController.findOneSchedule);
+router.get('/:groupId/:scheduleId', auth, scheduleController.findOneSchedule);
 
 module.exports = router;
