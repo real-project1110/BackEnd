@@ -20,6 +20,10 @@ class InviteService {
     });
     return invite;
   };
+  deletInvite = async ({ inviteId }) => {
+    const deletInvite = await this.inviteRepository.deletInvite({ inviteId });
+    return deletInvite;
+  };
 }
 
 module.exports = InviteService;

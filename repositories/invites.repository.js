@@ -48,6 +48,11 @@ class InviteRepository {
     console.log(group);
     return group;
   };
+
+  deletInvite = async ({ inviteId }) => {
+    const deletInvite = await Invite.destroy({ where: inviteId });
+    return deletInvite;
+  };
 }
 
 module.exports = InviteRepository;
