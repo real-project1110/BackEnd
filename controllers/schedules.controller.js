@@ -9,10 +9,12 @@ class ScheduleController {
       let { title, description, start, end, color, groupUserId } = req.body;
       const { groupId } = req.params;
       let date = new Date(start);
+      let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
+      end = endDate.setHours(endDate.getHours() + 9);
       //   start = date.setHours(start.getHours() + 9);
       //   end = date.setHours(start.getHours() + 9);
-      console.log('시간이다이마리야', start);
+      console.log('시간이다이마리야', start, end);
       // const {user}=res.locals
       // const userId = user.userId
       // const {groupId}=req.params
