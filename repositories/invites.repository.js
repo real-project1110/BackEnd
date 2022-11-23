@@ -13,8 +13,12 @@ class InviteRepository {
   };
   createInvite = async ({ findUser, groupId }) => {
     for (let i = 0; i < findUser.length; i++) {
-      await Invite.create({ userId: findUser[i], groupId });
+      await Invite.create({
+        userId: findUser[i],
+        groupId,
+      });
     }
+    console.log('111111111111', findUser, groupId);
     // const { userId } = await User.findOne({ where: { email } });
     // const { groupName, groupImg } = await GroupList.findOne({
     //   where: { groupId },
