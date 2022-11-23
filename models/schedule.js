@@ -35,13 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      colorId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Color',
-          key: 'colorId',
-        },
+      color: {
+        allowNull: true,
+        type: DataTypes.STRING,
       },
       groupUserId: {
         allowNull: false,
