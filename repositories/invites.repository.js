@@ -1,6 +1,6 @@
-const {Invite,GroupList,User} = require('../models')
+const { Invite, GroupList, User } = require('../models');
 
-class InviteRepository{
+class InviteRepository {
 
     createInvite = async(email,groupId)=>{
         const {userId} = await User.findOne({where:{email}})
@@ -12,6 +12,7 @@ class InviteRepository{
         const invite = await Invite.findAll({where:{userId}})
         return invite
     }
+
 }
 
-module.exports = InviteRepository
+module.exports = InviteRepository;
