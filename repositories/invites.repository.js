@@ -54,7 +54,7 @@ class InviteRepository {
   };
 
   deletInvite = async ({ inviteId }) => {
-    const deletInvite = await Invite.destroy({ where: inviteId });
+    const deletInvite = await Invite.destroy({ where: { inviteId } });
     return deletInvite;
   };
 }

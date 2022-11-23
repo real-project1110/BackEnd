@@ -1,4 +1,5 @@
 const InviteService = require('../services/invites.service');
+const InvalidParamsError = require('../exceptions/index.exception');
 
 class InviteController {
   inviteService = new InviteService();
@@ -27,6 +28,9 @@ class InviteController {
     try {
       const { inviteId } = req.params;
       const { userId } = res.locals.user;
+      if (!inviteId && !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
       await this.inviteService.deletInvite({ userId, inviteId });
       res.status(200).json({ ok: true });
     } catch (error) {
