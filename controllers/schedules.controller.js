@@ -19,9 +19,8 @@ class ScheduleController{
 
     updateSchedule = async(req,res)=>{
         try{
-        const {scheduleId} = req.params
-        const {title,description,start,end,color,groupUserId,groupId} = req.body
-        const updateschedule = await this.scheduleService.updateSchedule(title,description,start,end,color,scheduleId)
+        const {scheduleId,title,description,start,end,color,groupUserId,groupId} = req.body
+        const updateschedule = await this.scheduleService.updateSchedule(scheduleId,title,description,start,end,color,groupId)
         res.status(200).json({data:updateschedule})
         }catch(err){
             res.status(400).json(err)
@@ -41,7 +40,7 @@ class ScheduleController{
     
     findOneSchedule = async(req,res)=>{
         try{
-            const {groupId,scheduleId}=req.params
+            const {groupId,scheduleId}=req.body
             const findschedule = await this.scheduleService.findOneSchedule(scheduleId,groupId)
             res.status(200).json({data:findschedule})
         }catch(err){
@@ -51,8 +50,8 @@ class ScheduleController{
 
     destroySchedule = async(req,res)=>{
         try{
-            const {scheduleId} = req.params
-            const destroySchedule= await this.scheduleService.destroySchedule(scheduleId)
+            const {scheduleId,groupId} = req.params
+            const destroySchedule= await this.scheduleService.destroySchedule(scheduleId,groupId)
             res.status(200).json({data:destroySchedule})
         }catch(err){
             res.status(400).json(err)

@@ -6,13 +6,13 @@ const scheduleController = new ScheduleController();
 
 router.post('/:groupId',scheduleController.createSchedule)
 
-router.get('/:groupId',auth,scheduleController.findAllSchedule)
+router.get('/:groupId',scheduleController.findAllSchedule)
 
-router.put('/:scheduleId',auth,scheduleController.updateSchedule)
+router.put('/:groupId/:id',scheduleController.updateSchedule)
 
-router.delete('/:scheduleId',auth,scheduleController.destroySchedule)
+router.delete('/:groupId/:id',scheduleController.destroySchedule)
 
-router.get('/:groupId/:scheduleId',auth,scheduleController.findOneSchedule)
+router.get('/:groupId/:id',auth,scheduleController.findOneSchedule)
 
 
 module.exports = router;

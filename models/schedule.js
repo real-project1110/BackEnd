@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     color: {
       allowNull: false,
-      type:DataTypes.STRING,
+      type:DataTypes.INTEGER,
       references: {
         model: "Color",
         key: "color",
