@@ -4,7 +4,7 @@ const { Invite, GroupList, User } = require('../models');
 class InviteRepository {
   findUser = async (email) => {
     const findUser = [];
-    for (let i = 0; i < emailList.length; i++) {
+    for (let i = 0; i < email.length; i++) {
       const find = await User.findOne({ where: { email: email[i] } });
       const { userId } = find;
       findUser.push(userId);
@@ -35,7 +35,8 @@ class InviteRepository {
     for (let i = 0; i < findGroup.length; i++) {
       const groupFind = await GroupList.findByPk({ groupId: findGroup[i] });
       const { groupName, groupImg } = groupFind;
-      group.push(Object.assign(invite[i], { groupName, groupImg }));
+      group.push({ ...invite[i], groupName, groupImg });
+      //   Object.assign(invite[i], { groupName, groupImg });
     }
     console.log(group);
     return group;
