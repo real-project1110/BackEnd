@@ -26,7 +26,8 @@ class InviteController {
   deletInvite = async (req, res, next) => {
     try {
       const { inviteId } = req.params;
-      await this.inviteService.deletInvite({ inviteId });
+      const { userId } = res.locals.user;
+      await this.inviteService.deletInvite({ userId, inviteId });
       res.status(200).json({ ok: true });
     } catch (error) {
       next(error);

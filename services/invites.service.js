@@ -1,4 +1,5 @@
 const InviteRepository = require('../repositories/invites.repository');
+const ValidationError = require('../exceptions/index.exception');
 
 class InviteService {
   inviteRepository = new InviteRepository();
@@ -20,7 +21,11 @@ class InviteService {
     });
     return invite;
   };
-  deletInvite = async ({ inviteId }) => {
+  deletInvite = async ({ userId, inviteId }) => {
+    const findUserId = await this.inviteRepository.findUserId({ userId });
+    if (!findUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     const deletInvite = await this.inviteRepository.deletInvite({ inviteId });
     return deletInvite;
   };

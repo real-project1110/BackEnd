@@ -48,6 +48,10 @@ class InviteRepository {
     console.log(group);
     return group;
   };
+  findUserId = async ({ userId }) => {
+    const findUserId = await User.findByPk(userId);
+    return findUserId;
+  };
 
   deletInvite = async ({ inviteId }) => {
     const deletInvite = await Invite.destroy({ where: inviteId });
