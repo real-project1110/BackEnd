@@ -1,4 +1,3 @@
-const { object } = require('joi');
 const { Invite, GroupList, User } = require('../models');
 
 class InviteRepository {
@@ -18,7 +17,6 @@ class InviteRepository {
         groupId,
       });
     }
-    console.log('111111111111', findUser, groupId);
     // const { userId } = await User.findOne({ where: { email } });
     // const { groupName, groupImg } = await GroupList.findOne({
     //   where: { groupId },
@@ -40,7 +38,6 @@ class InviteRepository {
     for (let i = 0; i < findGroup.length; i++) {
       const groupFind = await GroupList.findOne({ groupId: findGroup[i] });
       const { userId, inviteId, groupId, createdAt } = invite[i];
-      console.log('여기좀보세요', userId, inviteId);
       const { groupName, groupImg } = groupFind;
       group.push({ inviteId, userId, groupId, createdAt, groupName, groupImg });
       //   Object.assign(invite[i], { groupName, groupImg });

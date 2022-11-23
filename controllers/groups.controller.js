@@ -189,10 +189,6 @@ class GroupController {
         userId,
         groupId,
       );
-      console.log(
-        '제발여기보세요제발여기보세요제발여기보세요',
-        creategroupuser,
-      );
       res.status(201).json({ data: creategroupuser });
     } catch (error) {
       next(error);

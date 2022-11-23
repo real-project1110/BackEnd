@@ -80,7 +80,6 @@ class GroupService {
   };
 
   getProfile = async (userId, groupId) => {
-    console.log('항해ㅐㅐㅐㅐㅐ', userId, groupId);
     const getprofile = await this.groupRepository.getprofile(userId, groupId);
     if (!getprofile) {
       throw new Error('유저 정보가 존재하지 않습니다');
