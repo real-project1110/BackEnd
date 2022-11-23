@@ -49,7 +49,7 @@ class UserController {
         nickname: user.user.nickname,
         accessToken: user.accessToken,
         refreshToken: user.refreshToken,
-        currentPage :user.user.currentPage
+        currentPage: user.user.currentPage,
       });
       console.log(
         user.user.userId,
@@ -94,9 +94,8 @@ class UserController {
   avatarImg = async (req, res, next) => {
     try {
       const originalUrl = req.file.location;
-      const url = originalUrl.replace(/\/original\//, '/thumb/');
-      console.log('123123123123123123123', originalUrl, url);
-      res.status(200).json({ ok: true, data: url });
+      console.log('123123123123123123123', originalUrl);
+      res.status(200).json({ ok: true, data: originalUrl });
     } catch (error) {
       next(error);
     }
@@ -107,7 +106,9 @@ class UserController {
       const { userId } = res.locals.user;
       const { nickname } = req.body;
       const changeNic = await this.userService.changeNic(userId, nickname);
-      res.status(200).json({ data: changeNic.nickname, message: '닉네임 수정 완료' });
+      res
+        .status(200)
+        .json({ data: changeNic.nickname, message: '닉네임 수정 완료' });
     } catch (error) {
       next(error);
     }
