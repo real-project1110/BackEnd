@@ -1,3 +1,4 @@
+const { date } = require('joi');
 const ScheduleService = require('../services/schedules.service');
 
 class ScheduleController {
@@ -7,8 +8,8 @@ class ScheduleController {
     try {
       let { title, description, start, end, color, groupUserId } = req.body;
       const { groupId } = req.params;
-      start = start.setHours(start.getHours() + 9);
-      end = end.setHours(end.getHours() + 9);
+      start = date.setHours(date.getHours() + 9);
+      end = date.setHours(date.getHours() + 9);
       console.log('시간이다이마리야', start, end);
       // const {user}=res.locals
       // const userId = user.userId
