@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       status: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue : 0
       },
       statusMessage: {
         type: DataTypes.STRING,

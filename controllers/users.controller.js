@@ -49,7 +49,7 @@ class UserController {
         nickname: user.user.nickname,
         accessToken: user.accessToken,
         refreshToken: user.refreshToken,
-        currentPage :user.currentPage
+        currentPage :user.user.currentPage
       });
       console.log(
         user.user.userId,
@@ -94,7 +94,7 @@ class UserController {
   avatarImg = async (req, res, next) => {
     try {
       const originalUrl = req.file.location;
-      const url = originalUrl.replace(/\/original\//, '/statUS/');
+      const url = originalUrl.replace(/\/original\//, '/thumb/');
       console.log('123123123123123123123', originalUrl, url);
       res.status(200).json({ ok: true, data: url });
     } catch (error) {
