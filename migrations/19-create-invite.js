@@ -18,20 +18,12 @@ module.exports = {
         },
         onDelete: 'cascade',
       },
-      groupName:{
-          allowNull:false,
-          type:Sequelize.STRING
-        },
-        groupImg:{
-          allowNull:true,
-          type:Sequelize.STRING
-        },
-      groupId:{
-        allowNull:false,
-        type:Sequelize.INTEGER,
-        references:{
-          model : 'GroupLists',
-          key :'groupId',
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
         },
         onDelete: 'cascade',
       },
@@ -44,10 +36,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Invites');
-  }
+  },
 };
