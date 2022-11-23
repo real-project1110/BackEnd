@@ -13,8 +13,8 @@ class ScheduleService {
         return {message:"일정이 생성되었습니다."}
     }
 
-    updateSchedule =async(title,description,start,end,color,scheduleId)=>{
-        await this.scheduleRepository.updateSchedule(title,description,start,end,color,scheduleId)
+    updateSchedule =async(scheduleId,title,description,start,end,color,groupId)=>{
+        await this.scheduleRepository.updateSchedule(scheduleId,title,description,start,end,color,groupId)
         return {message:"수정이 완료되었습니다."}
     }
 
@@ -24,14 +24,14 @@ class ScheduleService {
     }
 
     
-    findOneSchedule = async(groupId,scheduleId)=>{
+    findOneSchedule = async(scheduleId,groupId)=>{
         const schedule=await this.scheduleRepository.findOneSchedule(scheduleId,groupId)
         return schedule
     }
 
 
-    destroySchedule = async (scheduleId)=>{
-        await this.scheduleRepository.destroySchedule(scheduleId)
+    destroySchedule = async (scheduleId,groupId)=>{
+        await this.scheduleRepository.destroySchedule(scheduleId,groupId)
     }
 }
 

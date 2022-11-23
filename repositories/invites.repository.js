@@ -4,7 +4,6 @@ class InviteRepository{
 
     createInvite = async(email,groupId)=>{
         const {userId} = await User.findOne({where:{email}})
-        console.log(userId)
         const {groupName,groupImg}= await GroupList.findOne({where:{groupId}})
         await Invite.create({userId,groupId,groupName,groupImg})
     }
