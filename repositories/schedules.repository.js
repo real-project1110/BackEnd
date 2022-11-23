@@ -35,24 +35,17 @@ class ScheduleRepository {
     start,
     end,
     color,
-    groupId,
+    groupUserId,
   ) => {
     await Schedule.update(
       { title, description, start, end, color },
-      { where: { [Op.and]: [{ scheduleId }, { groupId }] } },
+      { where: { [Op.and]: [{ scheduleId }, { groupUserId }] } },
     );
   };
 
   findAllSchedule = async (groupId) => {
     const findAllSchedule = await Schedule.findAll({ where: { groupId } });
     return findAllSchedule;
-  };
-
-  findOneSchedule = async (scheduleId, groupId) => {
-    const findOneSchedule = await Schedule.findOne({
-      where: { scheduleId, groupId },
-    });
-    return findOneSchedule;
   };
 
   destroySchedule = async (scheduleId) => {

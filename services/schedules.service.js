@@ -13,9 +13,11 @@ class ScheduleService {
     start,
     end,
     color,
-    groupUserId,
+    userId,
     groupId,
   ) => {
+    const findGroupUserId = await this.findGroupUserId(userId, groupId);
+    const groupUserId = findGroupUserId;
     await this.scheduleRepository.createSchedule(
       title,
       description,
@@ -35,30 +37,24 @@ class ScheduleService {
     start,
     end,
     color,
-    groupId,
+    userId,
   ) => {
+    const findGroupUserId = await this.findGroupUserId(userId, groupId);
+    const groupUserId = findGroupUserId;
     await this.scheduleRepository.updateSchedule(
       scheduleId,
       title,
       description,
       start,
       end,
+      groupUserId,
       color,
-      groupId,
     );
     return { message: '수정이 완료되었습니다.' };
   };
 
   findAllSchedule = async (groupId) => {
     const schedule = await this.scheduleRepository.findAllSchedule(groupId);
-    return schedule;
-  };
-
-  findOneSchedule = async (scheduleId, groupId) => {
-    const schedule = await this.scheduleRepository.findOneSchedule(
-      scheduleId,
-      groupId,
-    );
     return schedule;
   };
 

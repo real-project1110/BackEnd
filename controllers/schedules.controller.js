@@ -6,13 +6,13 @@ class ScheduleController {
 
   createSchedule = async (req, res, next) => {
     try {
-      let { title, description, start, end, color, groupUserId } = req.body;
+      let { title, description, start, end, color } = req.body;
       const { groupId } = req.params;
+      const { userId } = res.locals.user;
       let date = new Date(start);
       let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
       end = endDate.setHours(endDate.getHours() + 9);
-      console.log('시간이다이마리야', start, end);
       // const {user}=res.locals
       // const userId = user.userId
       // const {groupId}=req.params
@@ -23,20 +23,20 @@ class ScheduleController {
         start,
         end,
         color,
-        groupUserId,
+        userId,
         groupId,
       );
       res.status(201).json({ data: createschedule });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   };
 
-  updateSchedule = async (req, res) => {
+  updateSchedule = async (req, res, next) => {
     try {
-      let { title, description, start, end, color, groupUserId, groupId } =
-        req.body;
+      let { title, description, start, end, color } = req.body;
       const { scheduleId } = req.params;
+      const { userId } = res.locals.user;
       let date = new Date(start);
       let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
@@ -45,37 +45,24 @@ class ScheduleController {
         scheduleId,
         title,
         description,
+        userId,
         start,
         end,
         color,
-        groupId,
       );
       res.status(200).json({ data: updateschedule });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
-  findAllSchedule = async (req, res) => {
+  findAllSchedule = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const findschedule = await this.scheduleService.findAllSchedule(groupId);
       res.status(200).json({ data: findschedule });
-    } catch (err) {
-      res.status(400).json(err);
-    }
-  };
-
-  findOneSchedule = async (req, res) => {
-    try {
-      const { groupId, scheduleId } = req.body;
-      const findschedule = await this.scheduleService.findOneSchedule(
-        scheduleId,
-        groupId,
-      );
-      res.status(200).json({ data: findschedule });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
