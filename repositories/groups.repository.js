@@ -75,7 +75,9 @@ class GroupRepository {
   };
 
   getprofile = async (userId, groupId) => {
-    const getprofile = await GroupUser.findOne({ where: { userId, groupId } });
+    const getprofile = await GroupUser.findOne({
+      where: { [Op.and]: [{ userId }, { groupId }] },
+    });
     return getprofile;
   };
 
@@ -84,14 +86,14 @@ class GroupRepository {
     return getUser;
   };
 
-  findAllGU=async(groupId)=>{
-    console.log('groupId : ', groupId)
-      const findAllGU= await GroupUser.findAll({
-      where:{groupId},
-      order:[['groupUserId', 'desc']]
-    })
-      return findAllGU
-  }
+  findAllGU = async (groupId) => {
+    console.log('groupId : ', groupId);
+    const findAllGU = await GroupUser.findAll({
+      where: { groupId },
+      order: [['groupUserId', 'desc']],
+    });
+    return findAllGU;
+  };
 
   postStatus = async (status, statusMessage) => {
     const poststatus = await GroupUser.create({ status, statusMessage });
@@ -118,7 +120,7 @@ class GroupRepository {
 
   groupuserdup = async (userId, groupId) => {
     const groupuserdup = await GroupUser.findOne({
-      where: { userId, groupId },
+      where: { [Op.and]: [{ userId }, { groupId }] },
     });
     return groupuserdup;
   };
