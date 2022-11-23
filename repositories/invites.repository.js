@@ -39,10 +39,10 @@ class InviteRepository {
     console.log(invite);
     for (let i = 0; i < findGroup.length; i++) {
       const groupFind = await GroupList.findOne({ groupId: findGroup[i] });
-      const { userId, inviteId } = invite[i];
+      const { userId, inviteId, groupId, createdAt } = invite[i];
       console.log('여기좀보세요', userId, inviteId);
       const { groupName, groupImg } = groupFind;
-      group.push(Object.assign(invite[i], { groupName, groupImg }));
+      group.push({ inviteId, userId, groupid, createdAt, groupName, groupImg });
       //   Object.assign(invite[i], { groupName, groupImg });
     }
     console.log(group);
