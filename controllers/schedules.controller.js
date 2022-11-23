@@ -69,15 +69,15 @@ class ScheduleController {
     }
   };
 
-  destroySchedule = async (req, res) => {
+  destroySchedule = async (req, res, next) => {
     try {
       const { scheduleId } = req.params;
       const destroySchedule = await this.scheduleService.destroySchedule(
         scheduleId,
       );
       res.status(200).json({ data: destroySchedule });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 }
