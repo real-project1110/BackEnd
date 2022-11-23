@@ -17,7 +17,7 @@ class InviteController {
     try {
       const { user } = res.locals;
       const userId = user.userId;
-      const invite = await this.inviteService.findInvite(userId);
+      const invite = await this.inviteService.findInvite({ userId });
       res.status(200).json({ data: invite });
     } catch (error) {
       next(error);
