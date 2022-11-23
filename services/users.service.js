@@ -86,7 +86,7 @@ class UserService {
       email: myprofile.email,
       nickname: myprofile.nickname,
       avatarImg: myprofile.avatarImg,
-      currentPage: myprofile.currentPage,
+      currentPage: myprofile.currentPage
     };
   };
 

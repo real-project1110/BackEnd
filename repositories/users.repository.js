@@ -1,4 +1,5 @@
 const {User,Certification} = require('../models');
+const groupList = require('../models/groupList');
 
 class UserRepository{
     createUser = async ({email,nickname,password})=>{
@@ -48,6 +49,11 @@ class UserRepository{
         const findByUserId =await User.findOne({where : {userId}})
         return findByUserId
     }
+
+    // getGroupId = async(groupId)=>{
+    //     const getGroupId = await groupList.findByPk(groupId)
+    //     return getGroupId
+    // }
 
     //----------------------------------------------------------------------------------
     authEmail = async(email)=>{
