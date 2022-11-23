@@ -60,6 +60,7 @@ class GroupService {
     if (!updateNic) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
+}
 
     updateNic = async(userId,groupId,groupUserNickname)=>{
         const updateNic = await this.groupRepository.updateNic(userId,groupId,groupUserNickname)
@@ -161,5 +162,4 @@ class GroupService {
     }
   };
 }
-
 module.exports = GroupService;
