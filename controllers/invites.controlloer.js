@@ -7,7 +7,7 @@ class InviteController {
     try {
       const { email } = req.body;
       const { groupId } = req.params;
-      const invite = await this.inviteService.createInvite(email, groupId);
+      const invite = await this.inviteService.createInvite({ email, groupId });
       res.status(201).json({ data: invite });
     } catch (error) {
       next(error);

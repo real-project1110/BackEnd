@@ -2,7 +2,7 @@ const { object } = require('joi');
 const { Invite, GroupList, User } = require('../models');
 
 class InviteRepository {
-  findUser = async (email) => {
+  findUser = async ({ email }) => {
     const findUser = [];
     for (let i = 0; i < email.length; i++) {
       const find = await User.findOne({ where: { email: email[i] } });
