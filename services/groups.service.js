@@ -62,7 +62,6 @@ class GroupService {
     }
   };
 
-
   updateNic = async (userId, groupId, groupUserNickname) => {
     const updateNic = await this.groupRepository.updateNic(
       userId,
@@ -86,8 +85,11 @@ class GroupService {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
     return {
+      groupUserId: getprofile.groupUserId,
       groupUserNickname: getprofile.groupUserNickname,
       groupAvatarImg: getprofile.groupAvatarImg,
+      status: getprofile.status,
+      statusMessage: getprofile.statusMessage,
     };
   };
 
@@ -97,8 +99,11 @@ class GroupService {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
     return {
+      groupUserId: getUser.groupUserId,
       groupUserNickname: getUser.groupUserNickname,
       groupAvatarImg: getUser.groupAvatarImg,
+      status: getUser.status,
+      statusMessage: getUser.statusMessage,
     };
   };
 

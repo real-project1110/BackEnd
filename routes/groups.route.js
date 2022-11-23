@@ -16,7 +16,7 @@ router.put('/:groupId/groupUser/status', auth, groupcontroller.changeStatus);
 router.get('/', auth, groupcontroller.findAllGroupList);
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
 router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);
-router.get('/:groupUserId', auth, groupcontroller.findGroupUser);
+router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
 router.get('/:groupId/groupUsers', auth, groupcontroller.findAllGroupUser);
 
 router.delete('/:groupId', auth, groupcontroller.destroyGroup);
