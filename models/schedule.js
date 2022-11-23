@@ -29,19 +29,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       start: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
       },
       end: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
       },
-      colorId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Color',
-          key: 'colorId',
-        },
+      color: {
+        allowNull: true,
+        type: DataTypes.STRING,
       },
       groupUserId: {
         allowNull: false,
