@@ -18,6 +18,14 @@ module.exports = {
         },
         onDelete: 'cascade',
       },
+      groupName:{
+          allowNull:false,
+          type:Sequelize.STRING
+        },
+        groupImg:{
+          allowNull:true,
+          type:Sequelize.STRING
+        },
       groupId:{
         allowNull:false,
         type:Sequelize.INTEGER,

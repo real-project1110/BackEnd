@@ -62,6 +62,7 @@ class GroupService {
     }
   };
 
+
   updateNic = async (userId, groupId, groupUserNickname) => {
     const updateNic = await this.groupRepository.updateNic(
       userId,

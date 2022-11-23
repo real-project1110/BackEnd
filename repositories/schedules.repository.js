@@ -9,8 +9,9 @@ class ScheduleRepository{
         await Schedule.create({title,description,start,end,color,groupUserId,groupId})
     };
 
-    updateSchedule = async (title,description,start,end,color,scheduleId)=>{
-        await Schedule.upadte({title,description,start,end,color},{where:{scheduleId}})
+    updateSchedule = async (scheduleId,title,description,start,end,color,groupId)=>{
+        await Schedule.update({title,description,start,end,color},{where:{scheduleId,groupId}})
+        
     }
 
     findAllSchedule = async (groupId)=>{
@@ -18,14 +19,13 @@ class ScheduleRepository{
         return findAllSchedule
     }
     
-    findOneSchedule = async (groupId,scheduleId)=>{
-        console.log(groupId,scheduleId)
-        const findOneSchedule = await Schedule.findOne({where:{groupId,scheduleId}})
+    findOneSchedule = async (scheduleId,groupId)=>{
+        const findOneSchedule = await Schedule.findOne({where:{scheduleId,groupId}})
         return findOneSchedule
     }
 
-    destroySchedule = async (scheduleId)=>{
-        await Schedule.destroy({where:{scheduleId}})
+    destroySchedule = async (scheduleId,groupId)=>{
+        await Schedule.destroy({where:{scheduleId,groupId}})
     }
 
 
