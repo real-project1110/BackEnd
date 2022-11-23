@@ -42,7 +42,7 @@ class InviteRepository {
       const { userId, inviteId, groupId, createdAt } = invite[i];
       console.log('여기좀보세요', userId, inviteId);
       const { groupName, groupImg } = groupFind;
-      group.push({ inviteId, userId, groupid, createdAt, groupName, groupImg });
+      group.push({ inviteId, userId, groupId, createdAt, groupName, groupImg });
       //   Object.assign(invite[i], { groupName, groupImg });
     }
     console.log(group);
