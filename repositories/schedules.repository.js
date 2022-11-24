@@ -47,10 +47,15 @@ class ScheduleRepository {
       end,
       color,
     );
-    await Schedule.update(
+    const updateSchedule = await Schedule.update(
       { title, description, start, end, color },
       { where: { [Op.and]: [{ scheduleId }, { groupUserId }] } },
     );
+    console.log(
+      '여기요제발요봐주세요여기오제발요봐주세요 여기요',
+      updateSchedule,
+    );
+    return updateSchedule;
   };
 
   findAllSchedule = async ({ groupId }) => {
