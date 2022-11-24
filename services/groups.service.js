@@ -50,7 +50,7 @@ class GroupService {
     }
     const groups = await this.groupRepository.findOneGroup({
       groupId,
-      groupUserId: findGroupUser.groupUserId,
+      userId,
     });
     if (!groups) {
       throw new ValidationError('그룹이 없습니다');
