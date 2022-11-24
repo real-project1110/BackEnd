@@ -8,7 +8,7 @@ const postController = new PostController();
 
 //*게시글 등록
 router.post(
-  '/:groupId',
+  '/:groupId/posts',
   auth,
   upload.array('image', 5),
   postController.createPost,
