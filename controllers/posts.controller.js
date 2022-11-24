@@ -1,6 +1,7 @@
 const PostService = require('../services/posts.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const PostImgService = require('../services/postImgs.service');
+const { post } = require('../routes');
 
 class PostController {
   postService = new PostService();
@@ -23,39 +24,54 @@ class PostController {
       // const images = req.files;
       const originalUrl = req.file.location;
       // console.log('123123123123123', req.files);
-      console.log('12312312312312312312312req.body', req.body);
       const category = 0;
       if (!content) {
         throw new InvalidParamsError('내용을 입력해주세요');
       }
-      const post = await this.postService.createPost({
-        groupId,
-        userId,
-        content,
-        category,
-      });
-      console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
-      // if (images) {
-      //   const postId = post.postId;
-      //   const postImgs = images.map((a) => {
-      //     let postImg = a.name;
-      //     postImg = postImg.replace(/\/original\//, '/statUS/');
-      //     return {
-      //       postImg,
-      //     };
-      //   });
-      //   await this.postImgService.createPostImg({ postId, postImgs });
-      // } else {
-      //   return;
-      // }
-      res.status(201).json({
-        ok: true,
-        postId: post.postId,
-      });
+      if (originalUrl) {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const post = await this.postService.createPost({
+          groupId,
+          userId,
+          content,
+          resizeUrl,
+          category,
+        });
+        return res.status(201).json({
+          ok: true,
+          postId: post.postId,
+        });
+      } else {
+        const post = await this.postService.createPost({
+          groupId,
+          userId,
+          content,
+          resizeUrl: null,
+          category,
+        });
+        return res.status(201).json({
+          ok: true,
+          postId: post.postId,
+        });
+      }
     } catch (error) {
       next(error);
     }
   };
+  // console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
+  // if (images) {
+  //   const postId = post.postId;
+  //   const postImgs = images.map((a) => {
+  //     let postImg = a.name;
+  //     postImg = postImg.replace(/\/original\//, '/statUS/');
+  //     return {
+  //       postImg,
+  //     };
+  //   });
+  //   await this.postImgService.createPostImg({ postId, postImgs });
+  // } else {
+  //   return;
+  // }
 
   //*공지/자유로 등록
   updatCategory = async (req, res, next) => {
@@ -121,16 +137,32 @@ class PostController {
     try {
       const { postId } = req.params;
       const { userId } = res.locals.user;
-      const { title, content, category } = req.body;
+      const { content, category } = req.body;
+      const originalUrl = req.file.location;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const updatPost = await this.postService.updatPost({
-        postId,
-        userId,
-        content,
-        category,
-      });
+      if (originalUrl) {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updatPost = await this.groupService.updatPost({
+          postId,
+          userId,
+          content,
+          category,
+          resizeUrl,
+        });
+        return res.status(200).json({ ok: true, data: updatPost });
+      } else {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updatPost = await this.groupService.updatPost({
+          postId,
+          userId,
+          content,
+          category,
+          resizeUrl: null,
+        });
+        return res.status(200).json({ ok: true, data: updatPost });
+      }
       res.status(200).json({
         ok: true,
         data: updatPost,

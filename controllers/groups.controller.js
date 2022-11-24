@@ -44,10 +44,18 @@ class GroupController {
       const originalUrl = req.file.location;
       if (originalUrl) {
         const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
-        const updategroup = await this.groupService.updateGroupName({
+        const updategroup = await this.groupService.updateGroupImg({
           userId,
           groupId,
           resizeUrl,
+        });
+        return res.status(200).json({ ok: true, data: updategroup });
+      } else {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updategroup = await this.groupService.updateGroupImg({
+          userId,
+          groupId,
+          resizeUrl: null,
         });
         return res.status(200).json({ ok: true, data: updategroup });
       }

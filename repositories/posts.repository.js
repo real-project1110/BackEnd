@@ -8,17 +8,14 @@ class PostRepository extends Post {
     super();
   }
   //*게시글 작성
-  createPost = async ({ groupId, content, category, groupUserId }) => {
+  createPost = async ({ groupId, content, postImg, category, groupUserId }) => {
     const createPost = await Post.create({
       groupId,
       content,
       category,
+      postImg,
       groupUserId,
     });
-    console.log(
-      '여기요이겨이ㅕㅁ걍너리먿쟈ㅣ;럼;쟈러먄ㅇ로ㅜㅑㅁㄴ오ㅓ랴;ㅣㅁㄷㅈㄹ',
-      createPost,
-    );
     return createPost;
   };
   //*그룹유저 찾기
@@ -33,6 +30,7 @@ class PostRepository extends Post {
       attributes: [
         postId,
         commentCount,
+        postImg,
         createdAt,
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -51,6 +49,7 @@ class PostRepository extends Post {
       attributes: [
         postId,
         content,
+        postImg,
         commentCount,
         createdAt,
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
@@ -67,9 +66,9 @@ class PostRepository extends Post {
     return existsPost;
   };
   //*게시글 수정
-  updatPost = async ({ postId, title, content, category, groupUserId }) => {
+  updatPost = async ({ postId, content, postImg, category, groupUserId }) => {
     const updatPost = await Post.update(
-      { title, content, category },
+      { content, category, postImg },
       { where: { [Op.and]: [{ postId }, { groupUserId }] } },
     );
     return updatPost;

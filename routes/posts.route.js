@@ -20,7 +20,12 @@ router.get('/posts/:postId', auth, postController.findPost);
 //*공지/자유로 등록
 router.put('/posts/:postId', auth, postController.updatCategory);
 //*게시글 수정
-router.put('/posts/:postId', auth, postController.updatPost);
+router.put(
+  '/posts/:postId',
+  auth,
+  upload.single('image'),
+  postController.updatPost,
+);
 //*게시글 삭제
 router.delete('/posts/:postId', auth, postController.deletPost);
 
