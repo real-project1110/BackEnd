@@ -4,11 +4,13 @@ const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
 class ScheduleRepository {
-  findGroupUserId = async (userId, groupId) => {
-    const groupuser = await GroupUser.findOne({ where: userId, groupId });
-    return { groupUserId: groupuser.groupUserId };
+  findGroupUserId = async ({ userId, groupId }) => {
+    const groupuser = await GroupUser.findOne({
+      where: { [Op.and]: [{ userId }, { groupId }] },
+    });
+    return groupuser;
   };
-  createSchedule = async (
+  createSchedule = async ({
     title,
     description,
     start,
@@ -16,7 +18,7 @@ class ScheduleRepository {
     color,
     groupUserId,
     groupId,
-  ) => {
+  }) => {
     await Schedule.create({
       title,
       description,
@@ -28,7 +30,7 @@ class ScheduleRepository {
     });
   };
 
-  updateSchedule = async (
+  updateSchedule = async ({
     scheduleId,
     title,
     description,
@@ -36,19 +38,20 @@ class ScheduleRepository {
     end,
     color,
     groupUserId,
-  ) => {
-    await Schedule.update(
+  }) => {
+    const updateSchedule = await Schedule.update(
       { title, description, start, end, color },
       { where: { [Op.and]: [{ scheduleId }, { groupUserId }] } },
     );
+    return updateSchedule;
   };
 
-  findAllSchedule = async (groupId) => {
+  findAllSchedule = async ({ groupId }) => {
     const findAllSchedule = await Schedule.findAll({ where: { groupId } });
     return findAllSchedule;
   };
 
-  destroySchedule = async (scheduleId) => {
+  destroySchedule = async ({ scheduleId }) => {
     await Schedule.destroy({ where: { scheduleId } });
   };
 }
