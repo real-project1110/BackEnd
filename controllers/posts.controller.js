@@ -14,7 +14,7 @@ class PostController {
       const { userId } = res.locals.user;
       const { content } = req.body;
       // const images = req.files;
-      const originalUrl = req.file.location;
+      const originalUrl = req.file.name;
       const category = 0;
       if (!content) {
         throw new InvalidParamsError('내용을 입력해주세요');
