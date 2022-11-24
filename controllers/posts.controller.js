@@ -27,7 +27,8 @@ class PostController {
       if (images) {
         const postId = post.postId;
         const postImgs = images.map((a) => {
-          const postImg = a.replace(/\/original\//, '/statUS/');
+          let postImg = a.location;
+          postImg = postImg.replace(/\/original\//, '/statUS/');
           return {
             postImg,
           };
