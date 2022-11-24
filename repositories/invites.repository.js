@@ -36,7 +36,9 @@ class InviteRepository {
     const invite = await Invite.findAll({ where: { userId } });
     console.log(invite);
     for (let i = 0; i < findGroup.length; i++) {
-      const groupFind = await GroupList.findOne({ groupId: findGroup[i] });
+      const groupFind = await GroupList.findOne({
+        where: { groupId: findGroup[i] },
+      });
       const { userId, inviteId, groupId, createdAt } = invite[i];
       const { groupName, groupImg } = groupFind;
       group.push({ inviteId, userId, groupId, createdAt, groupName, groupImg });
