@@ -43,7 +43,12 @@ class ScheduleService {
       userId,
       groupId,
     );
-    console.log('여기좀보세요제발보세요여기요사람있어요', findGroupUserId);
+    console.log(
+      '여기좀보세요제발보세요여기요사람있어요',
+      userId,
+      groupId,
+      findGroupUserId,
+    );
     const groupUserId = findGroupUserId.groupUserId;
     const updateSchedule = await this.scheduleRepository.updateSchedule(
       scheduleId,
