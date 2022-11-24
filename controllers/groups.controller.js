@@ -84,6 +84,7 @@ class GroupController {
   findAllGroupList = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
+      console.log(userId);
       if (!userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
