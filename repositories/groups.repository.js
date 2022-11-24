@@ -22,9 +22,9 @@ class GroupRepository {
     await GroupList.update({ groupName }, { where: { groupId } });
   };
 
-  findOneGroup = async ({ groupId, userId }) => {
+  findOneGroup = async ({ groupId }) => {
     const findOneGroup = await GroupList.findOne({
-      where: { [Op.and]: [{ groupId }, { userId }] },
+      where: { groupId },
     });
     return findOneGroup;
   };
