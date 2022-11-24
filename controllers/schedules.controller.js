@@ -35,7 +35,7 @@ class ScheduleController {
   updateSchedule = async (req, res, next) => {
     try {
       let { title, description, start, end, color } = req.body;
-      const { scheduleId } = req.params;
+      const { scheduleId, groupId } = req.params;
       const { userId } = res.locals.user;
       let date = new Date(start);
       let endDate = new Date(end);
@@ -46,6 +46,7 @@ class ScheduleController {
         title,
         description,
         userId,
+        groupId,
         start,
         end,
         color,
