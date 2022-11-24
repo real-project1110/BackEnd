@@ -5,7 +5,9 @@ const Sequelize = Sq.Sequelize;
 
 class ScheduleRepository {
   findGroupUserId = async (userId, groupId) => {
-    const groupuser = await GroupUser.findOne({ where: userId });
+    const groupuser = await GroupUser.findOne({
+      where: { [Op.and]: [{ userId }, { groupId }] },
+    });
     return { groupUserId: groupuser.groupUserId };
   };
   createSchedule = async (
