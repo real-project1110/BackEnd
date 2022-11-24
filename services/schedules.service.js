@@ -12,7 +12,10 @@ class ScheduleService {
     userId,
     groupId,
   ) => {
-    const findGroupUserId = await this.findGroupUserId(userId, groupId);
+    const findGroupUserId = await this.scheduleRepository.findGroupUserId(
+      userId,
+      groupId,
+    );
     const groupUserId = findGroupUserId.groupUserId;
     await this.scheduleRepository.createSchedule(
       title,
@@ -36,7 +39,10 @@ class ScheduleService {
     groupId,
     userId,
   ) => {
-    const findGroupUserId = await this.findGroupUserId(userId, groupId);
+    const findGroupUserId = await this.scheduleRepository.findGroupUserId(
+      userId,
+      groupId,
+    );
     const groupUserId = findGroupUserId.groupUserId;
     await this.scheduleRepository.updateSchedule(
       scheduleId,
