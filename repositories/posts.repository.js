@@ -23,7 +23,6 @@ class PostRepository extends Post {
       where: { [Op.and]: [{ groupId }, { category }] },
       attributes: [
         postId,
-        title,
         commentCount,
         createdAt,
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
@@ -42,7 +41,6 @@ class PostRepository extends Post {
       where: { postId },
       attributes: [
         postId,
-        title,
         content,
         commentCount,
         createdAt,

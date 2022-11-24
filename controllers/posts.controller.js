@@ -114,7 +114,6 @@ class PostController {
       const updatPost = await this.postService.updatPost({
         postId,
         userId,
-        title,
         content,
         category,
       });

@@ -81,7 +81,6 @@ class PostService {
     }
     const updatPost = await this.postRepository.updatPost({
       postId,
-      title,
       content,
       category,
       groupUserId: findGroupUserId.groupUserId,
