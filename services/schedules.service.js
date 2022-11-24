@@ -37,6 +37,7 @@ class ScheduleService {
     start,
     end,
     color,
+    groupId,
     userId,
   ) => {
     const findGroupUserId = await this.findGroupUserId(userId, groupId);
