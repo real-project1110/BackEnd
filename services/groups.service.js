@@ -142,16 +142,27 @@ class GroupService {
     if (!getprofile) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
+
     const image = getprofile.avatarImg;
-    const originalUrl = image.replace(/\/statUS\//, '/original/');
-    return {
-      groupUserId: getprofile.groupUserId,
-      groupUserNickname: getprofile.groupUserNickname,
-      groupAvatarImg: getprofile.groupAvatarImg,
-      status: getprofile.status,
-      statusMessage: getprofile.statusMessage,
-      originalUrl,
-    };
+    if (image == null) {
+      return {
+        groupUserId: getprofile.groupUserId,
+        groupUserNickname: getprofile.groupUserNickname,
+        groupAvatarImg: getprofile.groupAvatarImg,
+        status: getprofile.status,
+        statusMessage: getprofile.statusMessage,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupUserId: getprofile.groupUserId,
+        groupUserNickname: getprofile.groupUserNickname,
+        groupAvatarImg: getprofile.groupAvatarImg,
+        status: getprofile.status,
+        statusMessage: getprofile.statusMessage,
+        originalUrl,
+      };
+    }
   };
 
   getUser = async ({ userId, groupUserId }) => {
@@ -160,15 +171,25 @@ class GroupService {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
     const image = getUser.avatarImg;
-    const originalUrl = image.replace(/\/statUS\//, '/original/');
-    return {
-      groupUserId: getUser.groupUserId,
-      groupUserNickname: getUser.groupUserNickname,
-      groupAvatarImg: getUser.groupAvatarImg,
-      status: getUser.status,
-      statusMessage: getUser.statusMessage,
-      originalUrl,
-    };
+    if (image == null) {
+      return {
+        groupUserId: getUser.groupUserId,
+        groupUserNickname: getUser.groupUserNickname,
+        groupAvatarImg: getUser.groupAvatarImg,
+        status: getUser.status,
+        statusMessage: getUser.statusMessage,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupUserId: getUser.groupUserId,
+        groupUserNickname: getUser.groupUserNickname,
+        groupAvatarImg: getUser.groupAvatarImg,
+        status: getUser.status,
+        statusMessage: getUser.statusMessage,
+        originalUrl,
+      };
+    }
   };
 
   findAllGU = async (groupId) => {
@@ -178,15 +199,26 @@ class GroupService {
     }
     const result = findAllGU.map((x) => {
       const image = x.groupAvatarImg;
-      const originalUrl = image.replace(/\/statUS\//, '/original/');
-      return {
-        groupUserId: x.groupUserId,
-        groupUserNickname: x.groupUserNickname,
-        groupAvatarImg: x.groupAvatarImg,
-        status: x.status,
-        statusMessage: x.statusMessage,
-        originalUrl,
-      };
+      if (image == null) {
+        return {
+          groupUserId: x.groupUserId,
+          groupUserNickname: x.groupUserNickname,
+          groupAvatarImg: x.groupAvatarImg,
+          status: x.status,
+          statusMessage: x.statusMessage,
+        };
+      } else {
+        const originalUrl = image.replace(/\/statUS\//, '/original/');
+        return {
+          groupUserId: x.groupUserId,
+          groupUserNickname: x.groupUserNickname,
+          groupAvatarImg: x.groupAvatarImg,
+          status: x.status,
+          statusMessage: x.statusMessage,
+          originalUrl,
+        };
+      }
+      // const originalUrl = image.replace(/\/statUS\//, '/original/');
     });
     return result;
   };

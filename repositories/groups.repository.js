@@ -42,8 +42,13 @@ class GroupRepository {
         where: { groupId: findGroupUserId[i] },
       });
       const { groupId, groupName, groupImg } = find;
-      const originalUrl = groupImg.replace(/\/statUS\//, '/original/');
-      findGroup.push({ groupId, groupName, groupImg, originalUrl });
+      if (groupImg == null) {
+        findGroup.push({ groupId, groupName, groupImg });
+      } else {
+        const originalUrl = image.replace(/\/statUS\//, '/original/');
+        findGroup.push({ groupId, groupName, groupImg, originalUrl });
+      }
+      // const originalUrl = groupImg.replace(/\/statUS\//, '/original/');=
     }
     return findGroup;
   };
