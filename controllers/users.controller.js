@@ -106,6 +106,8 @@ class UserController {
           resizeUrl,
         });
         return res.status(200).json({ ok: true, data: avatarImg });
+      } else {
+        return res.status(200).json({ ok: true });
       }
     } catch (error) {
       next(error);

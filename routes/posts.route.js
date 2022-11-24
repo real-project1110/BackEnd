@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/multerMiddleware');
 
 const PostController = require('../controllers/posts.controller');
 const postController = new PostController();
 
 //*게시글 등록
-router.post('/:groupId', auth, postController.createPost);
+router.post(
+  '/:groupId',
+  auth,
+  upload.array('image', 5),
+  postController.createPost,
+);
 //*게시글 전체 조회
 router.get('/:groupId/posts', auth, postController.findAllPost);
 //*게시글 상세 조회

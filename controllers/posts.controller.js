@@ -10,18 +10,30 @@ class PostController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const { title, content } = req.body;
+      const { content } = req.body;
+      const images = req.files;
       const category = 0;
-      if (!title || !content) {
+      if (!content) {
         throw new InvalidParamsError('내용을 입력해주세요');
       }
       const post = await this.postService.createPost({
         groupId,
         userId,
-        title,
         content,
         category,
       });
+      if (images) {
+        const postId = post.postId;
+        const postImgs = images.map((a) => {
+          const postImg = a.replace(/\/original\//, '/statUS/');
+          return {
+            postImg,
+          };
+        });
+        await this.postImgService.createPostImg({ postId, postImgs });
+      } else {
+        return;
+      }
       res.status(201).json({
         ok: true,
         postId: post.postId,

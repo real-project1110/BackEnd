@@ -18,7 +18,12 @@ router.put(
 );
 router.put('/:groupId/groupUserNickname', auth, groupcontroller.updateGroupNic);
 router.put('/:groupId/groupUser/status', auth, groupcontroller.changeStatus);
-
+router.put(
+  '/:groupId/groupAvatarImg',
+  auth,
+  upload.single('image'),
+  groupcontroller.updatGroupAvatarImg,
+);
 router.get('/', auth, groupcontroller.findAllGroupList);
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
 router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);

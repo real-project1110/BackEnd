@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         sourceKey: 'postId',
       });
+      this.hasMany(models.PostImg, {
+        foreignKey: 'postId',
+        sourceKey: 'postId',
+      });
     }
   }
   Post.init(
@@ -48,15 +52,7 @@ module.exports = (sequelize, DataTypes) => {
           key: 'groupUserId',
         },
       },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       content: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      postImg: {
         type: DataTypes.STRING,
         allowNull: true,
       },
@@ -87,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
       indexes: [
         {
           type: 'FULLTEXT',
-          fields: ['title'],
+          fields: ['content'],
         },
       ],
     },
