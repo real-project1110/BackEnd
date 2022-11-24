@@ -41,6 +41,8 @@ class ScheduleRepository {
   }) => {
     console.log(
       '여기요살려주세요사라졌어요실종이예요제발요',
+      scheduleId,
+      groupUserId,
       title,
       description,
       start,
