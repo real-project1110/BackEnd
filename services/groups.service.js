@@ -55,13 +55,21 @@ class GroupService {
       throw new ValidationError('그룹이 없습니다');
     }
     const image = groups.groupImg;
-    const originalUrl = image.replace(/\/statUS\//, '/original/');
-    return {
-      groupId: groups.groupId,
-      groupName: groups.groupName,
-      groupImg: groups.groupImg,
-      originalUrl,
-    };
+    if (image == null) {
+      return {
+        groupId: groups.groupId,
+        groupName: groups.groupName,
+        groupImg: groups.groupImg,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupId: groups.groupId,
+        groupName: groups.groupName,
+        groupImg: groups.groupImg,
+        originalUrl,
+      };
+    }
   };
   findAllGroupList = async ({ userId }) => {
     const findGroupUserId = await this.groupRepository.findGroupUserId({
