@@ -39,6 +39,14 @@ class ScheduleRepository {
     color,
     groupUserId,
   }) => {
+    console.log(
+      '여기요살려주세요사라졌어요실종이예요제발요',
+      title,
+      description,
+      start,
+      end,
+      color,
+    );
     await Schedule.update(
       { title, description, start, end, color },
       { where: { [Op.and]: [{ scheduleId }, { groupUserId }] } },
