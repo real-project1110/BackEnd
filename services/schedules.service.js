@@ -23,7 +23,7 @@ class ScheduleService {
       start,
       end,
       color,
-      groupUserId,
+      groupUserId: groupUserId,
       groupId,
     });
     return { message: '일정이 생성되었습니다.' };
@@ -50,7 +50,7 @@ class ScheduleService {
       description,
       start,
       end,
-      groupUserId,
+      groupUserId: groupUserId,
       color,
     });
     return updateSchedule;
