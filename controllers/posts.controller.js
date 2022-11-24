@@ -13,7 +13,8 @@ class PostController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const { content } = req.body;
-      const images = req.files;
+      // const images = req.files;
+      const originalUrl = req.file.location;
       const category = 0;
       if (!content) {
         throw new InvalidParamsError('내용을 입력해주세요');
@@ -24,19 +25,20 @@ class PostController {
         content,
         category,
       });
-      if (images) {
-        const postId = post.postId;
-        const postImgs = images.map((a) => {
-          let postImg = a.location;
-          postImg = postImg.replace(/\/original\//, '/statUS/');
-          return {
-            postImg,
-          };
-        });
-        await this.postImgService.createPostImg({ postId, postImgs });
-      } else {
-        return;
-      }
+      console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
+      // if (images) {
+      //   const postId = post.postId;
+      //   const postImgs = images.map((a) => {
+      //     let postImg = a.location;
+      //     postImg = postImg.replace(/\/original\//, '/statUS/');
+      //     return {
+      //       postImg,
+      //     };
+      //   });
+      //   await this.postImgService.createPostImg({ postId, postImgs });
+      // } else {
+      //   return;
+      // }
       res.status(201).json({
         ok: true,
         postId: post.postId,
