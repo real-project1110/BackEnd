@@ -20,8 +20,8 @@ class PostController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const { content } = req.body;
-      const images = req.files;
-      // const originalUrl = req.file.location;
+      // const images = req.files;
+      const originalUrl = req.file;
       console.log('123123123123123', req.files);
       console.log('12312312312312312312312req.body', req.body);
       const category = 0;
@@ -34,20 +34,20 @@ class PostController {
         content,
         category,
       });
-      // console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
-      if (images) {
-        const postId = post.postId;
-        const postImgs = images.map((a) => {
-          let postImg = a.name;
-          postImg = postImg.replace(/\/original\//, '/statUS/');
-          return {
-            postImg,
-          };
-        });
-        await this.postImgService.createPostImg({ postId, postImgs });
-      } else {
-        return;
-      }
+      console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
+      // if (images) {
+      //   const postId = post.postId;
+      //   const postImgs = images.map((a) => {
+      //     let postImg = a.name;
+      //     postImg = postImg.replace(/\/original\//, '/statUS/');
+      //     return {
+      //       postImg,
+      //     };
+      //   });
+      //   await this.postImgService.createPostImg({ postId, postImgs });
+      // } else {
+      //   return;
+      // }
       res.status(201).json({
         ok: true,
         postId: post.postId,
