@@ -12,13 +12,12 @@ class PostService {
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const post = {
+    const createPost = await this.postRepository.createPost({
       groupId,
       content,
       category,
       groupUserId: findGroupUserId.groupUserId,
-    };
-    const createPost = await this.postRepository.createPost({ post });
+    });
     return createPost;
   };
 
