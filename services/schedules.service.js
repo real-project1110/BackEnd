@@ -43,8 +43,9 @@ class ScheduleService {
       userId,
       groupId,
     );
+    console.log('여기좀보세요제발보세요여기요사람있어요', findGroupUserId);
     const groupUserId = findGroupUserId.groupUserId;
-    await this.scheduleRepository.updateSchedule(
+    const updateSchedule = await this.scheduleRepository.updateSchedule(
       scheduleId,
       title,
       description,
@@ -53,7 +54,7 @@ class ScheduleService {
       groupUserId,
       color,
     );
-    return { message: '수정이 완료되었습니다.' };
+    return updateSchedule;
   };
 
   findAllSchedule = async (groupId) => {
