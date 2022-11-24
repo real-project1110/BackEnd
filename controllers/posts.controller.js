@@ -1,8 +1,10 @@
 const PostService = require('../services/posts.service');
 const InvalidParamsError = require('../exceptions/index.exception');
+const PostImgService = require('../services/postImgs.service');
 
 class PostController {
   postService = new PostService();
+  postImgService = new PostImgService();
 
   //*게시글 작성
 
