@@ -177,7 +177,7 @@ class GroupService {
       throw new Error('정보가 존재하지 않습니다.');
     }
     const result = findAllGU.map((x) => {
-      const image = x.avatarImg;
+      const image = x.groupAvatarImg;
       const originalUrl = image.replace(/\/statUS\//, '/original/');
       return {
         groupUserId: x.groupUserId,
