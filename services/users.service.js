@@ -83,17 +83,18 @@ class UserService {
     const myprofile = await this.userRepository.findByUser(userId);
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
     const image = myprofile.avatarImg;
-    if (image !== null) {
-      const originalUrl = image.replace(/\/statUS\//, '/original/');
-      return {
-        userId: myprofile.userId,
-        email: myprofile.email,
-        nickname: myprofile.nickname,
-        avatarImg: myprofile.avatarImg,
-        currentPage: myprofile.currentPage,
-        originalUrl,
-      };
+    if (image == null) {
+      throw new ValidationError('잘못된 요청입니다.');
     }
+    const originalUrl = image.replace(/\/statUS\//, '/original/');
+    return {
+      userId: myprofile.userId,
+      email: myprofile.email,
+      nickname: myprofile.nickname,
+      avatarImg: myprofile.avatarImg,
+      currentPage: myprofile.currentPage,
+      originalUrl,
+    };
   };
   avatarImg = async ({ userId, resizeUrl }) => {
     const findByUser = await this.userRepository.findByUser({ userId });
