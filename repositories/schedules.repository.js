@@ -8,7 +8,7 @@ class ScheduleRepository {
     const groupuser = await GroupUser.findOne({
       where: { [Op.and]: [{ userId }, { groupId }] },
     });
-    return { groupUserId: groupuser.groupUserId };
+    return groupUserId;
   };
   createSchedule = async (
     title,

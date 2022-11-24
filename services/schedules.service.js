@@ -3,10 +3,6 @@ const ScheduleRepository = require('../repositories/schedules.repository');
 class ScheduleService {
   scheduleRepository = new ScheduleRepository();
 
-  findGroupUserId = async (userId, groupId) => {
-    return await this.scheduleRepository.findGroupUserId(userId, groupId);
-  };
-
   createSchedule = async (
     title,
     description,
@@ -17,7 +13,7 @@ class ScheduleService {
     groupId,
   ) => {
     const findGroupUserId = await this.findGroupUserId(userId, groupId);
-    const groupUserId = findGroupUserId;
+    const groupUserId = findGroupUserId.groupUserId;
     await this.scheduleRepository.createSchedule(
       title,
       description,
@@ -41,7 +37,7 @@ class ScheduleService {
     userId,
   ) => {
     const findGroupUserId = await this.findGroupUserId(userId, groupId);
-    const groupUserId = findGroupUserId;
+    const groupUserId = findGroupUserId.groupUserId;
     await this.scheduleRepository.updateSchedule(
       scheduleId,
       title,
