@@ -77,15 +77,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Post',
-      tableName: 'posts',
-      charset: 'utf8',
-      collate: 'utf8_general_ci',
-      indexes: [
-        {
-          type: 'FULLTEXT',
-          fields: ['content'],
-        },
-      ],
     },
   );
   return Post;

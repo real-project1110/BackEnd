@@ -15,6 +15,10 @@ class PostRepository extends Post {
       category,
       groupUserId,
     });
+    console.log(
+      '여기요이겨이ㅕㅁ걍너리먿쟈ㅣ;럼;쟈러먄ㅇ로ㅜㅑㅁㄴ오ㅓ랴;ㅣㅁㄷㅈㄹ',
+      createPost,
+    );
     return createPost;
   };
   //*그룹유저 찾기
