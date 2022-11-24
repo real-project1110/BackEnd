@@ -82,12 +82,14 @@ class UserService {
   myprofile = async (userId) => {
     const myprofile = await this.userRepository.findByUser(userId);
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
+    const originalUrl = myprofile.avatarImg.replace(/\/statUS\//, '/original/');
     return {
       userId: myprofile.userId,
       email: myprofile.email,
       nickname: myprofile.nickname,
       avatarImg: myprofile.avatarImg,
       currentPage: myprofile.currentPage,
+      originalUrl,
     };
   };
   avatarImg = async ({ userId, resizeUrl }) => {

@@ -100,7 +100,7 @@ class UserController {
       }
       const originalUrl = req.file.location;
       if (originalUrl) {
-        const resizeUrl = originalUrl.replace(/\/original\//, '/thumb/');
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
         const avatarImg = await this.userService.avatarImg({
           userId,
           resizeUrl,
