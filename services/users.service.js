@@ -3,6 +3,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authEmail = require('../util/nodeMailer');
+const ValidationError = require('../exceptions/index.exception');
 
 class UserService {
   userRepository = new UserRepository();
@@ -86,8 +87,19 @@ class UserService {
       email: myprofile.email,
       nickname: myprofile.nickname,
       avatarImg: myprofile.avatarImg,
-      currentPage: myprofile.currentPage
+      currentPage: myprofile.currentPage,
     };
+  };
+  avatarImg = async ({ userId, resizeUrl }) => {
+    const findByUser = await this.userRepository.findByUser({ userId });
+    if (!findByUser) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const avatarImg = await this.userRepository.avatarImg({
+      userId,
+      resizeUrl,
+    });
+    return avatarImg;
   };
 
   changeNic = async (userId, nickname) => {
