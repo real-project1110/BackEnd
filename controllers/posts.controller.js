@@ -21,8 +21,8 @@ class PostController {
       const { userId } = res.locals.user;
       const { content } = req.body;
       // const images = req.files;
-      const originalUrl = req.file;
-      console.log('123123123123123', req.files);
+      const originalUrl = req.file.location;
+      // console.log('123123123123123', req.files);
       console.log('12312312312312312312312req.body', req.body);
       const category = 0;
       if (!content) {
