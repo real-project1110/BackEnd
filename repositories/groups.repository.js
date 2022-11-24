@@ -22,11 +22,18 @@ class GroupRepository {
     await GroupList.update({ groupName }, { where: { groupId } });
   };
 
-  findOneGroup = async ({ groupId }) => {
+  findOneGroup = async ({ userId, groupId }) => {
     const findOneGroup = await GroupList.findOne({
       where: { groupId },
     });
     return findOneGroup;
+  };
+  updatcurrentPage = async ({ userId, currentPage }) => {
+    const updatcurrentPage = await User.update(
+      { currentPage },
+      { where: { userId } },
+    );
+    return updatcurrentPage;
   };
   findGroupUserId = async ({ userId }) => {
     const findGroupUserId = await GroupUser.findAll({ where: { userId } });

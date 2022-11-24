@@ -40,7 +40,7 @@ class GroupService {
     return updateGroupImg;
   };
 
-  findOneGroup = async ({ groupId, userId }) => {
+  findOneGroup = async ({ groupId, userId, currentPage }) => {
     const findGroupUser = await this.groupRepository.findGroupUser({
       userId,
       groupId,
@@ -48,8 +48,16 @@ class GroupService {
     if (!findGroupUser) {
       throw new ValidationError('잘못된 요청입니다.');
     }
+
+    if (currentPage != groupId) {
+      await this.groupRepository.updatcurrentPage({
+        userId,
+        currentPage: groupId,
+      });
+    }
     const groups = await this.groupRepository.findOneGroup({
       groupId,
+      userId,
     });
     if (!groups) {
       throw new ValidationError('그룹이 없습니다');

@@ -33,12 +33,22 @@ class UserService {
       throw new Error('비밀번호가 다릅니다.');
     }
     const accessToken = jwt.sign(
-      { userId: user.userId, email: user.email, nickname: user.nickname },
+      {
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        currentPage: user.currentPage,
+      },
       process.env.SECRET_KEY,
       { expiresIn: '1h' },
     );
     const refreshToken = jwt.sign(
-      { userId: user.userId, email: user.email, nickname: user.nickname },
+      {
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        currentPage: user.currentPage,
+      },
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
     );

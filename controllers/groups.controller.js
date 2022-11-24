@@ -67,13 +67,14 @@ class GroupController {
   findOneGroup = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const { userId } = res.locals.user;
+      const { userId, currentPage } = res.locals.user;
       if (!groupId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const findgroup = await this.groupService.findOneGroup({
         groupId,
         userId,
+        currentPage,
       });
       res.status(200).json({ data: findgroup });
     } catch (error) {
