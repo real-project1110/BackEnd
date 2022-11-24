@@ -17,7 +17,7 @@ class ScheduleController {
       // const userId = user.userId
       // const {groupId}=req.params
       // const {groupUserId} = await this.scheduleService.findGroupUserId(userId,groupId)
-      const createschedule = await this.scheduleService.createSchedule(
+      const createschedule = await this.scheduleService.createSchedule({
         title,
         description,
         start,
@@ -25,7 +25,7 @@ class ScheduleController {
         color,
         userId,
         groupId,
-      );
+      });
       res.status(201).json({ data: createschedule });
     } catch (error) {
       next(error);
@@ -41,7 +41,7 @@ class ScheduleController {
       let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
       end = endDate.setHours(endDate.getHours() + 9);
-      const updateschedule = await this.scheduleService.updateSchedule(
+      const updateschedule = await this.scheduleService.updateSchedule({
         scheduleId,
         title,
         description,
@@ -50,7 +50,7 @@ class ScheduleController {
         start,
         end,
         color,
-      );
+      });
       res.status(200).json({ data: updateschedule });
     } catch (error) {
       next(error);
@@ -60,7 +60,9 @@ class ScheduleController {
   findAllSchedule = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const findschedule = await this.scheduleService.findAllSchedule(groupId);
+      const findschedule = await this.scheduleService.findAllSchedule({
+        groupId,
+      });
       res.status(200).json({ data: findschedule });
     } catch (error) {
       next(error);
@@ -70,9 +72,9 @@ class ScheduleController {
   destroySchedule = async (req, res, next) => {
     try {
       const { scheduleId } = req.params;
-      const destroySchedule = await this.scheduleService.destroySchedule(
+      const destroySchedule = await this.scheduleService.destroySchedule({
         scheduleId,
-      );
+      });
       res.status(200).json({ data: destroySchedule });
     } catch (error) {
       next(error);
