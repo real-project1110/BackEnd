@@ -10,7 +10,7 @@ const postController = new PostController();
 router.post(
   '/:groupId/posts',
   auth,
-  upload.single('image'),
+  upload.array('image', 5),
   postController.createPost,
 );
 //*게시글 전체 조회
@@ -23,7 +23,7 @@ router.put('/posts/:postId', auth, postController.updatCategory);
 router.put(
   '/posts/:postId',
   auth,
-  upload.single('image'),
+  upload.array('image', 5),
   postController.updatPost,
 );
 //*게시글 삭제
