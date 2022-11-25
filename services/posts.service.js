@@ -5,7 +5,7 @@ class PostService {
   postRepository = new PostRepository();
 
   //*게시글 작성
-  createPost = async ({ groupId, userId, resizeUrl, content, category }) => {
+  createPost = async ({ groupId, userId, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -15,7 +15,6 @@ class PostService {
     const createPost = await this.postRepository.createPost({
       groupId,
       content,
-      postImg: resizeUrl,
       category,
       groupUserId: findGroupUserId.groupUserId,
     });

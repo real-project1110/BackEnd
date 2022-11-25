@@ -8,12 +8,11 @@ class PostRepository extends Post {
     super();
   }
   //*게시글 작성
-  createPost = async ({ groupId, content, postImg, category, groupUserId }) => {
+  createPost = async ({ groupId, content, category, groupUserId }) => {
     const createPost = await Post.create({
       groupId,
       content,
       category,
-      postImg,
       groupUserId,
     });
     return createPost;

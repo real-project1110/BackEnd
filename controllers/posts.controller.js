@@ -22,38 +22,53 @@ class PostController {
       const { userId } = res.locals.user;
       const { content } = req.body;
       // const images = req.files;
-      const originalUrl = req.file.location;
+      const images = req.files;
+      console.log(images);
       // console.log('123123123123123', req.files);
       const category = 0;
-      if (!content) {
-        throw new InvalidParamsError('내용을 입력해주세요');
+      if (!content || !userId || !groupId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      if (originalUrl) {
-        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
-        const post = await this.postService.createPost({
-          groupId,
-          userId,
-          content,
-          resizeUrl,
-          category,
-        });
-        return res.status(201).json({
-          ok: true,
-          postId: post.postId,
-        });
-      } else {
-        const post = await this.postService.createPost({
-          groupId,
-          userId,
-          content,
-          resizeUrl: null,
-          category,
-        });
-        return res.status(201).json({
-          ok: true,
-          postId: post.postId,
+      const createPost = await this.postService.createPost({
+        groupId,
+        userId,
+        content,
+        category,
+      });
+
+      if (images) {
+        const createPostImg = await this.postImgService.createPostImg({
+          postId: createPost.postId,
+          images,
         });
       }
+      res.status(201).json({ ok: true, data: createPost.postId });
+      // if (originalUrl) {
+      //   const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+      //   const post = await this.postService.createPost({
+      //     groupId,
+      //     userId,
+      //     content,
+      //     resizeUrl,
+      //     category,
+      //   });
+      //   return res.status(201).json({
+      //     ok: true,
+      //     postId: post.postId,
+      //   });
+      // } else {
+      //   const post = await this.postService.createPost({
+      //     groupId,
+      //     userId,
+      //     content,
+      //     resizeUrl: null,
+      //     category,
+      //   });
+      //   return res.status(201).json({
+      //     ok: true,
+      //     postId: post.postId,
+      //   });
+      // }
     } catch (error) {
       next(error);
     }
