@@ -34,16 +34,13 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
     },
     color: {
-    allowNull: false,
-    type: DataTypes.STRING,
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     content: {
       allowNull: false,
       type: DataTypes.STRING,
-      },
-      groupId:{
-        type: DataTypes.INTEGER
-      }
+    },
   }, {
     sequelize,
     modelName: 'Color',

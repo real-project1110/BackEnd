@@ -8,7 +8,7 @@ class ColorController {
             const {userId} = res.locals.user
             const {groupId} = req.params;
             const {color,content} = req.body;
-            const createColor = await this.colorService.createColor(userId,groupId,color,content)
+            const createColor = await this.colorService.createColor({userId,groupId,color,content})
             res.status(201).json({data:createColor,message:"컬러가 생성되었습니다"})
         }catch(error){
             next(error);

@@ -21,11 +21,8 @@ module.exports = {
       color: {
         type: Sequelize.STRING
       },
-      status: {
+      content: {
         type: Sequelize.STRING
-      },
-      groupId:{
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
