@@ -24,21 +24,20 @@ class PostRepository extends Post {
   };
   //*게시글 전체 조회
   findAllPost = async ({ groupId, category }) => {
-    const findAllPost = await Post.findAll({
+    const posts = await Post.findAll({
       where: { [Op.and]: [{ groupId }, { category }] },
       attributes: [
-        postId,
-        commentCount,
-        postImg,
-        createdAt,
+        'postId',
+        'commentCount',
+        'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
-      include: [{ model: GroupUser }],
-      order: ['createdAt', 'DESC'],
+      include: { model: GroupUser, attributes: [] },
+      order: [['createdAt', 'DESC']],
     });
-    return findAllPost;
+    return posts;
   };
   //*게시글 상세 조회
   //postImg 추가해야함
@@ -46,16 +45,16 @@ class PostRepository extends Post {
     const findPost = await Post.findOne({
       where: { postId },
       attributes: [
-        postId,
-        content,
-        postImg,
-        commentCount,
-        createdAt,
+        'postId',
+        'content',
+        'postImg',
+        'commentCount',
+        'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
-      include: [{ model: GroupUser }],
+      include: [{ model: GroupUser, attributes: [] }],
     });
     return findPost;
   };
