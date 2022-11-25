@@ -71,7 +71,7 @@ class PostService {
   };
 
   //*게시글 수정
-  updatPost = async ({ postId, userId, content, category }) => {
+  updatPost = async ({ postId, userId, content }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -88,7 +88,6 @@ class PostService {
     const updatPost = await this.postRepository.updatPost({
       postId,
       content,
-      category,
       groupUserId: findGroupUserId.groupUserId,
     });
     return updatPost;

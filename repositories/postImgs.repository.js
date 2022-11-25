@@ -24,6 +24,12 @@ class PostImgRepository extends PostImg {
       });
     }
   };
+  deletPostImg = async ({ postId, groupId }) => {
+    const deletPostImg = await PostImg.destroy({
+      where: { [Op.and]: [{ groupId }, { postId }] },
+    });
+    return deletPostImg;
+  };
 }
 
 module.exports = PostImgRepository;

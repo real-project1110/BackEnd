@@ -157,7 +157,6 @@ class GroupController {
     try {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
-      console.log('여기확인하세요', req.file, req.files);
       const originalUrl = req.file.location;
       if (!userId || !groupId) {
         throw new InvalidParamsError('잘못된 요청입니다.');

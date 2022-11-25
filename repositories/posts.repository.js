@@ -95,9 +95,9 @@ class PostRepository extends Post {
     return existsPost;
   };
   //*게시글 수정
-  updatPost = async ({ postId, content, category, groupUserId }) => {
+  updatPost = async ({ postId, content, groupUserId }) => {
     const updatPost = await Post.update(
-      { content, category },
+      { content },
       { where: { [Op.and]: [{ postId }, { groupUserId }] } },
     );
     return updatPost;

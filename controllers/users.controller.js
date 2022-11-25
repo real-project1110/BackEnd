@@ -24,12 +24,15 @@ class UserController {
           message: '이름과 비밀번호를 다른형식으로 설정해주세요',
         });
       }
+      const avatarImg =
+        'https://shitlambda.s3.ap-northeast-2.amazonaws.com/statUS/78611669410319683.jpeg';
 
       const hashed = await bcrypt.hash(password, 12);
       const users = await Object.create({
         email: email,
         nickname: nickname,
         password: hashed,
+        avatarImg,
       });
       await this.userService.createUser(users);
       res.status(201).json({ message: '회원가입에 성공하셨습니다.' });
@@ -86,10 +89,6 @@ class UserController {
   myprofile = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      console.log(
-        'controller시팔이거맞는건가싶은건데정말이거오류같은데이게맞는건가',
-        userId,
-      );
       const user = await this.userService.myprofile({ userId });
       res.status(200).json({ data: user, message: '프로필 조회 성공' });
     } catch (error) {
