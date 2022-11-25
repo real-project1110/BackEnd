@@ -1,3 +1,4 @@
+const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
 
 class GroupController {
@@ -6,10 +7,10 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { groupName } = req.body;
-      const { user } = res.locals;
-      const userId = user.userId;
-      const { nickname } = res.locals.user;
-      console.log('real', groupName, userId);
+      const { userId, nickname } = res.locals.user;
+      if (!userId || !nickname || !groupName) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
       const createGroup = await this.groupService.createGroup({
         groupName,
         userId,
@@ -39,30 +40,57 @@ class GroupController {
   updateGroupImg = async (req, res) => {
     try {
       const { groupId } = req.params;
-      const { groupImg } = req.body;
-      const updategroup = await this.groupService.updateGroupName(
-        groupId,
-        groupImg,
-      );
-      res.status(200).json({ data: updategroup });
-    } catch (err) {
-      res.status(400).json(err);
+      const { userId } = res.locals.user;
+      const originalUrl = req.file.location;
+      if (originalUrl) {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updategroup = await this.groupService.updateGroupImg({
+          userId,
+          groupId,
+          resizeUrl,
+        });
+        return res.status(200).json({ ok: true, data: updategroup });
+      } else {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updategroup = await this.groupService.updateGroupImg({
+          userId,
+          groupId,
+          resizeUrl: null,
+        });
+        return res.status(200).json({ ok: true, data: updategroup });
+      }
+    } catch (error) {
+      next(error);
     }
   };
 
-  findOneGroup = async (req, res) => {
+  findOneGroup = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const findgroup = await this.groupService.findOneGroup(groupId);
-      console.log('33333333333', findgroup);
+      const { userId, currentPage } = res.locals.user;
+      if (!groupId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const findgroup = await this.groupService.findOneGroup({
+        groupId,
+        userId,
+        currentPage,
+      });
       res.status(200).json({ data: findgroup });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
   findAllGroupList = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
+      console.log(
+        '사람있어요여기요여기보세요제발요살려주세요여기요제발요잘게요',
+        userId,
+      );
+      if (!userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
@@ -116,8 +144,39 @@ class GroupController {
     try {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
-      const getProfile = await this.groupService.getProfile(userId, groupId);
+      if (!userId || !groupId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const getProfile = await this.groupService.getProfile({
+        userId,
+        groupId,
+      });
       res.status(200).json({ data: getProfile });
+    } catch (error) {
+      next(error);
+    }
+  };
+  updatGroupAvatarImg = async (req, res, next) => {
+    try {
+      const { userId } = res.locals.user;
+      const { groupId } = req.params;
+      const originalUrl = req.file.location;
+      if (!userId || !groupId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      if (originalUrl) {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const updatGroupAvatarImg = await this.groupService.updatGroupAvatarImg(
+          {
+            userId,
+            resizeUrl,
+            groupId,
+          },
+        );
+        return res.status(200).json({ ok: true, data: updatGroupAvatarImg });
+      } else {
+        return res.status(200).json({ ok: true });
+      }
     } catch (error) {
       next(error);
     }
@@ -127,7 +186,10 @@ class GroupController {
     try {
       const { userId } = res.locals.user;
       const { groupUserId } = req.params;
-      const getUser = await this.groupService.getUser(userId, groupUserId);
+      if (!userId || !groupUserId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const getUser = await this.groupService.getUser({ userId, groupUserId });
       res.status(200).json({ data: getUser });
     } catch (error) {
       next(error);

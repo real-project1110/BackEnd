@@ -33,12 +33,22 @@ class UserService {
       throw new Error('비밀번호가 다릅니다.');
     }
     const accessToken = jwt.sign(
-      { userId: user.userId, email: user.email, nickname: user.nickname },
+      {
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        currentPage: user.currentPage,
+      },
       process.env.SECRET_KEY,
       { expiresIn: '7d' },
     );
     const refreshToken = jwt.sign(
-      { userId: user.userId, email: user.email, nickname: user.nickname },
+      {
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        currentPage: user.currentPage,
+      },
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
     );
@@ -82,15 +92,26 @@ class UserService {
   myprofile = async (userId) => {
     const myprofile = await this.userRepository.findByUser(userId);
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
-    const originalUrl = myprofile.avatarImg.replace(/\/statUS\//, '/original/');
-    return {
-      userId: myprofile.userId,
-      email: myprofile.email,
-      nickname: myprofile.nickname,
-      avatarImg: myprofile.avatarImg,
-      currentPage: myprofile.currentPage,
-      originalUrl,
-    };
+    const image = myprofile.avatarImg;
+    if (image == null) {
+      return {
+        userId: myprofile.userId,
+        email: myprofile.email,
+        nickname: myprofile.nickname,
+        avatarImg: myprofile.avatarImg,
+        currentPage: myprofile.currentPage,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        userId: myprofile.userId,
+        email: myprofile.email,
+        nickname: myprofile.nickname,
+        avatarImg: myprofile.avatarImg,
+        currentPage: myprofile.currentPage,
+        originalUrl,
+      };
+    }
   };
   avatarImg = async ({ userId, resizeUrl }) => {
     const findByUser = await this.userRepository.findByUser({ userId });

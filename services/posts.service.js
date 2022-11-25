@@ -5,21 +5,19 @@ class PostService {
   postRepository = new PostRepository();
 
   //*게시글 작성
-  createPost = async ({ groupId, userId, title, content, category }) => {
+  createPost = async ({ groupId, userId, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const post = {
+    const createPost = await this.postRepository.createPost({
       groupId,
-      title,
       content,
       category,
-      groupUser: findGroupUserId.groupUserId,
-    };
-    const createPost = await this.postRepository.createPost({ post });
+      groupUserId: findGroupUserId.groupUserId,
+    });
     return createPost;
   };
 
@@ -66,7 +64,7 @@ class PostService {
   };
 
   //*게시글 수정
-  updatPost = async ({ postId, userId, title, content, category }) => {
+  updatPost = async ({ postId, userId, resizeUrl, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -82,8 +80,8 @@ class PostService {
     }
     const updatPost = await this.postRepository.updatPost({
       postId,
-      title,
       content,
+      postImg: resizeUrl,
       category,
       groupUserId: findGroupUserId.groupUserId,
     });
