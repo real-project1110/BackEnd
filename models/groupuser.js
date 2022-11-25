@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupUserId',
         sourceKey: 'groupUserId',
       });
+      this.hasMany(models.Schedule, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
     }
   }
   GroupUser.init(
@@ -63,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       status: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue : 0
+        defaultValue: 0,
       },
       statusMessage: {
         type: DataTypes.STRING,
