@@ -9,7 +9,12 @@ const userController = new UserController();
 router.post('/signup', authlogin, userController.signup);
 router.post('/login', authlogin, userController.login);
 router.post('/emailcheck', userController.emailCheck);
-router.post('/avatarImg', auth, upload.single('img'), userController.avatarImg);
+router.put(
+  '/avatarImg',
+  auth,
+  upload.single('image'),
+  userController.avatarImg,
+);
 router.post('/emailcheck/auth', userController.certification);
 router.get('/myprofile', auth, userController.myprofile);
 router.put('/nickname', auth, userController.updateNic);

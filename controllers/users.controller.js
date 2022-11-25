@@ -1,6 +1,7 @@
 const UserService = require('../services/users.service');
 const bcrypt = require('bcrypt');
 const Joi = require('../util/joi');
+const { InvalidParamsError } = require('../exceptions/index.exception');
 
 class UserController {
   userService = new UserService();
@@ -49,7 +50,7 @@ class UserController {
         nickname: user.user.nickname,
         accessToken: user.accessToken,
         refreshToken: user.refreshToken,
-        currentPage :user.user.currentPage
+        currentPage: user.user.currentPage,
       });
       console.log(
         user.user.userId,
@@ -93,10 +94,19 @@ class UserController {
   };
   avatarImg = async (req, res, next) => {
     try {
+      const { userId } = res.locals.user;
+      if (!userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
       const originalUrl = req.file.location;
-      const url = originalUrl.replace(/\/original\//, '/thumb/');
-      console.log('123123123123123123123', originalUrl, url);
-      res.status(200).json({ ok: true, data: url });
+      if (originalUrl) {
+        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
+        const avatarImg = await this.userService.avatarImg({
+          userId,
+          resizeUrl,
+        });
+        return res.status(200).json({ ok: true, data: avatarImg });
+      }
     } catch (error) {
       next(error);
     }
@@ -107,7 +117,9 @@ class UserController {
       const { userId } = res.locals.user;
       const { nickname } = req.body;
       const changeNic = await this.userService.changeNic(userId, nickname);
-      res.status(200).json({ data: changeNic.nickname, message: '닉네임 수정 완료' });
+      res
+        .status(200)
+        .json({ data: changeNic.nickname, message: '닉네임 수정 완료' });
     } catch (error) {
       next(error);
     }

@@ -189,11 +189,6 @@ class GroupController {
         userId,
         groupId,
       );
-      console.log(
-        '1111111111',
-        creategroupuser,
-        creategroupuser.groupUserNickname,
-      );
       res.status(201).json({ data: creategroupuser });
     } catch (error) {
       next(error);
