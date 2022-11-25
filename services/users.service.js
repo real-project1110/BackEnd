@@ -14,7 +14,6 @@ class UserService {
       nickname,
       password,
     );
-    console.log(user);
     return {
       email: user.email,
       nickname: user.nickname,
@@ -86,7 +85,6 @@ class UserService {
         certificationCheck: auth.certificationCheck,
       };
     }
-    // console.log('11111111',authEmail.certificationNum)
   };
 
   myprofile = async (userId) => {
@@ -127,7 +125,6 @@ class UserService {
 
   changeNic = async (userId, nickname) => {
     const changeNic = await this.userRepository.changeNic(userId, nickname);
-    console.log(changeNic);
     return {
       nickname: changeNic.nickname,
     };
@@ -140,7 +137,6 @@ class UserService {
     }
     const comparePw = await bcrypt.compare(user.password, newpassword);
 
-    console.log('22222222222222', comparePw, user.password, newpassword);
     newpassword = await bcrypt.hash(newpassword, 12);
     const changePw = await this.userRepository.changePw(userId, newpassword);
     return changePw;

@@ -2,9 +2,7 @@ const {Color,GroupUser} = require('../models');
 const {Op} = require('sequelize')
 class ColorRepository{
     createColor = async({groupId,color,content}) =>{
-        console.log(color)
         const createColor = await Color.create({groupId,color,content})
-        console.log('1111',createColor)
         return createColor
     }
 

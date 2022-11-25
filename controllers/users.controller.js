@@ -9,7 +9,6 @@ class UserController {
   //회원가입
   signup = async (req, res, next) => {
     try {
-      console.log(req.body);
       const { email, nickname, password } =
         await Joi.signupSchema.validateAsync(req.body);
 
@@ -52,12 +51,6 @@ class UserController {
         refreshToken: user.refreshToken,
         currentPage: user.user.currentPage,
       });
-      console.log(
-        user.user.userId,
-        user.user.nicknmae,
-        user.accessToken,
-        user.refreshToken,
-      );
     } catch (error) {
       next(error);
     }
