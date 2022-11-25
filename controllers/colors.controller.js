@@ -1,51 +1,54 @@
-const ColorService = require('../services/colors.service')
+const ColorService = require('../services/colors.service');
 
 class ColorController {
-    colorService = new ColorService()
+    colorService = new ColorService();
 
-    createColor = async(req,res,next)=>{
-     try{
-        const {color,status} = req.body
-        const {groupId} = req.params
-        const createcolor = await this.colorService.createColor(color,status,groupId)
-        res.status(201).json({data:createcolor})
-        }catch(err){
-            next(err)
+    createColor = async (req,res,next)=>{
+        try{
+            const {userId} = res.locals.user
+            const {groupId} = req.params;
+            const {color,content} = req.body;
+            const createColor = await this.colorService.createColor(userId,groupId,color,content)
+            res.status(201).json({data:createColor,message:"컬러가 생성되었습니다"})
+        }catch(error){
+            next(error);
+        }        
+    }
+
+    getColor = async(req,res,next)=>{
+        try{
+            const {groupId} = req.params;
+            const getColor = await this.colorService.getColor(groupId)
+            res.status(200).json({data:getColor})
+        }catch(error){
+            next(error)
         }
     }
 
-
     updateColor = async(req,res,next)=>{
         try{
-            const {color,status}=req.body
-            const {groupId,colorId} = req.params
-            const updatecolor = await this.colorService.updateColor(color,status,groupId,colorId)
-            res.status(200).json({data:updatecolor})
-        }catch (err) {
-            next(err)
-          }
+            const {userId} = res.locals.user;
+            const {groupId,colorId} = req.params;
+            const {color,content} = req.body;
+            const updateColor = await this.colorService.updateColor(userId,groupId,colorId,color,content)
+            res.status(200).json({data:updateColor.groupId,message:"컬러 수정 완료"})
+        }catch(error){
+            next(error)
+        }
     }
 
     deleteColor = async(req,res,next)=>{
         try{
-            const {groupId,colorId} = req.params
-            const deletecolor = await this.colorService.deleteColor(groupId,colorId)
-            res.status(200).json({data:deletecolor})
-        }catch (err) {
-            next(err)
-          }
+            const{userId} = res.locals.user;
+            const{colorId} = req.params;
+            const deleteColor = await this.colorService.deleteColor(userId,colorId)
+            res.status(200).json({data:deleteColor,message:"컬러 삭제 완료"})
+        }catch(error){
+            next(error)
+        }
     }
 
-
-    getColor = async(req,res,next)=>{
-        try{
-            const {groupId} = req.params
-            const getcolor = await this.colorService.getColor(groupId)
-            res.status(200).json({data:getcolor})
-        }catch (err) {
-            next(err)
-          }
-    }
 }
 
-module.exports = ColorController;
+
+module.exports = ColorController

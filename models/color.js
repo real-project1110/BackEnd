@@ -11,20 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
+      });
     }
   }
   Color.init({
     colorId: {
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-    type: DataTypes.INTEGER,
-  },
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    groupId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'GroupList',
+        key: 'groupId',
+      },
+      onDelete: 'cascade',
+    },
     color: {
     allowNull: false,
     type: DataTypes.STRING,
     },
-    status: {
+    content: {
       allowNull: false,
       type: DataTypes.STRING,
       },
