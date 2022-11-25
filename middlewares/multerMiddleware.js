@@ -17,7 +17,12 @@ const upload = multer({
     bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
       const ext = path.extname(file.originalname);
-      cb(null, `original/${Date.now()}${ext}`);
+      cb(
+        null,
+        `original/${
+          Math.floor(Math.random() * 10000).toString() + Date.now()
+        }${ext}`,
+      );
     },
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
