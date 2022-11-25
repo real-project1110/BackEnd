@@ -9,9 +9,9 @@ class UserRepository {
   findByUser = async ({ userId }) => {
     console.log('userId::::::::::::::repository:::::::::::::::', userId);
     const findByUser = await User.findOne({
-      // attributes: {
-      //   exclude: ['password'],
-      // },
+      attributes: {
+        exclude: ['password'],
+      },
       where: { userId },
     });
     return findByUser;
@@ -52,10 +52,6 @@ class UserRepository {
       { where: { userId } },
     );
     return avatarImg;
-  };
-  findByUser = async ({ userId }) => {
-    const findByUser = await User.findOne({ wher: { userId } });
-    return findByUser;
   };
 
   findByUserId = async (userId) => {
