@@ -86,6 +86,10 @@ class UserController {
   myprofile = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
+      console.log(
+        '시팔이거맞는건가싶은건데정말이거오류같은데이게맞는건가',
+        userId,
+      );
       const user = await this.userService.myprofile({ userId });
       res.status(200).json({ data: user, message: '프로필 조회 성공' });
     } catch (error) {
