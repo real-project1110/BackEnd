@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-router.use('/groups/calendars/schedules', require('./schedules.route'));
+router.use('/groups', require('./schedules.route'));
 router.use('/groups', require('./groups.route'));
 router.use('/groups', require('./comments.route'));
 router.use('/groups', require('./posts.route'));
@@ -13,4 +13,5 @@ router.use('/', require('./google.route'));
 router.use('/invites', require('./invites.route'));
 router.use('/', require('./naver.route'));
 router.use('/groups',require('./colors.route'))
+
 module.exports = router;

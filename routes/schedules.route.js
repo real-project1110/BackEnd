@@ -3,13 +3,20 @@ const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
 const ScheduleController = require('../controllers/schedules.controller');
 const scheduleController = new ScheduleController();
+router.post('/:groupId/schedules', auth, scheduleController.createSchedule);
 
-router.post('/:groupId', auth, scheduleController.createSchedule);
+router.get('/:groupId/schedules', auth, scheduleController.findAllSchedule);
 
-router.get('/:groupId', auth, scheduleController.findAllSchedule);
+router.put(
+  '/:groupId/schedules/:scheduleId',
+  auth,
+  scheduleController.updateSchedule,
+);
 
-router.put('/:scheduleId', auth, scheduleController.updateSchedule);
-
-router.delete('/:scheduleId', auth, scheduleController.destroySchedule);
+router.delete(
+  '/schedules/:scheduleId',
+  auth,
+  scheduleController.destroySchedule,
+);
 
 module.exports = router;
