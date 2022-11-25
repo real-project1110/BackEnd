@@ -29,6 +29,10 @@ class PostController {
         req.files,
       );
       console.log(
+        'req.file::::::::::::::::::::::::::::::::::::::::::::::::::::',
+        req.file,
+      );
+      console.log(
         '사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요',
         req.body,
       );
@@ -81,20 +85,6 @@ class PostController {
       next(error);
     }
   };
-  // console.log('asdfasdfasdfasdfasdfasdf', originalUrl);
-  // if (images) {
-  //   const postId = post.postId;
-  //   const postImgs = images.map((a) => {
-  //     let postImg = a.name;
-  //     postImg = postImg.replace(/\/original\//, '/statUS/');
-  //     return {
-  //       postImg,
-  //     };
-  //   });
-  //   await this.postImgService.createPostImg({ postId, postImgs });
-  // } else {
-  //   return;
-  // }
 
   //*공지/자유로 등록
   updatCategory = async (req, res, next) => {
