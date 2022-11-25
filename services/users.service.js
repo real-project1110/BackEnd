@@ -15,7 +15,6 @@ class UserService {
       password,
       avatarImg,
     );
-    console.log(user);
     return {
       email: user.email,
       nickname: user.nickname,
@@ -89,17 +88,11 @@ class UserService {
         certificationCheck: auth.certificationCheck,
       };
     }
-    // console.log('11111111',authEmail.certificationNum)
   };
 
   myprofile = async ({ userId }) => {
-    console.log('serviceUserId:::::::::::::::::::::::::::::::::', userId);
     const myprofile = await this.userRepository.findByUser({ userId });
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
-    console.log(
-      'service:::::::::::::::::::::::::::::::::::::myprofile',
-      myprofile,
-    );
     const image = myprofile.avatarImg;
     if (image == null) {
       return {
@@ -135,7 +128,7 @@ class UserService {
 
   changeNic = async ({ userId, nickname }) => {
     const changeNic = await this.userRepository.changeNic({ userId, nickname });
-    console.log(changeNic);
+
     return {
       nickname: changeNic.nickname,
     };
@@ -148,7 +141,6 @@ class UserService {
     }
     const comparePw = await bcrypt.compare(user.password, newpassword);
 
-    console.log('22222222222222', comparePw, user.password, newpassword);
     newpassword = await bcrypt.hash(newpassword, 12);
     const changePw = await this.userRepository.changePw(userId, newpassword);
     return changePw;

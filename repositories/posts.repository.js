@@ -37,7 +37,6 @@ class PostRepository extends Post {
       include: { model: GroupUser, attributes: [] },
       order: [['createdAt', 'DESC']],
     });
-    console.log('포스트0번째', posts[0]);
     return posts;
   };
   //*사진 찾기

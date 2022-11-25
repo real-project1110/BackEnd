@@ -17,7 +17,6 @@ class GroupController {
         nickname,
         avatarImg,
       });
-      console.log(createGroup);
       res.status(201).json({ data: createGroup.groupId });
     } catch (error) {
       next(error);
@@ -198,7 +197,6 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const findAllGU = await this.groupService.findAllGU(groupId);
-      console.log(findAllGU);
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);

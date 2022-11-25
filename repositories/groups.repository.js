@@ -5,7 +5,6 @@ const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
   createGroup = async ({ groupUserNickname, groupName, userId, avatarImg }) => {
-    console.log(userId, groupName);
     const createGroup = await GroupList.create({ groupName, userId });
     const groupId = createGroup.groupId;
     const userCount = 1;
@@ -125,7 +124,6 @@ class GroupRepository {
   };
 
   findAllGU = async (groupId) => {
-    console.log('groupId : ', groupId);
     const findAllGU = await GroupUser.findAll({
       where: { groupId },
       order: [['groupUserId', 'desc']],
@@ -147,7 +145,6 @@ class GroupRepository {
   };
 
   createGroupUser = async (groupUser) => {
-    console.log('안녕', groupUser);
     return await GroupUser.create(groupUser);
   };
 

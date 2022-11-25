@@ -34,7 +34,6 @@ class InviteRepository {
   findInvite = async ({ userId, findGroup }) => {
     const group = [];
     const invite = await Invite.findAll({ where: { userId } });
-    console.log(invite);
     for (let i = 0; i < findGroup.length; i++) {
       const groupFind = await GroupList.findOne({
         where: { groupId: findGroup[i] },
@@ -44,7 +43,6 @@ class InviteRepository {
       group.push({ inviteId, userId, groupId, createdAt, groupName, groupImg });
       //   Object.assign(invite[i], { groupName, groupImg });
     }
-    console.log(group);
     return group;
   };
   findUserId = async ({ userId }) => {

@@ -106,11 +106,6 @@ module.exports = (req, res, next) => {
     const { userId } = jwt.verify(authToken, process.env.SECRET_KEY);
     User.findByPk(userId).then((user) => {
       res.locals.user = user;
-      console.log(
-        '미들웨어입니다미들웨어입니다.asdjfoiadsjofijadsoifjoadsijfo;iasdj;oifjadso',
-        userId,
-        user,
-      );
       next();
     });
   } catch (err) {

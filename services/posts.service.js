@@ -9,7 +9,6 @@ class PostService {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
-    console.log(findGroupUserId);
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
@@ -53,7 +52,6 @@ class PostService {
       throw new ValidationError('잘못된 요청입니다.');
     }
     const postIds = findAllPost.map((a) => a.postId);
-    console.log(postIds);
     const findPostImg = await this.postRepository.findPostImg({
       postIds,
       groupId,
