@@ -49,7 +49,7 @@ class PostController {
       });
 
       if (images) {
-        const createPostImg = await this.postImgService.createPostImg({
+        await this.postImgService.createPostImg({
           postId: createPost.postId,
           images,
         });
