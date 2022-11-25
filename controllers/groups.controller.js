@@ -41,7 +41,6 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      console.log('여기확인하세요', req.file, req.files);
       const originalUrl = req.file.location;
       if (originalUrl) {
         const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
@@ -252,17 +251,20 @@ class GroupController {
       next(error);
     }
   };
-  
-  deleteGroupUser = async(req,res,next)=>{
-    try{
-      const {userId} = res.locals.user;
-      const {groupId} = req.params;
-      const deletegroupuser = await this.groupService.deletegroupuser({userId,groupId})
-      res.status(200).json({data:deletegroupuser})
-    }catch(error){
-      next(error)
+
+  deleteGroupUser = async (req, res, next) => {
+    try {
+      const { userId } = res.locals.user;
+      const { groupId } = req.params;
+      const deletegroupuser = await this.groupService.deletegroupuser({
+        userId,
+        groupId,
+      });
+      res.status(200).json({ data: deletegroupuser });
+    } catch (error) {
+      next(error);
     }
-  }
+  };
 }
 
 module.exports = GroupController;

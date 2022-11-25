@@ -101,7 +101,7 @@ class PostRepository extends Post {
   };
   //*게시글 찾기
   existsPost = async ({ postId }) => {
-    const existsPost = await Post.findByPk(postId);
+    const existsPost = await Post.findOne({ where: { postId } });
     return existsPost;
   };
   //*게시글 수정

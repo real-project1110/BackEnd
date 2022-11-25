@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
+      });
+      this.belongsTo(models.GroupUser, {
+        foreignKey: 'groupUserId',
+        targetKey: 'groupUserId',
+      });
     }
   }
   Schedule.init(
@@ -54,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
           model: 'GroupList',
           key: 'groupId',
         },
+        onDelete: 'cascade',
       },
     },
     {

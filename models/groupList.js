@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
+      this.hasMany(models.Schedule, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
     }
   }
   GroupList.init(
