@@ -55,6 +55,9 @@ class GroupService {
         currentPage: groupId,
       });
     }
+    
+    console.log('11111111111',userId,findGroupUser.userId)
+    
     const groups = await this.groupRepository.findOneGroup({
       groupId,
       userId,
@@ -284,6 +287,15 @@ class GroupService {
       return;
     }
   };
+
+  deletegroupuser = async({userId,groupId})=>{
+    const user = await this.groupRepository.getUserId({userId,groupId})
+    if(!user){
+      throw new Error('유저 정보가 없습니다')
+    }
+    const deleteGroupUser = await this.groupRepository.deleteGroupUser({groupUserId:user.groupUserId})
+    return deleteGroupUser
+  }
 }
 
 module.exports = GroupService;

@@ -30,6 +30,6 @@ router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);
 router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
 router.get('/:groupId/groupUsers', auth, groupcontroller.findAllGroupUser);
 
+router.delete('/:groupId/groupUser',auth,groupcontroller.deleteGroupUser)
 router.delete('/:groupId', auth, groupcontroller.destroyGroup);
-
 module.exports = router;
