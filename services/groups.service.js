@@ -279,6 +279,7 @@ class GroupService {
         groupUserNickname: user.nickname,
         userId,
         groupId,
+        groupAvatarImg: user.avatarImg,
       };
       return await this.groupRepository.createGroupUser(groupUser);
     } else {
