@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
       },
+      groupId:{
+        type: DataTypes.INTEGER
+      }
   }, {
     sequelize,
     modelName: 'Color',
