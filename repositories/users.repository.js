@@ -51,10 +51,6 @@ class UserRepository {
     );
     return avatarImg;
   };
-  findByUser = async ({ userId }) => {
-    const findByUser = await User.findOne({ wher: { userId } });
-    return findByUser;
-  };
 
   findByUserId = async (userId) => {
     const findByUserId = await User.findOne({ where: { userId } });
