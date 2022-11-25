@@ -159,6 +159,16 @@ class GroupRepository {
     });
     return groupuserdup;
   };
+
+  deleteGroupUser = async({groupUserId})=>{
+    const deletegroupuser = await GroupUser.destroy({where:{groupUserId}})
+    return deletegroupuser
+  }
+
+  getUserId = async({userId,groupId})=>{
+    const getUserId = await GroupUser.findOne({where:{userId,groupId}})
+    return getUserId
+  }
 }
 
 module.exports = GroupRepository;

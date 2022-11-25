@@ -19,10 +19,10 @@ module.exports = {
         onDelete: 'cascade',
       },
       color: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
