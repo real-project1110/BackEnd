@@ -7,7 +7,7 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { groupName } = req.body;
-      const { userId, nickname } = res.locals.user;
+      const { userId, nickname, avatarImg } = res.locals.user;
       if (!userId || !nickname || !groupName) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -15,6 +15,7 @@ class GroupController {
         groupName,
         userId,
         nickname,
+        avatarImg,
       });
       console.log(createGroup);
       res.status(201).json({ data: createGroup.groupId });

@@ -4,12 +4,13 @@ const GroupRepository = require('../repositories/groups.repository');
 class GroupService {
   groupRepository = new GroupRepository();
 
-  createGroup = async ({ groupName, userId, nickname }) => {
+  createGroup = async ({ groupName, userId, nickname, avatarImg }) => {
     const groupUserNickname = nickname;
     const createGroup = await this.groupRepository.createGroup({
       groupUserNickname,
       groupName,
       userId,
+      avatarImg,
     });
     return createGroup;
   };
