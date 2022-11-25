@@ -1,8 +1,8 @@
 const {Color,GroupUser} = require('../models');
 const {Op} = require('sequelize')
 class ColorRepository{
-    createColor = async(groupId,color,status) =>{
-        const createColor = await Color.create({groupId,color,status})
+    createColor = async(groupId,color,content) =>{
+        const createColor = await Color.create({groupId,color,content})
         console.log('1111',createColor)
         return createColor
     }
@@ -35,9 +35,9 @@ class ColorRepository{
     //     return findUC
     // }
 
-    updateColor = async(colorId,groupId,color,status)=>{
+    updateColor = async(colorId,groupId,color,content)=>{
         const updateColor = await Color.update(
-            {color,status},
+            {color,content},
             {where: {colorId,groupId}}
         )
         return updateColor

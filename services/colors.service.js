@@ -4,7 +4,7 @@ const ColorRepository = require('../repositories/colors.repository')
 class ColorService {
     colorRepository = new ColorRepository();
 
-    createColor = async(userId,groupId,color,status)=>{
+    createColor = async(userId,groupId,color,content)=>{
         const getGroupId = await this.colorRepository.getGroupId(userId)
         // if(userId !==getGroupId.userId){
         //     throw new Error('유저 정보가 없습니다')
@@ -17,7 +17,7 @@ class ColorService {
         }
         // console.log('11111111',groupId,getGroupId.groupId)
         // console.log('123123123123',userId)
-        const createColor = await this.colorRepository.createColor(groupId,color,status)
+        const createColor = await this.colorRepository.createColor(groupId,color,content)
         if(createColor.groupId !==groupId){
             throw new Error('권한이 없습니다')
         }
@@ -25,7 +25,7 @@ class ColorService {
         return {
             groupId: getGroupId.groupId,
             color : createColor.color,
-            status : createColor.status
+            content : createColor.content
         }
     }
     getColor = async(groupId)=>{
@@ -38,21 +38,21 @@ class ColorService {
                 colorId : x.colorId,
                 groupId : x.groupId,
                 color : x.color,
-                status : x.status
+                content : x.content
             }
         })
         return result
     }
 
-    updateColor = async(userId,groupId,colorId,color,status)=>{
+    updateColor = async(userId,groupId,colorId,color,content)=>{
         const getGroupId = await this.colorRepository.getGroupId(userId)
         if(!getGroupId){
             throw new Error('유저 정보가 없습니다')
         }
-        const updateColor = await this.colorRepository.updateColor(groupId,colorId,color,status)
+        const updateColor = await this.colorRepository.updateColor(groupId,colorId,color,content)
         return{
             color :updateColor.color,
-            status : updateColor.status
+            content : updateColor.content
         }
     }
 

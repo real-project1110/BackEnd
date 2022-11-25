@@ -7,8 +7,8 @@ class ColorController {
         try{
             const {userId} = res.locals.user
             const {groupId} = req.params;
-            const {color,status} = req.body;
-            const createColor = await this.colorService.createColor(userId,groupId,color,status)
+            const {color,content} = req.body;
+            const createColor = await this.colorService.createColor(userId,groupId,color,content)
             res.status(201).json({data:createColor,message:"컬러가 생성되었습니다"})
         }catch(error){
             next(error);
@@ -29,8 +29,8 @@ class ColorController {
         try{
             const {userId} = res.locals.user;
             const {groupId,colorId} = req.params;
-            const {color,status} = req.body;
-            const updateColor = await this.colorService.updateColor(userId,groupId,colorId,color,status)
+            const {color,content} = req.body;
+            const updateColor = await this.colorService.updateColor(userId,groupId,colorId,color,content)
             res.status(200).json({data:updateColor.groupId,message:"컬러 수정 완료"})
         }catch(error){
             next(error)
