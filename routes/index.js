@@ -10,7 +10,8 @@ router.use('/users', require('./users.route'));
 router.use('/', require('./searches.route'));
 router.use('/', require('./kakao.route'));
 router.use('/', require('./google.route'));
-router.use('/invites',require('./invites.route'))
-router.use('/',require('./naver.route'));
+router.use('/invites', require('./invites.route'));
+router.use('/', require('./naver.route'));
+router.use('/colors',require('./colors.route'))
 
 module.exports = router;

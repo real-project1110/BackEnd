@@ -59,48 +59,7 @@ module.exports = (sequelize, DataTypes) => {
           key: 'groupId',
         },
       },
-    },
-    {
-      sequelize,
-      modelName: 'Schedule',
-    },
-    description: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    start: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    end: {
-      allowNull: false,
-      type:DataTypes.STRING
-    },
-    color: {
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "Color",
-        key: "color",
-      }
-    },
-    groupUserId:{
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "GroupUser",
-        key: "groupuserId",
-      }
-    },
-    groupId:{
-      allowNull: false,
-      type:DataTypes.INTEGER,
-      references: {
-        model: "Group",
-        key: "groupId",
-      }
-    },
-  }, {
+    },{
     sequelize,
     modelName: 'Schedule',
   });
