@@ -12,5 +12,5 @@ router.use('/', require('./kakao.route'));
 router.use('/', require('./google.route'));
 router.use('/invites', require('./invites.route'));
 router.use('/', require('./naver.route'));
-
+router.use('/groups',require('./colors.route'))
 module.exports = router;

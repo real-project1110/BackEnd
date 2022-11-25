@@ -34,7 +34,7 @@ class UserService {
     const accessToken = jwt.sign(
       { userId: user.userId, email: user.email, nickname: user.nickname },
       process.env.SECRET_KEY,
-      { expiresIn: '1h' },
+      { expiresIn: '7d' },
     );
     const refreshToken = jwt.sign(
       { userId: user.userId, email: user.email, nickname: user.nickname },
