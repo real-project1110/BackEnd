@@ -90,9 +90,13 @@ class UserService {
   };
 
   myprofile = async ({ userId }) => {
+    console.log('serviceUserId:::::::::::::::::::::::::::::::::', userId);
     const myprofile = await this.userRepository.findByUser({ userId });
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
-    console.log(':::::::::::::::::::::::::::::::::::::myprofile', myprofile);
+    console.log(
+      'service:::::::::::::::::::::::::::::::::::::myprofile',
+      myprofile,
+    );
     const image = myprofile.avatarImg;
     if (image == null) {
       return {

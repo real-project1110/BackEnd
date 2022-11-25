@@ -8,12 +8,13 @@ class UserRepository {
   };
   findByUser = async ({ userId }) => {
     console.log('userId::::::::::::::repository:::::::::::::::', userId);
-    await User.findOne({
+    const findByUser = await User.findOne({
       // attributes: {
       //   exclude: ['password'],
       // },
       where: { userId },
     });
+    return findByUser;
   };
   findByEmail = async (email) => {
     const findEmail = await User.findOne({ where: { email } });

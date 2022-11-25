@@ -87,7 +87,7 @@ class UserController {
     try {
       const { userId } = res.locals.user;
       console.log(
-        '시팔이거맞는건가싶은건데정말이거오류같은데이게맞는건가',
+        'controller시팔이거맞는건가싶은건데정말이거오류같은데이게맞는건가',
         userId,
       );
       const user = await this.userService.myprofile({ userId });
