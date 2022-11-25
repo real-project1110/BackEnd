@@ -4,8 +4,8 @@ const ColorRepository = require('../repositories/colors.repository')
 class ColorService {
     colorRepository = new ColorRepository();
 
-    createColor = async(userId,groupId,color,content)=>{
-        const getGroupId = await this.colorRepository.getGroupId(userId)
+    createColor = async({userId,groupId,color,content})=>{
+        const getGroupId = await this.colorRepository.getGroupId({userId})
         // if(userId !==getGroupId.userId){
         //     throw new Error('유저 정보가 없습니다')
         // }
@@ -17,7 +17,8 @@ class ColorService {
         }
         // console.log('11111111',groupId,getGroupId.groupId)
         // console.log('123123123123',userId)
-        const createColor = await this.colorRepository.createColor(groupId,color,content)
+        console.log(color)
+        const createColor = await this.colorRepository.createColor({groupId,color,content})
         if(createColor.groupId !==groupId){
             throw new Error('권한이 없습니다')
         }
