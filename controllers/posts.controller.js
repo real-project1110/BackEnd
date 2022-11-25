@@ -23,7 +23,11 @@ class PostController {
       const { content } = req.body;
       // const images = req.files;
       const images = req.files;
-      console.log(images);
+      console.log(
+        'req.fileList, req.files::::::::::::::::::::::::::::::',
+        req.fileList,
+        req.files,
+      );
       console.log(
         '사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요',
         req.body,
