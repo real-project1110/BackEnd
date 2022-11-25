@@ -8,11 +8,12 @@ const ValidationError = require('../exceptions/index.exception');
 class UserService {
   userRepository = new UserRepository();
 
-  createUser = async (email, nickname, password) => {
+  createUser = async (email, nickname, password, avatarImg) => {
     const user = await this.userRepository.createUser(
       email,
       nickname,
       password,
+      avatarImg,
     );
     return {
       email: user.email,
@@ -37,6 +38,7 @@ class UserService {
         email: user.email,
         nickname: user.nickname,
         currentPage: user.currentPage,
+        avatarImg: user.avatarImg,
       },
       process.env.SECRET_KEY,
       { expiresIn: '7d' },
@@ -47,6 +49,7 @@ class UserService {
         email: user.email,
         nickname: user.nickname,
         currentPage: user.currentPage,
+        avatarImg: user.avatarImg,
       },
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
@@ -87,8 +90,8 @@ class UserService {
     }
   };
 
-  myprofile = async (userId) => {
-    const myprofile = await this.userRepository.findByUser(userId);
+  myprofile = async ({ userId }) => {
+    const myprofile = await this.userRepository.findByUser({ userId });
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
     const image = myprofile.avatarImg;
     if (image == null) {
@@ -123,8 +126,9 @@ class UserService {
     return avatarImg;
   };
 
-  changeNic = async (userId, nickname) => {
-    const changeNic = await this.userRepository.changeNic(userId, nickname);
+  changeNic = async ({ userId, nickname }) => {
+    const changeNic = await this.userRepository.changeNic({ userId, nickname });
+
     return {
       nickname: changeNic.nickname,
     };

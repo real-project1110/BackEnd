@@ -15,10 +15,10 @@ class SearchRepository {
     const userPostSearch = await Post.findAll({
       where: { groupUserId },
       attributes: [
-        postId,
-        title,
-        commentCount,
-        createdAt,
+        'postId',
+        'content',
+        'commentCount',
+        'createdAt',
         [Sequelize.col('GroupUser.groupUserUserId'), 'groupUserUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],

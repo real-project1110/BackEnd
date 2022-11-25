@@ -22,6 +22,15 @@ module.exports = {
         },
         onDelete: 'cascade',
       },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

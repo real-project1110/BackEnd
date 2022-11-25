@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Color extends Model {
     /**
@@ -17,33 +15,37 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Color.init({
-    colorId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-    groupId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'GroupList',
-        key: 'groupId',
+  Color.init(
+    {
+      colorId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
       },
-      onDelete: 'cascade',
+      groupId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupList',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
+      },
+      color: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      content: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
     },
-    color: {
-      allowNull: false,
-      type: DataTypes.STRING,
+    {
+      sequelize,
+      modelName: 'Color',
     },
-    content: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-  }, {
-    sequelize,
-    modelName: 'Color',
-  });
+  );
+
   return Color;
 };
