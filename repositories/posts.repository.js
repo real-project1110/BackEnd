@@ -1,4 +1,4 @@
-const { Post, GroupUser } = require('../models');
+const { Post, GroupUser, PostImg } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
@@ -33,18 +33,38 @@ class PostRepository extends Post {
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
-        [Sequelize.col('PostImg.postImg'), 'postImg'],
       ],
       include: { model: GroupUser, attributes: [] },
-      include: { model: PostImg, attributes: [] },
       order: [['createdAt', 'DESC']],
     });
+    console.log('포스트0번째', posts[0]);
     return posts;
+  };
+  findPostImg = async ({ postIds, groupId }) => {
+    const result = [];
+    for (let i = 0; i < postIds.length; i++) {
+      let postImg = await PostImg.findAll({
+        where: { postId: postIds[i] },
+        attributes: ['postImg'],
+      });
+      if (!postImg) {
+        return (postImg = null);
+      }
+      const post = await Post.findOne({
+        where: { postid: postIds[i] },
+        raw: true,
+      });
+
+      const Posts = { ...post, postImg };
+      result.push(Posts);
+    }
+    return result;
   };
   //*게시글 상세 조회
   //postImg 추가해야함
   findPost = async ({ postId }) => {
-    const findPost = await Post.findOne({
+    const result = [];
+    const post = await Post.findOne({
       where: { postId },
       attributes: [
         'postId',
@@ -58,7 +78,16 @@ class PostRepository extends Post {
       ],
       include: [{ model: GroupUser, attributes: [] }],
     });
-    return findPost;
+    let postImg = await PostImg.findAll({
+      where: { postId },
+      attributes: ['postImg'],
+    });
+    if (!postImg) {
+      return (postImg = null);
+    }
+    const Post = { post, postImg };
+    result.push(Post);
+    return result;
   };
   //*게시글 찾기
   existsPost = async ({ postId }) => {
@@ -66,9 +95,9 @@ class PostRepository extends Post {
     return existsPost;
   };
   //*게시글 수정
-  updatPost = async ({ postId, content, postImg, category, groupUserId }) => {
+  updatPost = async ({ postId, content, category, groupUserId }) => {
     const updatPost = await Post.update(
-      { content, category, postImg },
+      { content, category },
       { where: { [Op.and]: [{ postId }, { groupUserId }] } },
     );
     return updatPost;

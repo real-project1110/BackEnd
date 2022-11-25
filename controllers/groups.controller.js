@@ -41,6 +41,7 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
+      console.log('여기확인하세요', req.file, req.files);
       const originalUrl = req.file.location;
       if (originalUrl) {
         const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
@@ -84,10 +85,6 @@ class GroupController {
   findAllGroupList = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      console.log(
-        '사람있어요여기요여기보세요제발요살려주세요여기요제발요잘게요',
-        userId,
-      );
       if (!userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
