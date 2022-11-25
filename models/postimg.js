@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         targetKey: 'postId',
       });
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
+      });
     }
   }
   PostImg.init(
@@ -32,6 +36,15 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'Post',
           key: 'postId',
+        },
+        onDelete: 'cascade',
+      },
+      groupId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupList',
+          key: 'groupId',
         },
         onDelete: 'cascade',
       },

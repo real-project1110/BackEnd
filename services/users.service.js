@@ -89,8 +89,8 @@ class UserService {
     // console.log('11111111',authEmail.certificationNum)
   };
 
-  myprofile = async (userId) => {
-    const myprofile = await this.userRepository.findByUser(userId);
+  myprofile = async ({ userId }) => {
+    const myprofile = await this.userRepository.findByUser({ userId });
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
     const image = myprofile.avatarImg;
     if (image == null) {
@@ -125,8 +125,8 @@ class UserService {
     return avatarImg;
   };
 
-  changeNic = async (userId, nickname) => {
-    const changeNic = await this.userRepository.changeNic(userId, nickname);
+  changeNic = async ({ userId, nickname }) => {
+    const changeNic = await this.userRepository.changeNic({ userId, nickname });
     console.log(changeNic);
     return {
       nickname: changeNic.nickname,

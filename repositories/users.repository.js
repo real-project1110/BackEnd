@@ -6,7 +6,7 @@ class UserRepository {
     const createUser = await User.create({ email, nickname, password });
     return createUser;
   };
-  findByUser = async (userId) => {
+  findByUser = async ({ userId }) => {
     return User.findOne({
       attributes: {
         exclude: ['password'],
@@ -29,7 +29,7 @@ class UserRepository {
     return findGroupUserId;
   };
 
-  changeNic = async (userId, nickname) => {
+  changeNic = async ({ userId, nickname }) => {
     const changeNic = await User.update(
       { nickname: nickname },
       { where: { userId } },

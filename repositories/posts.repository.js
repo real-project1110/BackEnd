@@ -19,7 +19,7 @@ class PostRepository extends Post {
   };
   //*그룹유저 찾기
   findGroupUserId = async ({ userId }) => {
-    const findGroupUserId = await GroupUser.findByPk(userId);
+    const findGroupUserId = await GroupUser.findOne({ where: { userId } });
     return findGroupUserId;
   };
   //*게시글 전체 조회
@@ -33,8 +33,10 @@ class PostRepository extends Post {
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        [Sequelize.col('PostImg.postImg'), 'postImg'],
       ],
       include: { model: GroupUser, attributes: [] },
+      include: { model: PostImg, attributes: [] },
       order: [['createdAt', 'DESC']],
     });
     return posts;

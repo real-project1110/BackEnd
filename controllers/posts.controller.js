@@ -7,15 +7,7 @@ class PostController {
   postService = new PostService();
   postImgService = new PostImgService();
 
-  //*확장자 달아주기
-  plusExt = async (req, res, next) => {
-    try {
-    } catch (error) {
-      next(error);
-    }
-  };
   //*게시글 작성
-
   createPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
@@ -37,6 +29,7 @@ class PostController {
         await this.postImgService.createPostImg({
           postId: createPost.postId,
           images,
+          groupId,
         });
       }
       res.status(201).json({ ok: true, data: createPost.postId });

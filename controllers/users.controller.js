@@ -86,7 +86,7 @@ class UserController {
   myprofile = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      const user = await this.userService.myprofile(userId);
+      const user = await this.userService.myprofile({ userId });
       res.status(200).json({ data: user, message: '프로필 조회 성공' });
     } catch (error) {
       next(error);
@@ -118,7 +118,7 @@ class UserController {
     try {
       const { userId } = res.locals.user;
       const { nickname } = req.body;
-      const changeNic = await this.userService.changeNic(userId, nickname);
+      const changeNic = await this.userService.changeNic({ userId, nickname });
       res
         .status(200)
         .json({ data: changeNic.nickname, message: '닉네임 수정 완료' });

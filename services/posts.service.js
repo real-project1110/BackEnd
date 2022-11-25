@@ -9,6 +9,7 @@ class PostService {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
+    console.log(findGroupUserId);
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
