@@ -7,7 +7,8 @@ class UserRepository {
     return createUser;
   };
   findByUser = async ({ userId }) => {
-    return User.findOne({
+    console.log('userId::::::::::::::repository:::::::::::::::', userId);
+    await User.findOne({
       attributes: {
         exclude: ['password'],
       },
