@@ -21,22 +21,7 @@ class PostController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const { content } = req.body;
-      // const images = req.files;
       const images = req.files;
-      console.log(
-        'req.fileList, req.files::::::::::::::::::::::::::::::',
-        req.fileList,
-        req.files,
-      );
-      console.log(
-        'req.file::::::::::::::::::::::::::::::::::::::::::::::::::::',
-        req.file,
-      );
-      console.log(
-        '사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요',
-        req.body,
-      );
-      // console.log('123123123123123', req.files);
       const category = 0;
       if (!content || !userId || !groupId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
@@ -55,32 +40,6 @@ class PostController {
         });
       }
       res.status(201).json({ ok: true, data: createPost.postId });
-      // if (originalUrl) {
-      //   const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
-      //   const post = await this.postService.createPost({
-      //     groupId,
-      //     userId,
-      //     content,
-      //     resizeUrl,
-      //     category,
-      //   });
-      //   return res.status(201).json({
-      //     ok: true,
-      //     postId: post.postId,
-      //   });
-      // } else {
-      //   const post = await this.postService.createPost({
-      //     groupId,
-      //     userId,
-      //     content,
-      //     resizeUrl: null,
-      //     category,
-      //   });
-      //   return res.status(201).json({
-      //     ok: true,
-      //     postId: post.postId,
-      //   });
-      // }
     } catch (error) {
       next(error);
     }
