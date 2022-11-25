@@ -57,8 +57,6 @@ class GroupService {
       });
     }
     
-    console.log('11111111111',userId,findGroupUser.userId)
-    
     const groups = await this.groupRepository.findOneGroup({
       groupId,
       userId,

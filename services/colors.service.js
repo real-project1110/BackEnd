@@ -6,23 +6,16 @@ class ColorService {
 
     createColor = async({userId,groupId,color,content})=>{
         const getGroupId = await this.colorRepository.getGroupId({userId})
-        // if(userId !==getGroupId.userId){
-        //     throw new Error('유저 정보가 없습니다')
-        // }
         if(!getGroupId){
             throw new Error('유저 정보가 없습니다')
         }
         if(getGroupId.groupId !==parseInt(groupId)){
             throw new Error('소속된 그룹이 아닙니다')
         }
-        // console.log('11111111',groupId,getGroupId.groupId)
-        // console.log('123123123123',userId)
-        console.log(color)
         const createColor = await this.colorRepository.createColor({groupId,color,content})
         if(createColor.groupId !==groupId){
             throw new Error('권한이 없습니다')
         }
-        console.log('111111',createColor.groupId,groupId)
         return {
             groupId: getGroupId.groupId,
             color : createColor.color,
