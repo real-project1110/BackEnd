@@ -40,6 +40,7 @@ class PostRepository extends Post {
     console.log('포스트0번째', posts[0]);
     return posts;
   };
+  //*사진 찾기
   findPostImg = async ({ postIds, groupId }) => {
     const result = [];
     for (let i = 0; i < postIds.length; i++) {
@@ -51,7 +52,16 @@ class PostRepository extends Post {
         return (postImg = null);
       }
       const post = await Post.findOne({
-        where: { postid: postIds[i] },
+        where: { [Op.and]: [{ groupId }, { postId: postIds[i] }] },
+        attributes: [
+          'postId',
+          'commentCount',
+          'createdAt',
+          [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
+          [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
+          [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        ],
+        include: { model: GroupUser, attributes: [] },
         raw: true,
       });
 
