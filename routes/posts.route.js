@@ -10,7 +10,7 @@ const postController = new PostController();
 router.post(
   '/:groupId/posts',
   auth,
-  upload.array('image', 5),
+  upload.array('image'),
   postController.createPost,
 );
 //*게시글 전체 조회
