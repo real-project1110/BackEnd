@@ -37,7 +37,7 @@ class GroupController {
     }
   };
 
-  updateGroupImg = async (req, res) => {
+  updateGroupImg = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
