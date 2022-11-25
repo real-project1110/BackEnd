@@ -7,10 +7,10 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { groupName } = req.body;
-      const { user } = res.locals;
-      const userId = user.userId;
-      const { nickname } = res.locals.user;
-      console.log('real', groupName, userId);
+      const { userId, nickname } = res.locals.user;
+      if (!userId || !nickname || !groupName) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
       const createGroup = await this.groupService.createGroup({
         groupName,
         userId,
