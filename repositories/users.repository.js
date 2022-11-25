@@ -9,9 +9,9 @@ class UserRepository {
   findByUser = async ({ userId }) => {
     console.log('userId::::::::::::::repository:::::::::::::::', userId);
     await User.findOne({
-      attributes: {
-        exclude: ['password'],
-      },
+      // attributes: {
+      //   exclude: ['password'],
+      // },
       where: { userId },
     });
   };
