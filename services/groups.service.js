@@ -4,12 +4,13 @@ const GroupRepository = require('../repositories/groups.repository');
 class GroupService {
   groupRepository = new GroupRepository();
 
-  createGroup = async ({ groupName, userId, nickname }) => {
+  createGroup = async ({ groupName, userId, nickname, avatarImg }) => {
     const groupUserNickname = nickname;
     const createGroup = await this.groupRepository.createGroup({
       groupUserNickname,
       groupName,
       userId,
+      avatarImg,
     });
     return createGroup;
   };
@@ -137,14 +138,14 @@ class GroupService {
     };
   };
   updatGroupAvatarImg = async ({ userId, groupId, resizeUrl }) => {
-    const findGroupUser = await this.groupService.findGroupUser({
+    const findGroupUser = await this.groupRepository.findGroupUser({
       userId,
       groupId,
     });
     if (!findGroupUser) {
       throw new ValidationError('그룹유저가 아닙니다.');
     }
-    const updatGroupAvatarImg = await this.groupService.updatGroupAvatarImg({
+    const updatGroupAvatarImg = await this.groupRepository.updatGroupAvatarImg({
       groupUserId: findGroupUser.groupUserId,
       groupAvatarImg: resizeUrl,
       groupId,
@@ -281,6 +282,7 @@ class GroupService {
         groupUserNickname: user.nickname,
         userId,
         groupId,
+        groupAvatarImg: user.avatarImg,
       };
       return await this.groupRepository.createGroupUser(groupUser);
     } else {

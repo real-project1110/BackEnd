@@ -31,15 +31,15 @@ class CommentRepository extends Comment {
     const findAllComment = await Comment.findAll({
       where: { postId },
       attributes: [
-        commentId,
-        comment,
-        createdAt,
+        'commentId',
+        'comment',
+        'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
-        // [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
-      include: [{ model: GroupUser }],
-      order: ['createdAt', 'DESC'],
+      include: [{ model: GroupUser, attributes: [] }],
+      order: ['createdAt', 'ASC'],
     });
     return findAllComment;
   };

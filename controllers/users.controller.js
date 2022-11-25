@@ -9,7 +9,6 @@ class UserController {
   //회원가입
   signup = async (req, res, next) => {
     try {
-      console.log(req.body);
       const { email, nickname, password } =
         await Joi.signupSchema.validateAsync(req.body);
 
@@ -24,12 +23,15 @@ class UserController {
           message: '이름과 비밀번호를 다른형식으로 설정해주세요',
         });
       }
+      const avatarImg =
+        'https://shitlambda.s3.ap-northeast-2.amazonaws.com/statUS/78611669410319683.jpeg';
 
       const hashed = await bcrypt.hash(password, 12);
       const users = await Object.create({
         email: email,
         nickname: nickname,
         password: hashed,
+        avatarImg,
       });
       await this.userService.createUser(users);
       res.status(201).json({ message: '회원가입에 성공하셨습니다.' });
@@ -52,12 +54,6 @@ class UserController {
         refreshToken: user.refreshToken,
         currentPage: user.user.currentPage,
       });
-      console.log(
-        user.user.userId,
-        user.user.nicknmae,
-        user.accessToken,
-        user.refreshToken,
-      );
     } catch (error) {
       next(error);
     }
@@ -86,7 +82,7 @@ class UserController {
   myprofile = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      const user = await this.userService.myprofile(userId);
+      const user = await this.userService.myprofile({ userId });
       res.status(200).json({ data: user, message: '프로필 조회 성공' });
     } catch (error) {
       next(error);
@@ -118,7 +114,7 @@ class UserController {
     try {
       const { userId } = res.locals.user;
       const { nickname } = req.body;
-      const changeNic = await this.userService.changeNic(userId, nickname);
+      const changeNic = await this.userService.changeNic({ userId, nickname });
       res
         .status(200)
         .json({ data: changeNic.nickname, message: '닉네임 수정 완료' });

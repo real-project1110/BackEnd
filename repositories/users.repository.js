@@ -2,17 +2,23 @@ const { User, Certification } = require('../models');
 const groupList = require('../models/groupList');
 
 class UserRepository {
-  createUser = async ({ email, nickname, password }) => {
-    const createUser = await User.create({ email, nickname, password });
+  createUser = async ({ email, nickname, password, avatarImg }) => {
+    const createUser = await User.create({
+      email,
+      nickname,
+      password,
+      avatarImg,
+    });
     return createUser;
   };
-  findByUser = async (userId) => {
-    return User.findOne({
+  findByUser = async ({ userId }) => {
+    const findByUser = await User.findOne({
       attributes: {
         exclude: ['password'],
       },
       where: { userId },
     });
+    return findByUser;
   };
   findByEmail = async (email) => {
     const findEmail = await User.findOne({ where: { email } });
@@ -29,7 +35,7 @@ class UserRepository {
     return findGroupUserId;
   };
 
-  changeNic = async (userId, nickname) => {
+  changeNic = async ({ userId, nickname }) => {
     const changeNic = await User.update(
       { nickname: nickname },
       { where: { userId } },

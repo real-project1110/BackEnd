@@ -51,7 +51,12 @@ class PostService {
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    return findAllPost;
+    const postIds = findAllPost.map((a) => a.postId);
+    const findPostImg = await this.postRepository.findPostImg({
+      postIds,
+      groupId,
+    });
+    return findPostImg;
   };
 
   //*게시글 상세 조회
@@ -64,7 +69,7 @@ class PostService {
   };
 
   //*게시글 수정
-  updatPost = async ({ postId, userId, resizeUrl, content, category }) => {
+  updatPost = async ({ postId, userId, content }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -81,8 +86,6 @@ class PostService {
     const updatPost = await this.postRepository.updatPost({
       postId,
       content,
-      postImg: resizeUrl,
-      category,
       groupUserId: findGroupUserId.groupUserId,
     });
     return updatPost;

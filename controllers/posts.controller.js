@@ -7,15 +7,7 @@ class PostController {
   postService = new PostService();
   postImgService = new PostImgService();
 
-  //*확장자 달아주기
-  plusExt = async (req, res, next) => {
-    try {
-    } catch (error) {
-      next(error);
-    }
-  };
   //*게시글 작성
-
   createPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
@@ -37,6 +29,7 @@ class PostController {
         await this.postImgService.createPostImg({
           postId: createPost.postId,
           images,
+          groupId,
         });
       }
       res.status(201).json({ ok: true, data: createPost.postId });
@@ -107,34 +100,26 @@ class PostController {
   //*게시글 수정
   updatPost = async (req, res, next) => {
     try {
-      const { postId } = req.params;
+      const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
-      const { content, category } = req.body;
-      const originalUrl = req.file.location;
+      const { content } = req.body;
+      const images = req.files;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      if (originalUrl) {
-        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
-        const updatPost = await this.groupService.updatPost({
+      const updatPost = await this.postService.updatPost({
+        postId,
+        userId,
+        content,
+      });
+      if (images) {
+        await this.postImgService.updatPostImg({
           postId,
-          userId,
-          content,
-          category,
-          resizeUrl,
+          images,
+          groupId,
         });
-        return res.status(200).json({ ok: true, data: updatPost });
-      } else {
-        const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
-        const updatPost = await this.groupService.updatPost({
-          postId,
-          userId,
-          content,
-          category,
-          resizeUrl: null,
-        });
-        return res.status(200).json({ ok: true, data: updatPost });
       }
+
       res.status(200).json({
         ok: true,
         data: updatPost,

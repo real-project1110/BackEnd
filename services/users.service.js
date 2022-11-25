@@ -8,13 +8,13 @@ const ValidationError = require('../exceptions/index.exception');
 class UserService {
   userRepository = new UserRepository();
 
-  createUser = async (email, nickname, password) => {
+  createUser = async (email, nickname, password, avatarImg) => {
     const user = await this.userRepository.createUser(
       email,
       nickname,
       password,
+      avatarImg,
     );
-    console.log(user);
     return {
       email: user.email,
       nickname: user.nickname,
@@ -38,6 +38,7 @@ class UserService {
         email: user.email,
         nickname: user.nickname,
         currentPage: user.currentPage,
+        avatarImg: user.avatarImg,
       },
       process.env.SECRET_KEY,
       { expiresIn: '7d' },
@@ -48,6 +49,7 @@ class UserService {
         email: user.email,
         nickname: user.nickname,
         currentPage: user.currentPage,
+        avatarImg: user.avatarImg,
       },
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
@@ -86,11 +88,10 @@ class UserService {
         certificationCheck: auth.certificationCheck,
       };
     }
-    // console.log('11111111',authEmail.certificationNum)
   };
 
-  myprofile = async (userId) => {
-    const myprofile = await this.userRepository.findByUser(userId);
+  myprofile = async ({ userId }) => {
+    const myprofile = await this.userRepository.findByUser({ userId });
     if (!myprofile) throw new Error('가입되지 않은 회원입니다.');
     const image = myprofile.avatarImg;
     if (image == null) {
@@ -125,9 +126,9 @@ class UserService {
     return avatarImg;
   };
 
-  changeNic = async (userId, nickname) => {
-    const changeNic = await this.userRepository.changeNic(userId, nickname);
-    console.log(changeNic);
+  changeNic = async ({ userId, nickname }) => {
+    const changeNic = await this.userRepository.changeNic({ userId, nickname });
+
     return {
       nickname: changeNic.nickname,
     };
@@ -140,7 +141,6 @@ class UserService {
     }
     const comparePw = await bcrypt.compare(user.password, newpassword);
 
-    console.log('22222222222222', comparePw, user.password, newpassword);
     newpassword = await bcrypt.hash(newpassword, 12);
     const changePw = await this.userRepository.changePw(userId, newpassword);
     return changePw;

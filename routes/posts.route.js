@@ -21,7 +21,7 @@ router.get('/posts/:postId', auth, postController.findPost);
 router.put('/posts/:postId', auth, postController.updatCategory);
 //*게시글 수정
 router.put(
-  '/posts/:postId',
+  '/:groupId/posts/:postId',
   auth,
   upload.array('image', 5),
   postController.updatPost,

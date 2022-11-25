@@ -18,7 +18,6 @@ const upload = multer({
     key: function (req, file, cb) {
       const ext =
         path.extname(file.originalname) === '.jpg' ? '.jpeg' : '.jpeg';
-      console.log(ext);
       cb(
         null,
         `original/${

@@ -15,13 +15,20 @@ class PostImgRepository extends PostImg {
   };
 
   //*게시글사진 생성
-  createPostImg = async ({ postId, postImgs }) => {
+  createPostImg = async ({ postId, postImgs, groupId }) => {
     for (let i = 0; i < postImgs.length; i++) {
       await PostImg.create({
         postId,
         postImg: postImgs[i],
+        groupId,
       });
     }
+  };
+  deletPostImg = async ({ postId, groupId }) => {
+    const deletPostImg = await PostImg.destroy({
+      where: { [Op.and]: [{ groupId }, { postId }] },
+    });
+    return deletPostImg;
   };
 }
 

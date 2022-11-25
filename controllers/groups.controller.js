@@ -7,7 +7,7 @@ class GroupController {
   createGroup = async (req, res, next) => {
     try {
       const { groupName } = req.body;
-      const { userId, nickname } = res.locals.user;
+      const { userId, nickname, avatarImg } = res.locals.user;
       if (!userId || !nickname || !groupName) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -15,8 +15,8 @@ class GroupController {
         groupName,
         userId,
         nickname,
+        avatarImg,
       });
-      console.log(createGroup);
       res.status(201).json({ data: createGroup.groupId });
     } catch (error) {
       next(error);
@@ -37,10 +37,11 @@ class GroupController {
     }
   };
 
-  updateGroupImg = async (req, res) => {
+  updateGroupImg = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
+      console.log('여기확인하세요', req.file, req.files);
       const originalUrl = req.file.location;
       if (originalUrl) {
         const resizeUrl = originalUrl.replace(/\/original\//, '/statUS/');
@@ -84,10 +85,6 @@ class GroupController {
   findAllGroupList = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      console.log(
-        '사람있어요여기요여기보세요제발요살려주세요여기요제발요잘게요',
-        userId,
-      );
       if (!userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -200,7 +197,6 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const findAllGU = await this.groupService.findAllGU(groupId);
-      console.log(findAllGU);
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
