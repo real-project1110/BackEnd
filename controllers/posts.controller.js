@@ -24,6 +24,10 @@ class PostController {
       // const images = req.files;
       const images = req.files;
       console.log(images);
+      console.log(
+        '사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요사람있어요',
+        req.body,
+      );
       // console.log('123123123123123', req.files);
       const category = 0;
       if (!content || !userId || !groupId) {
