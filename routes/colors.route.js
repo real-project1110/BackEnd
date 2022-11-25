@@ -4,12 +4,12 @@ const auth = require('../middlewares/authMiddleware');
 const ColorController = require('../controllers/colors.controller');
 const colorcontroller = new ColorController();
 
-router.post('/:groupId',colorcontroller.createColor)
+router.post('/:groupId',auth,colorcontroller.createColor)
 
-router.put('/:groupId/:colorId',colorcontroller.updateColor)
+router.put('/:groupId/:colorId',auth,colorcontroller.updateColor)
 
-router.delete('/:groupId/:colorId',colorcontroller.deleteColor)
+router.delete('/:groupId/:colorId',auth,colorcontroller.deleteColor)
 
-router.get('/:groupId',colorcontroller.getColor)
+router.get('/:groupId',auth,colorcontroller.getColor)
 
 module.exports=router

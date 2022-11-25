@@ -4,13 +4,13 @@ const auth = require('../middlewares/authMiddleware')
 const ScheduleController = require('../controllers/schedules.controller')
 const scheduleController = new ScheduleController();
 
-router.post('/:groupId',scheduleController.createSchedule)
+router.post('/:groupId',auth,scheduleController.createSchedule)
 
-router.get('/:groupId',scheduleController.findAllSchedule)
+router.get('/:groupId',auth,scheduleController.findAllSchedule)
 
-router.put('/:groupId/:id',scheduleController.updateSchedule)
+router.put('/:groupId/:id',auth,scheduleController.updateSchedule)
 
-router.delete('/:groupId/:id',scheduleController.destroySchedule)
+router.delete('/:groupId/:id',auth,scheduleController.destroySchedule)
 
 router.get('/:groupId/:id',auth,scheduleController.findOneSchedule)
 
