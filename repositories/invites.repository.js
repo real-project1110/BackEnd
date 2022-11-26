@@ -17,11 +17,6 @@ class InviteRepository {
         groupId,
       });
     }
-    // const { userId } = await User.findOne({ where: { email } });
-    // const { groupName, groupImg } = await GroupList.findOne({
-    //   where: { groupId },
-    // });
-    // await Invite.create({ userId, groupId, groupName, groupImg });
   };
   findGroup = async (userId) => {
     const findGroup = [];
