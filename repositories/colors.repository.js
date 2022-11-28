@@ -44,7 +44,7 @@ class ColorRepository {
     return updateColor;
   };
 
-  deleteColor = async (colorId) => {
+  deleteColor = async ({ colorId }) => {
     const deleteColor = await Color.destroy({ where: { colorId } });
     return deleteColor;
   };

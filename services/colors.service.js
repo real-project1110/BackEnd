@@ -69,13 +69,16 @@ class ColorService {
     };
   };
 
-  deleteColor = async (userId, colorId) => {
-    const getGroupId = await this.colorRepository.getGroupId(userId);
+  deleteColor = async ({ userId, colorId, groupId }) => {
+    const getGroupId = await this.colorRepository.getGroupId({
+      userId,
+      groupId,
+    });
     if (!getGroupId) {
       throw new Error('유저 정보가 없습니다');
     }
 
-    const deleteColor = await this.colorRepository.deleteColor(colorId);
+    const deleteColor = await this.colorRepository.deleteColor({ colorId });
     if (!deleteColor) {
       throw new Error('존재하지 않는 컬러입니다');
     }
