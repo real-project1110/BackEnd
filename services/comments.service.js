@@ -24,7 +24,7 @@ class CommentService {
   };
 
   //*댓글 전체 조회
-  findAllComment = async (postId, userId) => {
+  findAllComment = async ({ postId, userId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -38,7 +38,7 @@ class CommentService {
   };
 
   //*댓글 수정
-  updatComment = async (commentId, comment, userId) => {
+  updatComment = async ({ commentId, comment, userId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -61,7 +61,7 @@ class CommentService {
   };
 
   //*댓글 삭제
-  deletComment = async (commentId, userId) => {
+  deletComment = async ({ commentId, userId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
