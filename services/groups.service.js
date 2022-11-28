@@ -56,9 +56,9 @@ class GroupService {
         currentPage: groupId,
       });
     }
-    
-    console.log('11111111111',userId,findGroupUser.userId)
-    
+
+    console.log('11111111111', userId, findGroupUser.userId);
+
     const groups = await this.groupRepository.findOneGroup({
       groupId,
       userId,
@@ -108,6 +108,7 @@ class GroupService {
   //   };
 
   destroyGroup = async (groupId) => {
+    //그룹테이블 조회해서 그룹테이블 userId !== userId if문으로 에러
     await this.groupRepository.destroyGroup(groupId);
   };
   updateNic = async (userId, groupId, groupUserNickname) => {
@@ -290,14 +291,16 @@ class GroupService {
     }
   };
 
-  deletegroupuser = async({userId,groupId})=>{
-    const user = await this.groupRepository.getUserId({userId,groupId})
-    if(!user){
-      throw new Error('유저 정보가 없습니다')
+  deletegroupuser = async ({ userId, groupId }) => {
+    const user = await this.groupRepository.getUserId({ userId, groupId });
+    if (!user) {
+      throw new Error('유저 정보가 없습니다');
     }
-    const deleteGroupUser = await this.groupRepository.deleteGroupUser({groupUserId:user.groupUserId})
-    return deleteGroupUser
-  }
+    const deleteGroupUser = await this.groupRepository.deleteGroupUser({
+      groupUserId: user.groupUserId,
+    });
+    return deleteGroupUser;
+  };
 }
 
 module.exports = GroupService;
