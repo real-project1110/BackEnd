@@ -33,7 +33,7 @@ class PostImgService {
     console.log('이미지만', image);
     console.log('파인드포스트이미지', findPostImg);
     if (findPostImg.length == image.length) return;
-    const delet = findPostImg.filter((a) => image.includes(a.postImg));
+    const delet = findPostImg.filter((a) => !image.includes(a.postImg));
     console.log('필터로 나눈거', delet);
     const deletPostImg = await this.postImgRepository.deletPostImg({
       postImg: delet,
