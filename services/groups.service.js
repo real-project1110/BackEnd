@@ -15,7 +15,12 @@ class GroupService {
     return createGroup;
   };
 
-  updateGroupName = async (groupId, groupName) => {
+  updateGroupName = async (groupId, groupName,userId) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId)
+    const leaderId = findGroupLeader.userId
+    if(leaderId!==userId){
+      throw new ValidationError('권한이 없습니다.')
+    }
     await this.groupRepository.updateGroupName(groupId, groupName);
     return { message: '수정이 완료되었습니다.' };
   };
@@ -105,7 +110,12 @@ class GroupService {
   //     return groups;
   //   };
 
-  destroyGroup = async (groupId) => {
+  destroyGroup = async (groupId,userId) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId)
+    const leaderId = findGroupLeader.userId
+    if(leaderId!==userId){
+      throw new ValidationError('권한이 없습니다.')
+    }
     await this.groupRepository.destroyGroup(groupId);
   };
   updateNic = async (userId, groupId, groupUserNickname) => {

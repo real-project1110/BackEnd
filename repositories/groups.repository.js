@@ -170,6 +170,11 @@ class GroupRepository {
     const getUserId = await GroupUser.findOne({where:{userId,groupId}})
     return getUserId
   }
+
+  findGroupLeader = async({groupId})=>{
+    const findGroupLeader = await GroupList.findOne({where:{groupId}})
+    return findGroupLeader
+  }
 }
 
 module.exports = GroupRepository;
