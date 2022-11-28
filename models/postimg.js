@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class PostImg extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,31 +9,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Post, {
+        foreignKey: 'postId',
+        targetKey: 'postId',
+      });
       this.belongsTo(models.GroupList, {
         foreignKey: 'groupId',
         targetKey: 'groupId',
       });
-      this.belongsTo(models.GroupUser, {
-        foreignKey: 'groupUserId',
-        targetKey: 'groupUserId',
-      });
-      this.hasMany(models.Comment, {
-        foreignKey: 'postId',
-        sourceKey: 'postId',
-      });
-      this.hasMany(models.PostImg, {
-        foreignKey: 'postId',
-        sourceKey: 'postId',
-      });
     }
   }
-  Post.init(
+  PostImg.init(
     {
-      postId: {
+      postImgId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
+      },
+      postImg: {
+        type: DataTypes.STRING,
+      },
+      postId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Post',
+          key: 'postId',
+        },
+        onDelete: 'cascade',
       },
       groupId: {
         allowNull: false,
@@ -43,27 +47,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'groupId',
         },
         onDelete: 'cascade',
-      },
-      groupUserId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'GroupUser',
-          key: 'groupUserId',
-        },
-      },
-      content: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      category: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      commentCount: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -76,8 +59,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Post',
+      modelName: 'PostImg',
     },
   );
-  return Post;
+  return PostImg;
 };

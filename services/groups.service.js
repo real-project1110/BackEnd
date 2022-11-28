@@ -1,14 +1,16 @@
+const { ValidationError } = require('sequelize');
 const GroupRepository = require('../repositories/groups.repository');
 
 class GroupService {
   groupRepository = new GroupRepository();
 
-  createGroup = async ({ groupName, userId, nickname }) => {
+  createGroup = async ({ groupName, userId, nickname, avatarImg }) => {
     const groupUserNickname = nickname;
     const createGroup = await this.groupRepository.createGroup({
       groupUserNickname,
       groupName,
       userId,
+      avatarImg,
     });
     return createGroup;
   };
@@ -18,19 +20,74 @@ class GroupService {
     return { message: '수정이 완료되었습니다.' };
   };
 
-  updateGroupImg = async (groupId, groupImg) => {
-    await this.groupRepository.updateGroupImg(groupId, groupImg);
-    return { message: '수정이 완료되었습니다.' };
+  updateGroupImg = async ({ userId, groupId, resizeUrl }) => {
+    const findByUser = await this.groupRepository.findByUser({
+      userId,
+    });
+    if (!findByUser) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findGroupUser = await this.groupRepository.findGroupUser({
+      groupId,
+    });
+    if (!findGroupUser) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const updateGroupImg = await this.groupRepository.updateGroupImg({
+      groupId,
+      groupUserId: findGroupUser.groupUserId,
+      groupImg: resizeUrl,
+    });
+    return updateGroupImg;
   };
 
-  findOneGroup = async (groupId) => {
-    const groups = await this.groupRepository.findOneGroup(groupId);
-    return groups;
+  findOneGroup = async ({ groupId, userId, currentPage }) => {
+    const findGroupUser = await this.groupRepository.findGroupUser({
+      userId,
+      groupId,
+    });
+    if (!findGroupUser) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+
+    if (currentPage != groupId) {
+      await this.groupRepository.updatcurrentPage({
+        userId,
+        currentPage: groupId,
+      });
+    }
+    
+    const groups = await this.groupRepository.findOneGroup({
+      groupId,
+      userId,
+    });
+    if (!groups) {
+      throw new ValidationError('그룹이 없습니다');
+    }
+    const image = groups.groupImg;
+    if (image == null) {
+      return {
+        groupId: groups.groupId,
+        groupName: groups.groupName,
+        groupImg: groups.groupImg,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupId: groups.groupId,
+        groupName: groups.groupName,
+        groupImg: groups.groupImg,
+        originalUrl,
+      };
+    }
   };
   findAllGroupList = async ({ userId }) => {
     const findGroupUserId = await this.groupRepository.findGroupUserId({
       userId,
     });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     const findGroup = await this.groupRepository.findGroup({ findGroupUserId });
     return findGroup;
   };
@@ -71,55 +128,114 @@ class GroupService {
     if (!updateNic) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
-    if (!updateNic.groupId) {
-      throw new Error('소속되지 않은 그룹입니다');
-    }
+    // if (!updateNic.groupId) {
+    //   throw new Error('소속되지 않은 그룹입니다');
+    // }
     return {
       groupUserNickname: updateNic.groupUserNickname,
     };
   };
+  updatGroupAvatarImg = async ({ userId, groupId, resizeUrl }) => {
+    const findGroupUser = await this.groupRepository.findGroupUser({
+      userId,
+      groupId,
+    });
+    if (!findGroupUser) {
+      throw new ValidationError('그룹유저가 아닙니다.');
+    }
+    const updatGroupAvatarImg = await this.groupRepository.updatGroupAvatarImg({
+      groupUserId: findGroupUser.groupUserId,
+      groupAvatarImg: resizeUrl,
+      groupId,
+    });
+    return updatGroupAvatarImg;
+  };
 
-  getProfile = async (userId, groupId) => {
-    const getprofile = await this.groupRepository.getprofile(userId, groupId);
+  getProfile = async ({ userId, groupId }) => {
+    const getprofile = await this.groupRepository.getprofile({
+      userId,
+      groupId,
+    });
     if (!getprofile) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
-    return {
-      groupUserId: getprofile.groupUserId,
-      groupUserNickname: getprofile.groupUserNickname,
-      groupAvatarImg: getprofile.groupAvatarImg,
-      status: getprofile.status,
-      statusMessage: getprofile.statusMessage,
-    };
+
+    const image = getprofile.avatarImg;
+    if (image == null) {
+      return {
+        groupUserId: getprofile.groupUserId,
+        groupUserNickname: getprofile.groupUserNickname,
+        groupAvatarImg: getprofile.groupAvatarImg,
+        status: getprofile.status,
+        statusMessage: getprofile.statusMessage,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupUserId: getprofile.groupUserId,
+        groupUserNickname: getprofile.groupUserNickname,
+        groupAvatarImg: getprofile.groupAvatarImg,
+        status: getprofile.status,
+        statusMessage: getprofile.statusMessage,
+        originalUrl,
+      };
+    }
   };
 
-  getUser = async (userId, groupUserId) => {
-    const getUser = await this.groupRepository.getUser(userId, groupUserId);
+  getUser = async ({ userId, groupUserId }) => {
+    const getUser = await this.groupRepository.getUser({ userId, groupUserId });
     if (!getUser) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
-    return {
-      groupUserId: getUser.groupUserId,
-      groupUserNickname: getUser.groupUserNickname,
-      groupAvatarImg: getUser.groupAvatarImg,
-      status: getUser.status,
-      statusMessage: getUser.statusMessage,
-    };
+    const image = getUser.avatarImg;
+    if (image == null) {
+      return {
+        groupUserId: getUser.groupUserId,
+        groupUserNickname: getUser.groupUserNickname,
+        groupAvatarImg: getUser.groupAvatarImg,
+        status: getUser.status,
+        statusMessage: getUser.statusMessage,
+      };
+    } else {
+      const originalUrl = image.replace(/\/statUS\//, '/original/');
+      return {
+        groupUserId: getUser.groupUserId,
+        groupUserNickname: getUser.groupUserNickname,
+        groupAvatarImg: getUser.groupAvatarImg,
+        status: getUser.status,
+        statusMessage: getUser.statusMessage,
+        originalUrl,
+      };
+    }
   };
 
   findAllGU = async (groupId) => {
     const findAllGU = await this.groupRepository.findAllGU(groupId);
     if (!findAllGU) {
-      throw new Error('정보가 존재하지 않습니다.');
+      throw new Error('유저정보가 존재하지 않습니다.');
     }
     const result = findAllGU.map((x) => {
-      return {
-        groupUserId: x.groupUserId,
-        groupUserNickname: x.groupUserNickname,
-        groupAvatarImg: x.groupAvatarImg,
-        status: x.status,
-        statusMessage: x.statusMessage,
-      };
+      const image = x.groupAvatarImg;
+      if (image == null) {
+        return {
+          groupUserId: x.groupUserId,
+          groupUserNickname: x.groupUserNickname,
+          groupAvatarImg: x.groupAvatarImg,
+          status: x.status,
+          statusMessage: x.statusMessage,
+        };
+      } else {
+        const originalUrl = image.replace(/\/statUS\//, '/original/');
+        return {
+          groupUserId: x.groupUserId,
+          groupUserNickname: x.groupUserNickname,
+          groupAvatarImg: x.groupAvatarImg,
+          status: x.status,
+          statusMessage: x.statusMessage,
+          originalUrl,
+        };
+      }
+      // const originalUrl = image.replace(/\/statUS\//, '/original/');
     });
     return result;
   };
@@ -164,12 +280,22 @@ class GroupService {
         groupUserNickname: user.nickname,
         userId,
         groupId,
+        groupAvatarImg: user.avatarImg,
       };
       return await this.groupRepository.createGroupUser(groupUser);
     } else {
       return;
     }
   };
+
+  deletegroupuser = async({userId,groupId})=>{
+    const user = await this.groupRepository.getUserId({userId,groupId})
+    if(!user){
+      throw new Error('유저 정보가 없습니다')
+    }
+    const deleteGroupUser = await this.groupRepository.deleteGroupUser({groupUserId:user.groupUserId})
+    return deleteGroupUser
+  }
 }
 
 module.exports = GroupService;

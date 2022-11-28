@@ -4,8 +4,8 @@ const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
-  createGroup = async ({ groupUserNickname, groupName, userId }) => {
-    console.log(userId, groupName);
+
+  createGroup = async ({ groupUserNickname, groupName, userId, avatarImg }) => {
     const createGroup = await GroupList.create({ groupName, userId });
     const groupId = createGroup.groupId;
     const userCount = 1;
@@ -14,6 +14,7 @@ class GroupRepository {
       groupId,
       groupUserNickname,
       userCount,
+      avatarImg,
     });
     return createGroup;
   };
@@ -22,13 +23,18 @@ class GroupRepository {
     await GroupList.update({ groupName }, { where: { groupId } });
   };
 
-  updateGroupImg = async (groupId, groupImg) => {
-    await GroupList.update({ groupImg }, { where: { groupId } });
-  };
-
-  findOneGroup = async (groupId) => {
-    const findOneGroup = await GroupList.findOne({ where: { groupId } });
+  findOneGroup = async ({ userId, groupId }) => {
+    const findOneGroup = await GroupList.findOne({
+      where: { groupId },
+    });
     return findOneGroup;
+  };
+  updatcurrentPage = async ({ userId, currentPage }) => {
+    const updatcurrentPage = await User.update(
+      { currentPage },
+      { where: { userId } },
+    );
+    return updatcurrentPage;
   };
   findGroupUserId = async ({ userId }) => {
     const findGroupUserId = await GroupUser.findAll({ where: { userId } });
@@ -44,9 +50,33 @@ class GroupRepository {
         where: { groupId: findGroupUserId[i] },
       });
       const { groupId, groupName, groupImg } = find;
-      findGroup.push({ groupId, groupName, groupImg });
+      if (groupImg == null) {
+        findGroup.push({ groupId, groupName, groupImg });
+      } else {
+        const originalUrl = image.replace(/\/statUS\//, '/original/');
+        findGroup.push({ groupId, groupName, groupImg, originalUrl });
+      }
+      // const originalUrl = groupImg.replace(/\/statUS\//, '/original/');=
     }
     return findGroup;
+  };
+  findByUser = async ({ userId }) => {
+    const findByUser = await User.findOne({
+      where: { userId },
+    });
+    return findByUser;
+  };
+  findGroupUser = async ({ groupId, userId }) => {
+    const findGroupUser = await GroupUser.findOne({
+      where: { [Op.and]: [{ groupId }, { userId }] },
+    });
+    return findGroupUser;
+  };
+  updateGroupImg = async ({ groupUserId, groupId, groupImg }) => {
+    await GroupList.update(
+      { groupImg },
+      { where: { [Op.and]: [{ groupId }, { groupUserId }] } },
+    );
   };
   // findGroupUser = async (userId) => {
   //   const findGroupUser = await GroupUser.findAll({ where: { userId } });
@@ -74,20 +104,27 @@ class GroupRepository {
     return updateNic;
   };
 
-  getprofile = async (userId, groupId) => {
+  updatGroupAvatarImg = async ({ groupUserId, groupId, groupAvatarImg }) => {
+    const updatGroupAvatarImg = await GroupUser.update(
+      { groupAvatarImg },
+      { where: { [Op.and]: [{ groupId }, { groupUserId }] } },
+    );
+    return updatGroupAvatarImg;
+  };
+
+  getprofile = async ({ userId, groupId }) => {
     const getprofile = await GroupUser.findOne({
       where: { [Op.and]: [{ userId }, { groupId }] },
     });
     return getprofile;
   };
 
-  getUser = async (userId, groupUserId) => {
+  getUser = async ({ userId, groupUserId }) => {
     const getUser = await GroupUser.findOne({ where: { userId, groupUserId } });
     return getUser;
   };
 
   findAllGU = async (groupId) => {
-    console.log('groupId : ', groupId);
     const findAllGU = await GroupUser.findAll({
       where: { groupId },
       order: [['groupUserId', 'desc']],
@@ -109,7 +146,6 @@ class GroupRepository {
   };
 
   createGroupUser = async (groupUser) => {
-    console.log('안녕', groupUser);
     return await GroupUser.create(groupUser);
   };
 
@@ -124,6 +160,16 @@ class GroupRepository {
     });
     return groupuserdup;
   };
+
+  deleteGroupUser = async({groupUserId})=>{
+    const deletegroupuser = await GroupUser.destroy({where:{groupUserId}})
+    return deletegroupuser
+  }
+
+  getUserId = async({userId,groupId})=>{
+    const getUserId = await GroupUser.findOne({where:{userId,groupId}})
+    return getUserId
+  }
 }
 
 module.exports = GroupRepository;

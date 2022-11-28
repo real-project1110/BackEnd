@@ -1,31 +1,38 @@
 const PostService = require('../services/posts.service');
 const InvalidParamsError = require('../exceptions/index.exception');
+const PostImgService = require('../services/postImgs.service');
+const { post } = require('../routes');
 
 class PostController {
   postService = new PostService();
+  postImgService = new PostImgService();
 
   //*게시글 작성
-
   createPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const { title, content } = req.body;
+      const { content } = req.body;
+      const images = req.files;
       const category = 0;
-      if (!title || !content) {
-        throw new InvalidParamsError('내용을 입력해주세요');
+      if (!content || !userId || !groupId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const post = await this.postService.createPost({
+      const createPost = await this.postService.createPost({
         groupId,
         userId,
-        title,
         content,
         category,
       });
-      res.status(201).json({
-        ok: true,
-        postId: post.postId,
-      });
+
+      if (images) {
+        await this.postImgService.createPostImg({
+          postId: createPost.postId,
+          images,
+          groupId,
+        });
+      }
+      res.status(201).json({ ok: true, data: createPost.postId });
     } catch (error) {
       next(error);
     }
@@ -93,19 +100,26 @@ class PostController {
   //*게시글 수정
   updatPost = async (req, res, next) => {
     try {
-      const { postId } = req.params;
+      const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
-      const { title, content, category } = req.body;
+      const { content } = req.body;
+      const images = req.files;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const updatPost = await this.postService.updatPost({
         postId,
         userId,
-        title,
         content,
-        category,
       });
+      if (images) {
+        await this.postImgService.updatPostImg({
+          postId,
+          images,
+          groupId,
+        });
+      }
+
       res.status(200).json({
         ok: true,
         data: updatPost,

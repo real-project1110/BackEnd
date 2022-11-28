@@ -25,10 +25,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
-      this.hasMany(models.Invite,{
-        foreignKey:'groupId',
-        sourceKey:'groupId',
-      })
+      this.hasMany(models.Invite, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
+      this.hasMany(models.Color, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
+      this.hasMany(models.PostImg, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
+      this.hasMany(models.Schedule, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
     }
   }
   GroupList.init(

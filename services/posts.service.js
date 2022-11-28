@@ -5,21 +5,19 @@ class PostService {
   postRepository = new PostRepository();
 
   //*게시글 작성
-  createPost = async ({ groupId, userId, title, content, category }) => {
+  createPost = async ({ groupId, userId, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const post = {
+    const createPost = await this.postRepository.createPost({
       groupId,
-      title,
       content,
       category,
-      groupUser: findGroupUserId.groupUserId,
-    };
-    const createPost = await this.postRepository.createPost({ post });
+      groupUserId: findGroupUserId.groupUserId,
+    });
     return createPost;
   };
 
@@ -53,7 +51,12 @@ class PostService {
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    return findAllPost;
+    const postIds = findAllPost.map((a) => a.postId);
+    const findPostImg = await this.postRepository.findPostImg({
+      postIds,
+      groupId,
+    });
+    return findPostImg;
   };
 
   //*게시글 상세 조회
@@ -66,7 +69,7 @@ class PostService {
   };
 
   //*게시글 수정
-  updatPost = async ({ postId, userId, title, content, category }) => {
+  updatPost = async ({ postId, userId, content }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
     });
@@ -82,9 +85,7 @@ class PostService {
     }
     const updatPost = await this.postRepository.updatPost({
       postId,
-      title,
       content,
-      category,
       groupUserId: findGroupUserId.groupUserId,
     });
     return updatPost;

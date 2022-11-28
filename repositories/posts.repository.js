@@ -1,4 +1,4 @@
-const { Post, GroupUser } = require('../models');
+const { Post, GroupUser, PostImg } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
@@ -8,60 +8,106 @@ class PostRepository extends Post {
     super();
   }
   //*게시글 작성
-  createPost = async ({ post }) => {
-    const createPost = await Post.create({ ...post });
+  createPost = async ({ groupId, content, category, groupUserId }) => {
+    const createPost = await Post.create({
+      groupId,
+      content,
+      category,
+      groupUserId,
+    });
     return createPost;
   };
   //*그룹유저 찾기
   findGroupUserId = async ({ userId }) => {
-    const findGroupUserId = await GroupUser.findByPk(userId);
+    const findGroupUserId = await GroupUser.findOne({ where: { userId } });
     return findGroupUserId;
   };
   //*게시글 전체 조회
   findAllPost = async ({ groupId, category }) => {
-    const findAllPost = await Post.findAll({
+    const posts = await Post.findAll({
       where: { [Op.and]: [{ groupId }, { category }] },
       attributes: [
-        postId,
-        title,
-        commentCount,
-        createdAt,
+        'postId',
+        'commentCount',
+        'createdAt',
+        [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
-        // [Sequelize.col('GroupUser.groupAvatarimg'), 'groupAvatarimg'],
+        [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
-      include: [{ model: GroupUser }],
-      order: ['createdAt', 'DESC'],
+      include: { model: GroupUser, attributes: [] },
+      order: [['createdAt', 'DESC']],
     });
-    return findAllPost;
+    return posts;
+  };
+  //*사진 찾기
+  findPostImg = async ({ postIds, groupId }) => {
+    const result = [];
+    for (let i = 0; i < postIds.length; i++) {
+      let postImg = await PostImg.findAll({
+        where: { postId: postIds[i] },
+        attributes: ['postImg'],
+      });
+      if (!postImg) {
+        return (postImg = null);
+      }
+      const post = await Post.findOne({
+        where: { [Op.and]: [{ groupId }, { postId: postIds[i] }] },
+        attributes: [
+          'postId',
+          'content',
+          'commentCount',
+          'createdAt',
+          [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
+          [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
+          [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        ],
+        include: { model: GroupUser, attributes: [] },
+        raw: true,
+      });
+
+      const Posts = { ...post, postImg };
+      result.push(Posts);
+    }
+    return result;
   };
   //*게시글 상세 조회
   //postImg 추가해야함
   findPost = async ({ postId }) => {
-    const findPost = await Post.findOne({
+    const result = [];
+    const post = await Post.findOne({
       where: { postId },
       attributes: [
-        postId,
-        title,
-        content,
-        commentCount,
-        createdAt,
+        'postId',
+        'content',
+        'postImg',
+        'commentCount',
+        'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
-        // [Sequelize.col('GroupUser.groupAvatarimg'), 'groupAvatarimg'],
+        [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
-      include: [{ model: GroupUser }],
+      include: [{ model: GroupUser, attributes: [] }],
     });
-    return findPost;
+    let postImg = await PostImg.findAll({
+      where: { postId },
+      attributes: ['postImg'],
+    });
+    if (!postImg) {
+      return (postImg = null);
+    }
+    const Post = { post, postImg };
+    result.push(Post);
+    return result;
   };
   //*게시글 찾기
   existsPost = async ({ postId }) => {
-    const existsPost = await Post.findByPk(postId);
+    const existsPost = await Post.findOne({ where: { postId } });
     return existsPost;
   };
   //*게시글 수정
-  updatPost = async ({ postId, title, content, category, groupUserId }) => {
+  updatPost = async ({ postId, content, groupUserId }) => {
     const updatPost = await Post.update(
-      { title, content, category },
+      { content },
       { where: { [Op.and]: [{ postId }, { groupUserId }] } },
     );
     return updatPost;

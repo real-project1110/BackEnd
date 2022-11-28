@@ -7,28 +7,34 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
       },
       color: {
         type: Sequelize.STRING
       },
-      status: {
+      content: {
         type: Sequelize.STRING
-      },
-      groupId:{
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Colors');
-  }
+  },
 };
