@@ -8,11 +8,12 @@ class CommentRepository extends Comment {
     super();
   }
   //*댓글 작성
-  createComment = async ({ postId, comment, groupUserId }) => {
+  createComment = async ({ postId, comment, groupUserId, groupId }) => {
     const createComment = await Comment.create({
       postId,
       comment,
       groupUserId,
+      groupId,
     });
     return createComment;
   };
@@ -27,9 +28,9 @@ class CommentRepository extends Comment {
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({ postId, userId }) => {
+  findAllComment = async ({ postId, groupId }) => {
     const findAllComment = await Comment.findAll({
-      where: { userId, postId },
+      where: { postId, groupId },
       attributes: [
         'commentId',
         'comment',
@@ -46,7 +47,7 @@ class CommentRepository extends Comment {
 
   //*댓글 찾기
   findComment = async ({ commentId }) => {
-    const findComment = await Comment.findByPk(commentId);
+    const findComment = await Comment.findOne({ where: { commentId } });
     return findComment;
   };
 

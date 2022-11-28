@@ -18,8 +18,10 @@ class PostRepository extends Post {
     return createPost;
   };
   //*그룹유저 찾기
-  findGroupUserId = async ({ userId }) => {
-    const findGroupUserId = await GroupUser.findOne({ where: { userId } });
+  findGroupUserId = async ({ userId, groupId }) => {
+    const findGroupUserId = await GroupUser.findOne({
+      where: { userId, groupId },
+    });
     return findGroupUserId;
   };
   //*게시글 전체 조회

@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
+      this.hasMany(models.Comment, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
       this.hasMany(models.Invite, {
         foreignKey: 'groupId',
         sourceKey: 'groupId',

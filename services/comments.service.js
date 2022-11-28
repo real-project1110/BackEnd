@@ -7,9 +7,10 @@ class CommentService {
   postRepository = new PostRepository();
 
   //*댓글 작성
-  createComment = async ({ postId, userId, comment }) => {
+  createComment = async ({ postId, userId, comment, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -18,30 +19,33 @@ class CommentService {
       postId,
       comment,
       groupUserId: findGroupUserId.groupUserId,
+      groupId,
     });
     await this.commentRepository.upCount({ postId });
     return createComment;
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({ postId, userId }) => {
+  findAllComment = async ({ postId, userId, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
     const findAllComment = await this.commentRepository.findAllComment({
       postId,
-      userId,
+      groupId,
     });
     return findAllComment;
   };
 
   //*댓글 수정
-  updatComment = async ({ commentId, comment, userId }) => {
+  updatComment = async ({ commentId, comment, userId, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -65,6 +69,7 @@ class CommentService {
   deletComment = async ({ commentId, userId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');

@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         targetKey: 'postId',
       });
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
+      });
     }
   }
   Comment.init(
@@ -26,6 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
+      },
+      groupId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupList',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
       },
       groupUserId: {
         allowNull: false,
