@@ -19,7 +19,7 @@ class ColorRepository{
         return getGroupId
     }
 
-    findGroupId= async(groupId)=>{
+    findGroupId= async({groupId})=>{
         const findGroupId = await Color.findAll({
             where : {groupId},
             order : [['colorId','desc']],
@@ -34,7 +34,7 @@ class ColorRepository{
     //     return findUC
     // }
 
-    updateColor = async(colorId,groupId,color,content)=>{
+    updateColor = async({colorId,groupId,color,content})=>{
         const updateColor = await Color.update(
             {color,content},
             {where: {colorId,groupId}}
@@ -42,7 +42,7 @@ class ColorRepository{
         return updateColor
     }
     
-    deleteColor = async(colorId)=>{
+    deleteColor = async({colorId})=>{
         const deleteColor = await Color.destroy({where: {colorId}})
         return deleteColor
     }

@@ -18,7 +18,7 @@ class ColorController {
     getColor = async(req,res,next)=>{
         try{
             const {groupId} = req.params;
-            const getColor = await this.colorService.getColor(groupId)
+            const getColor = await this.colorService.getColor({groupId})
             res.status(200).json({data:getColor})
         }catch(error){
             next(error)
@@ -30,7 +30,7 @@ class ColorController {
             const {userId} = res.locals.user;
             const {groupId,colorId} = req.params;
             const {color,content} = req.body;
-            const updateColor = await this.colorService.updateColor(userId,groupId,colorId,color,content)
+            const updateColor = await this.colorService.updateColor({userId,groupId,colorId,color,content})
             res.status(200).json({data:updateColor.groupId,message:"컬러 수정 완료"})
         }catch(error){
             next(error)
@@ -41,7 +41,7 @@ class ColorController {
         try{
             const{userId} = res.locals.user;
             const{colorId} = req.params;
-            const deleteColor = await this.colorService.deleteColor(userId,colorId)
+            const deleteColor = await this.colorService.deleteColor({userId,colorId})
             res.status(200).json({data:deleteColor,message:"컬러 삭제 완료"})
         }catch(error){
             next(error)
