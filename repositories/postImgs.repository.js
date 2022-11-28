@@ -29,8 +29,10 @@ class PostImgRepository extends PostImg {
     const result = [];
     for (let i = 0; i < image.length; i++) {
       const find = await PostImg.findOne({ where: { postImg: image[i] } });
+      console.log('반복문안에거', find);
       result.push(find.postImg);
     }
+    console.log('레포리절트', result);
     return result;
   };
   //*게시글 사진 삭제
