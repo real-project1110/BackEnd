@@ -39,7 +39,7 @@ class CommentRepository extends Comment {
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
       ],
       include: [{ model: GroupUser, attributes: [] }],
-      order: ['createdAt', 'ASC'],
+      order: [['createdAt', 'ASC']],
     });
     return findAllComment;
   };
