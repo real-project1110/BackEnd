@@ -28,9 +28,12 @@ class PostImgRepository extends PostImg {
   findPostImg = async ({ image }) => {
     const result = [];
     for (let i = 0; i < image.length; i++) {
-      const find = await PostImg.findOne({ where: { postImg: image[i] } });
+      const find = await PostImg.findOne({
+        where: { postImg: image[i] },
+        attributes: ['postImg'],
+      });
       console.log('반복문안에거', find);
-      result.push(find.postImg);
+      result.push(find);
     }
     console.log('레포리절트', result);
     return result;
