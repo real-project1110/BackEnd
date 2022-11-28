@@ -105,6 +105,7 @@ class PostController {
       const { userId } = res.locals.user;
       const { content } = req.body;
       const images = req.files;
+      console.log('req.body입니다.', req.body);
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
