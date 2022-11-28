@@ -38,6 +38,7 @@ class CommentController {
         postId,
         userId,
       });
+      console.log('findAllComment', findAllComment);
       res.status(200).json({
         ok: true,
         data: findAllComment,
