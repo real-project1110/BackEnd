@@ -112,6 +112,7 @@ class PostController {
         postId,
         userId,
         content,
+        groupId,
       });
       if (images) {
         await this.postImgService.updatPostImg({
