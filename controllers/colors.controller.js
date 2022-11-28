@@ -55,10 +55,11 @@ class ColorController {
   deleteColor = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
-      const { colorId } = req.params;
+      const { colorId, groupId } = req.params;
       const deleteColor = await this.colorService.deleteColor({
         userId,
         colorId,
+        groupId,
       });
       res.status(200).json({ data: deleteColor, message: '컬러 삭제 완료' });
     } catch (error) {
