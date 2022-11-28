@@ -36,7 +36,7 @@ class PostImgRepository extends PostImg {
   //*게시글 사진 삭제
   deletPostImg = async ({ postImg }) => {
     for (let i = 0; i < postImg.length; i++) {
-      await PostImg.destroy({ where: { postImg: postImg[i] } });
+      await PostImg.destroy({ where: { postImg: postImg[i].postImg } });
     }
     // const deletPostImg = await PostImg.destroy({
     //   where: { [Op.and]: [{ groupId }, { postId }] },
