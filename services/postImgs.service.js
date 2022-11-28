@@ -28,7 +28,7 @@ class PostImgService {
       throw new ValidationError('게시글이 존재하지 않습니다.');
     }
     const findPostImg = await this.postImgRepository.findPostImg({
-      image,
+      postId,
     });
     console.log('이미지만', image);
     console.log('파인드포스트이미지', findPostImg);

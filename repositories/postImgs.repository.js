@@ -25,19 +25,13 @@ class PostImgRepository extends PostImg {
     }
   };
   //*컨펌이미지
-  findPostImg = async ({ image }) => {
-    const result = [];
-    for (let i = 0; i < image.length; i++) {
-      const find = await PostImg.findOne({
-        where: { postImg: image[i] },
-        attributes: ['postImg'],
-        raw: true,
-      });
-      console.log('반복문안에거', find);
-      result.push(find);
-    }
-    console.log('레포리절트', result);
-    return result;
+  findPostImg = async ({ postId }) => {
+    const findPostImg = await PostImg.findAll({
+      where: { postId },
+      attributes: ['postImg'],
+      raw: true,
+    });
+    return findPostImg;
   };
   //*게시글 사진 삭제
   deletPostImg = async ({ postImg }) => {
