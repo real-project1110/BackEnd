@@ -41,7 +41,7 @@ class PostController {
   //*공지/자유로 등록
   updatCategory = async (req, res, next) => {
     try {
-      const { postId } = req.params;
+      const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
@@ -49,6 +49,7 @@ class PostController {
       await this.postService.updatCategory({
         postId,
         userId,
+        groupId,
       });
       res.status(200).json({
         ok: true,
@@ -132,12 +133,12 @@ class PostController {
   //*게시글 삭제
   deletPost = async (req, res, next) => {
     try {
-      const { postId } = req.params;
+      const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      await this.postService.deletPost({ postId, userId });
+      await this.postService.deletPost({ postId, userId, groupId });
       res.status(200).json({
         ok: true,
         msg: '삭제 성공',
