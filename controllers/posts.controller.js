@@ -116,6 +116,7 @@ class PostController {
         groupId,
       });
       if (image) {
+        await this.postImgService.confirmPostImg({ postId, image, groupId });
       }
       console.log('컨트롤러 이미지', images);
       if (images) {

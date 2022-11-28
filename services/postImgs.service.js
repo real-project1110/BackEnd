@@ -22,9 +22,23 @@ class PostImgService {
     });
     return createPostImg;
   };
+  confirmPostImg = async ({ postId, image, groupId }) => {
+    const findPost = await this.postImgRepository.findPost({ postId });
+    if (!findPost) {
+      throw new ValidationError('게시글이 존재하지 않습니다.');
+    }
+    const findPostImg = await this.postImgRepository.findPostImg({
+      image,
+    });
+    if (findPostImg.length == image.length) return;
+    const delet = findPostImg.filter((a) => image.includes(a));
+    const deletPostImg = await this.postImgRepository.deletPostImg({
+      postImg: delet,
+    });
+    return deletPostImg;
+  };
 
   updatPostImg = async ({ postId, images, groupId }) => {
-    console.log('서비스콘솔', images);
     const findPost = await this.postImgRepository.findPost({ postId });
     if (!findPost) {
       throw new ValidationError('게시글이 존재하지 않습니다.');
