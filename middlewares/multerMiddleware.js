@@ -17,7 +17,7 @@ const upload = multer({
     bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
       const ext =
-        path.extname(file.originalname) === '.jpg' ? '.webp' : '.webp';
+        path.extname(file.originalname) === '.webp' ? '.JPEG' : '.JPEG';
       cb(
         null,
         `original/${
