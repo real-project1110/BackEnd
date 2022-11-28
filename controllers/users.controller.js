@@ -23,8 +23,7 @@ class UserController {
           message: '이름과 비밀번호를 다른형식으로 설정해주세요',
         });
       }
-      const avatarImg =
-        'https://shitlambda.s3.ap-northeast-2.amazonaws.com/statUS/78611669410319683.jpeg';
+      const avatarImg = process.env.AWS_IMAGE_URL;
 
       const hashed = await bcrypt.hash(password, 12);
       const users = await Object.create({
