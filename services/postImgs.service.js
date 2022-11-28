@@ -34,12 +34,14 @@ class PostImgService {
       const postImage = images[i].location;
       postImgs.push(postImage.replace(/\/original\//, '/statUS/'));
     }
-    const updatPostImg = await this.postImgRepository.createPostImg({
+    console.log('포스트이미지스', postImgs);
+    const createPostImg = await this.postImgRepository.createPostImg({
       postId,
       postImgs,
       groupId,
     });
-    return updatPostImg;
+    console.log('이미지서비스', createPostImg);
+    return createPostImg;
   };
 }
 
