@@ -19,8 +19,16 @@ router.get(
   commentcontroller.findAllComment,
 );
 //*댓글 수정
-router.put('/comments/:commentId', auth, commentcontroller.updatComment);
+router.put(
+  '/:groupId/posts/comments/:commentId',
+  auth,
+  commentcontroller.updatComment,
+);
 //*댓글 삭제
-router.delete('/comments/:commentId', auth, commentcontroller.deletComment);
+router.delete(
+  '/:groupId/posts/comments/:commentId',
+  auth,
+  commentcontroller.deletComment,
+);
 
 module.exports = router;
