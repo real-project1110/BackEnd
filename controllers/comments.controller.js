@@ -52,39 +52,47 @@ class CommentController {
 
   //*댓글 수정
   updatComment = async (req, res, next) => {
-    const { commentId, groupId } = req.params;
-    const { userId } = res.locals.user;
-    const { comment } = req.body;
-    if (!commentId || !userId) {
-      throw new InvalidParamsError('잘못된 요청입니다.');
+    try {
+      const { commentId, groupId } = req.params;
+      const { userId } = res.locals.user;
+      const { comment } = req.body;
+      if (!commentId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const updatComment = await this.commentService.updatComment({
+        commentId,
+        comment,
+        userId,
+        groupId,
+      });
+      res.status(200).json({
+        ok: true,
+        data: updatComment,
+      });
+    } catch (error) {
+      next(error);
     }
-    const updatComment = await this.commentService.updatComment({
-      commentId,
-      comment,
-      userId,
-      groupId,
-    });
-    res.status(200).json({
-      ok: true,
-      data: updatComment,
-    });
   };
 
   //*댓글 삭제
   deletComment = async (req, res, next) => {
-    const { commentId, groupId } = req.params;
-    const { userId } = res.locals.user;
-    if (!commentId || !userId) {
-      throw new InvalidParamsError('잘못된 요청입니다.');
+    try {
+      const { commentId, groupId } = req.params;
+      const { userId } = res.locals.user;
+      if (!commentId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      await this.commentService.deletComment({
+        commentId,
+        userId,
+        groupId,
+      });
+      res.status(200).json({
+        ok: true,
+      });
+    } catch (error) {
+      next(error);
     }
-    await this.commentService.deletComment({
-      commentId,
-      userId,
-      groupId,
-    });
-    res.status(200).json({
-      ok: true,
-    });
   };
 }
 module.exports = CommentController;
