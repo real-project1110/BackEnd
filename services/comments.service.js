@@ -77,7 +77,7 @@ class CommentService {
     if (findGroupUserId.userId !== userId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const findComment = await this.commentRepository.existComment({
+    const findComment = await this.commentRepository.findComment({
       commentId,
     });
     if (!findComment) {
