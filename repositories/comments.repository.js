@@ -29,7 +29,7 @@ class CommentRepository extends Comment {
   //*댓글 전체 조회
   findAllComment = async ({ postId }) => {
     const findAllComment = await Comment.findAll({
-      where: { postId },
+      where: { userId, postId },
       attributes: [
         'commentId',
         'comment',

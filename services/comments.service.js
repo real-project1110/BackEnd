@@ -33,6 +33,7 @@ class CommentService {
     }
     const findAllComment = await this.commentRepository.findAllComment({
       postId,
+      userId,
     });
     return findAllComment;
   };
