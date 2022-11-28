@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
+      },
       groupUserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
