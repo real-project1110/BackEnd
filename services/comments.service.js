@@ -87,7 +87,7 @@ class CommentService {
       commentId,
       groupUserId: findGroupUserId.groupUserId,
     });
-    await this.commentRepository.downCount({ postId });
+    await this.commentRepository.downCount({ postId: findComment.postId });
     return deletComment;
   };
 }
