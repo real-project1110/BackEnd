@@ -66,7 +66,7 @@ class CommentService {
   };
 
   //*댓글 삭제
-  deletComment = async ({ commentId, userId }) => {
+  deletComment = async ({ commentId, userId, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
       groupId,
