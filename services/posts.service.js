@@ -1,6 +1,8 @@
 const PostRepository = require('../repositories/posts.repository');
 const ValidationError = require('../exceptions/index.exception');
 
+const getPostId = (a) => a.postId;
+
 class PostService {
   postRepository = new PostRepository();
 
@@ -55,7 +57,7 @@ class PostService {
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const postIds = findAllPost.map((a) => a.postId);
+    const postIds = findAllPost.map(getPostId);
     const findPostImg = await this.postRepository.findPostImg({
       postIds,
       groupId,
