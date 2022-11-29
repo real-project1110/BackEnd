@@ -75,7 +75,7 @@ class PostController {
       });
       res.status(200).json({
         ok: true,
-        posts: findAllPost,
+        data: findAllPost,
         currentPage: page,
       });
     } catch (error) {
