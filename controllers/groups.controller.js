@@ -27,9 +27,11 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { groupName } = req.body;
+      const {userId} = res.locals.user
       const updategroup = await this.groupService.updateGroupName(
         groupId,
         groupName,
+        userId
       );
       res.status(200).json({ data: updategroup });
     } catch (err) {
@@ -110,7 +112,8 @@ class GroupController {
   destroyGroup = async (req, res) => {
     try {
       const { groupId } = req.params;
-      const destroygroup = await this.groupService.destroyGroup(groupId);
+      const {userId} = res.locals.user
+      const destroygroup = await this.groupService.destroyGroup(groupId,userId);
       res.status(200).json({ data: destroygroup });
     } catch (err) {
       res.status(400).json(err);

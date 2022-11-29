@@ -14,7 +14,7 @@ router.put(
 );
 
 router.delete(
-  '/schedules/:scheduleId',
+  '/:groupId/schedules/:scheduleId',
   auth,
   scheduleController.destroySchedule,
 );
