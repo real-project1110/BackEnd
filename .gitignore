@@ -4,3 +4,4 @@ logs
 loadtest.json
 swagger-output.json
 swagger.js
+data.csv
