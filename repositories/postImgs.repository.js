@@ -24,11 +24,24 @@ class PostImgRepository extends PostImg {
       });
     }
   };
-  deletPostImg = async ({ postId, groupId }) => {
-    const deletPostImg = await PostImg.destroy({
-      where: { [Op.and]: [{ groupId }, { postId }] },
+  //*컨펌이미지
+  findPostImg = async ({ postId }) => {
+    const findPostImg = await PostImg.findAll({
+      where: { postId },
+      attributes: ['postImg'],
+      raw: true,
     });
-    return deletPostImg;
+    return findPostImg;
+  };
+  //*게시글 사진 삭제
+  deletPostImg = async ({ postImg }) => {
+    for (let i = 0; i < postImg.length; i++) {
+      await PostImg.destroy({ where: { postImg: postImg[i].postImg } });
+    }
+    // const deletPostImg = await PostImg.destroy({
+    //   where: { [Op.and]: [{ groupId }, { postId }] },
+    // });
+    // return deletPostImg;
   };
 }
 

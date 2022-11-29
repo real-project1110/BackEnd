@@ -18,14 +18,18 @@ class PostRepository extends Post {
     return createPost;
   };
   //*그룹유저 찾기
-  findGroupUserId = async ({ userId }) => {
-    const findGroupUserId = await GroupUser.findOne({ where: { userId } });
+  findGroupUserId = async ({ userId, groupId }) => {
+    const findGroupUserId = await GroupUser.findOne({
+      where: { userId, groupId },
+    });
     return findGroupUserId;
   };
   //*게시글 전체 조회
   findAllPost = async ({ groupId, category }) => {
-    const posts = await Post.findAll({
+    const { count, rows } = await Post.findAndCountAll({
       where: { [Op.and]: [{ groupId }, { category }] },
+      offset: 0,
+      limit: 3,
       attributes: [
         'postId',
         'commentCount',
@@ -36,8 +40,10 @@ class PostRepository extends Post {
       ],
       include: { model: GroupUser, attributes: [] },
       order: [['createdAt', 'DESC']],
+      raw: true,
     });
-    return posts;
+    console.log(count, rows);
+    return rows;
   };
   //*사진 찾기
   findPostImg = async ({ postIds, groupId }) => {

@@ -8,7 +8,7 @@ class GroupController {
     try {
       const { groupName } = req.body;
       const { userId, nickname, avatarImg } = res.locals.user;
-      if (!userId || !nickname || !groupName) {
+      if (!userId || !nickname || !groupName || !avatarImg) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const createGroup = await this.groupService.createGroup({

@@ -7,9 +7,10 @@ class CommentService {
   postRepository = new PostRepository();
 
   //*댓글 작성
-  createComment = async ({ postId, userId, comment }) => {
+  createComment = async ({ postId, userId, comment, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -18,29 +19,36 @@ class CommentService {
       postId,
       comment,
       groupUserId: findGroupUserId.groupUserId,
+      groupId,
     });
     await this.commentRepository.upCount({ postId });
     return createComment;
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({postId, userId}) => {
+
+  findAllComment = async ({ postId, userId, groupId }) => {
+
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
     const findAllComment = await this.commentRepository.findAllComment({
       postId,
+      groupId,
     });
     return findAllComment;
   };
 
   //*댓글 수정
-  updatComment = async ({commentId, comment, userId}) => {
+  updatComment = async ({ commentId, comment, userId, groupId }) => {
+
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -61,9 +69,11 @@ class CommentService {
   };
 
   //*댓글 삭제
-  deletComment = async ({commentId, userId}) => {
+  deletComment = async ({ commentId, userId, groupId }) => {
+
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -71,7 +81,7 @@ class CommentService {
     if (findGroupUserId.userId !== userId) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const findComment = await this.commentRepository.existComment({
+    const findComment = await this.commentRepository.findComment({
       commentId,
     });
     if (!findComment) {
@@ -81,7 +91,7 @@ class CommentService {
       commentId,
       groupUserId: findGroupUserId.groupUserId,
     });
-    await this.commentRepository.downCount({ postId });
+    await this.commentRepository.downCount({ postId: findComment.postId });
     return deletComment;
   };
 }

@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Comment extends Model {
+  class Like extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -17,29 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         targetKey: 'postId',
       });
-      this.belongsTo(models.GroupList, {
-        foreignKey: 'groupId',
-        targetKey: 'groupId',
-      });
     }
   }
-  Comment.init(
+  Like.init(
     {
-      commentId: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      groupId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'GroupList',
-          key: 'groupId',
-        },
-        onDelete: 'cascade',
-      },
       groupUserId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -57,23 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'cascade',
       },
-      comment: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
     },
     {
       sequelize,
-      modelName: 'Comment',
+      modelName: 'Like',
     },
   );
-  return Comment;
+  Like.removeAttribute('id');
+  return Like;
 };

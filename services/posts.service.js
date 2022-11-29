@@ -8,6 +8,7 @@ class PostService {
   createPost = async ({ groupId, userId, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -22,9 +23,10 @@ class PostService {
   };
 
   //*공지/자유로 변경
-  updatCategory = async ({ postId, userId }) => {
+  updatCategory = async ({ postId, userId, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -69,9 +71,10 @@ class PostService {
   };
 
   //*게시글 수정
-  updatPost = async ({ postId, userId, content }) => {
+  updatPost = async ({ postId, userId, content, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
@@ -92,9 +95,10 @@ class PostService {
   };
 
   //*게시글 삭제
-  deletPost = async ({ postId, userId }) => {
+  deletPost = async ({ postId, userId, groupId }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
+      groupId,
     });
     if (!findGroupUserId) {
       throw new ValidationError('잘못된 요청입니다.');
