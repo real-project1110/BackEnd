@@ -57,7 +57,7 @@ class ColorService {
             color :updateColor.color,
             content : updateColor.content
         }
-
+    }
 
 
 
