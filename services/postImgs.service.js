@@ -1,7 +1,7 @@
 const { ValidationError } = require('sequelize');
 const PostImgRepository = require('../repositories/postImgs.repository');
 
-const deduplication = (a) => !image.includes(a.postImg);
+// const deduplication = (a) => !image.includes(a.postImg);
 class PostImgService {
   postImgRepository = new PostImgRepository();
 
@@ -32,7 +32,7 @@ class PostImgService {
       postId,
     });
     if (findPostImg.length == image.length) return;
-    const delet = findPostImg.filter(deduplication);
+    const delet = findPostImg.filter((a) => !image.includes(a.postImg));
     const deletPostImg = await this.postImgRepository.deletPostImg({
       postImg: delet,
     });
