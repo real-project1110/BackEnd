@@ -4,7 +4,6 @@ const ColorRepository = require('../repositories/colors.repository');
 class ColorService {
   colorRepository = new ColorRepository();
 
-
   createColor = async ({ userId, groupId, color, content }) => {
     const getGroupId = await this.colorRepository.getGroupId({
       groupId,
@@ -30,53 +29,56 @@ class ColorService {
       content: createColor.content,
     };
   };
- getColor = async({groupId})=>{
-        const getColor = await this.colorRepository.findGroupId({groupId})
-        if(!getColor){
-            throw new Error('유저 정보가 존재하지 않습니다')
-        }
-        const result = getColor.map((x)=>{
-            return {
-                colorId : x.colorId,
-                groupId : x.groupId,
-                color : x.color,
-                content : x.content
-            }
-        })
-        return result
-        }
+  getColor = async ({ groupId }) => {
+    const getColor = await this.colorRepository.findGroupId({ groupId });
+    if (!getColor) {
+      throw new Error('유저 정보가 존재하지 않습니다');
+    }
+    const result = getColor.map((x) => {
+      return {
+        colorId: x.colorId,
+        groupId: x.groupId,
+        color: x.color,
+        content: x.content,
+      };
+    });
+    return result;
+  };
 
-
-    updateColor = async({userId,groupId,colorId,color,content})=>{
-        const getGroupId = await this.colorRepository.getGroupId({userId,groupId})
-        if(!getGroupId){
-            throw new Error('유저 정보가 없습니다')
-        }
-        const updateColor = await this.colorRepository.updateColor({groupId,colorId,color,content})
-        return{
-            color :updateColor.color,
-            content : updateColor.content
-        }
-
-
-
-
-  deleteColor = async ({ userId, colorId, groupId }) => {
+  updateColor = async ({ userId, groupId, colorId, color, content }) => {
     const getGroupId = await this.colorRepository.getGroupId({
       userId,
       groupId,
     });
     if (!getGroupId) {
       throw new Error('유저 정보가 없습니다');
-
     }
+    const updateColor = await this.colorRepository.updateColor({
+      groupId,
+      colorId,
+      color,
+      content,
+    });
+    return {
+      color: updateColor.color,
+      content: updateColor.content,
+    };
 
-    const deleteColor = await this.colorRepository.deleteColor({ colorId });
-    if (!deleteColor) {
-      throw new Error('존재하지 않는 컬러입니다');
-    }
-    return deleteColor;
+    deleteColor = async ({ userId, colorId, groupId }) => {
+      const getGroupId = await this.colorRepository.getGroupId({
+        userId,
+        groupId,
+      });
+      if (!getGroupId) {
+        throw new Error('유저 정보가 없습니다');
+      }
+
+      const deleteColor = await this.colorRepository.deleteColor({ colorId });
+      if (!deleteColor) {
+        throw new Error('존재하지 않는 컬러입니다');
+      }
+      return deleteColor;
+    };
   };
 }
-
 module.exports = ColorService;

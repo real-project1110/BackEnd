@@ -22,29 +22,33 @@ class ColorController {
     }
   };
 
-
-    getColor = async(req,res,next)=>{
-        try{
-            const {groupId} = req.params;
-            const getColor = await this.colorService.getColor({groupId})
-            res.status(200).json({data:getColor})
-        }catch(error){
-            next(error)
-        }
+  getColor = async (req, res, next) => {
+    try {
+      const { groupId } = req.params;
+      const getColor = await this.colorService.getColor({ groupId });
+      res.status(200).json({ data: getColor });
+    } catch (error) {
+      next(error);
     }
   };
 
-
-    updateColor = async(req,res,next)=>{
-        try{
-            const {userId} = res.locals.user;
-            const {groupId,colorId} = req.params;
-            const {color,content} = req.body;
-            const updateColor = await this.colorService.updateColor({userId,groupId,colorId,color,content})
-            res.status(200).json({data:updateColor.groupId,message:"컬러 수정 완료"})
-        }catch(error){
-            next(error)
-        }
+  updateColor = async (req, res, next) => {
+    try {
+      const { userId } = res.locals.user;
+      const { groupId, colorId } = req.params;
+      const { color, content } = req.body;
+      const updateColor = await this.colorService.updateColor({
+        userId,
+        groupId,
+        colorId,
+        color,
+        content,
+      });
+      res
+        .status(200)
+        .json({ data: updateColor.groupId, message: '컬러 수정 완료' });
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -63,5 +67,4 @@ class ColorController {
     }
   };
 }
-
 module.exports = ColorController;
