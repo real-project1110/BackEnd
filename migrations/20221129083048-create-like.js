@@ -2,22 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Posts', {
-      postId: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      groupId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'GroupLists',
-          key: 'groupId',
-        },
-        onDelete: 'cascade',
-      },
+    await queryInterface.createTable('Likes', {
       groupUserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -26,18 +11,14 @@ module.exports = {
           key: 'groupUserId',
         },
       },
-      content: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      category: {
+      postId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-      },
-      commentCount: {
-        type: Sequelize.INTEGER,
-      },
-      likeCount: {
-        type: Sequelize.INTEGER,
+        references: {
+          model: 'Posts',
+          key: 'postId',
+        },
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posts');
+    await queryInterface.dropTable('Likes');
   },
 };

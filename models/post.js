@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         sourceKey: 'postId',
       });
+      this.hasMany(models.Like, {
+        foreignKey: 'postId',
+        sourceKey: 'postId',
+      });
     }
   }
   Post.init(
@@ -61,6 +65,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       commentCount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+      },
+      likeCount: {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0,
