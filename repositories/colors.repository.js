@@ -1,12 +1,10 @@
-const { Color, GroupUser } = require('../models');
-const { Op } = require('sequelize');
-class ColorRepository {
-  createColor = async ({ groupId, color, content }) => {
-    console.log(color);
-    const createColor = await Color.create({ groupId, color, content });
-    console.log('1111', createColor);
-    return createColor;
-  };
+const {Color,GroupUser} = require('../models');
+const {Op} = require('sequelize')
+class ColorRepository{
+    createColor = async({groupId,color,content}) =>{
+        const createColor = await Color.create({groupId,color,content})
+        return createColor
+    }
 
   // findGU = async(userId,groupId) =>{
   //     const findGU = await GroupUser.findOne({
@@ -21,13 +19,13 @@ class ColorRepository {
     return getGroupId;
   };
 
-  findGroupId = async (groupId) => {
-    const findGroupId = await Color.findAll({
-      where: { groupId },
-      order: [['colorId', 'desc']],
-    });
-    return findGroupId;
-  };
+    findGroupId= async({groupId})=>{
+        const findGroupId = await Color.findAll({
+            where : {groupId},
+            order : [['colorId','desc']],
+        })
+        return findGroupId 
+    }
 
   // findUC = async(userId,colorId)=>{
   //     const findUC = await Color.findOne({
@@ -36,17 +34,19 @@ class ColorRepository {
   //     return findUC
   // }
 
-  updateColor = async (colorId, groupId, color, content) => {
-    const updateColor = await Color.update(
-      { color, content },
-      { where: { colorId, groupId } },
-    );
-    return updateColor;
-  };
 
-  deleteColor = async ({ colorId }) => {
-    const deleteColor = await Color.destroy({ where: { colorId } });
-    return deleteColor;
-  };
+    updateColor = async({colorId,groupId,color,content})=>{
+        const updateColor = await Color.update(
+            {color,content},
+            {where: {colorId,groupId}}
+        )
+        return updateColor
+    }
+    
+    deleteColor = async({colorId})=>{
+        const deleteColor = await Color.destroy({where: {colorId}})
+        return deleteColor
+    }
+
 }
 module.exports = ColorRepository;
