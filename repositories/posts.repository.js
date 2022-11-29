@@ -25,10 +25,10 @@ class PostRepository extends Post {
     return findGroupUserId;
   };
   //*게시글 전체 조회
-  findAllPost = async ({ groupId, category }) => {
+  findAllPost = async ({ groupId, category, offset }) => {
     const { count, rows } = await Post.findAndCountAll({
       where: { [Op.and]: [{ groupId }, { category }] },
-      offset: 0,
+      offset: offset,
       limit: 3,
       attributes: [
         'postId',
