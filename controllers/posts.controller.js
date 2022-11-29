@@ -68,6 +68,7 @@ class PostController {
       if (!groupId || !category) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
+      console.log('컨트롤러에서 page를 조회합니다.', page);
       const findAllPost = await this.postService.findAllPost({
         groupId,
         category,
