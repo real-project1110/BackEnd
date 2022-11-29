@@ -57,7 +57,7 @@ class PostService {
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    const postIds = findAllPost.map(getPostId);
+    const postIds = findAllPost.map((a) => a.postId);
     const findPostImg = await this.postRepository.findPostImg({
       postIds,
       groupId,
