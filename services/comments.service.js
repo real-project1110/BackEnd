@@ -40,7 +40,14 @@ class CommentService {
       groupId,
       groupUserId: findGroupUserId.groupUserId,
     });
-    return findAllComment;
+    const commentIds = findAllComment.map((a) => a.commentId);
+    const findAllCommentLike = await this.commentRepository.findAllCommentLike({
+      commentIds,
+      postId,
+      groupId,
+      groupUserId: findGroupUserId.groupUserId,
+    });
+    return findAllCommentLike;
   };
 
   //*댓글 수정

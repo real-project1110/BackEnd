@@ -28,7 +28,7 @@ class CommentRepository extends Comment {
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({ postId, groupId, groupUserId }) => {
+  findAllComment = async ({ postId, groupId }) => {
     // const result = [];
     const findAllComment = await Comment.findAll({
       where: { postId, groupId },
@@ -39,10 +39,10 @@ class CommentRepository extends Comment {
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
-        [Sequelize.col('CommentLike.commentId'), 'commentId'],
+        // [Sequelize.col('CommentLike.commentId'), 'commentId'],
       ],
       include: [{ model: GroupUser, attributes: [] }],
-      include: [{ model: CommentLike, attributes: [] }],
+      // include: [{ model: CommentLike, attributes: [] }],
       raw: true,
       order: [['createdAt', 'DESC']],
     });
@@ -56,6 +56,37 @@ class CommentRepository extends Comment {
     //   findLike = false;
     // }
     return findAllComment;
+  };
+  findAllCommentLike = async ({ commentIds, postId, groupUserId, groupId }) => {
+    const result = [];
+    for (let i = 0; i < commentIds.length; i++) {
+      let commentLike = await CommentLike.findOne({
+        where: { commentId: commentIds[i], groupUserId },
+        raw: true,
+      });
+      if (commentLike) {
+        commentLike = true;
+      } else {
+        commentLike = false;
+      }
+      const comment = await Comment.findOne({
+        where: { postId, groupId, commentId: commentIds[i] },
+        attributes: [
+          'commentId',
+          'comment',
+          'createdAt',
+          [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
+          [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
+          [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        ],
+        include: [{ model: GroupUser, attributes: [] }],
+        raw: true,
+        order: [['createdAt', 'DESC']],
+      });
+      const comments = { ...comment, commentLike };
+      result.push(comments);
+    }
+    return result;
   };
 
   //*댓글 찾기
