@@ -13,6 +13,6 @@ router.use('/', require('./google.route'));
 router.use('/invites', require('./invites.route'));
 router.use('/', require('./naver.route'));
 router.use('/groups',require('./colors.route'))
-router.use('/groups',require('./likes.route'))
-
+router.use('/groups',require('./postlikes.route'))
+router.use('/groups',require('./commentlikes.route'))
 module.exports = router;

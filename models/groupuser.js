@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
-      this.hasMany(models.Like, {
+      this.hasMany(models.PostLike, {
+        foreignKey: 'groupUserId',
+        sourceKey: 'groupUserId',
+      });
+      this.hasMany(models.CommentLike, {
         foreignKey: 'groupUserId',
         sourceKey: 'groupUserId',
       });
