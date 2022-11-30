@@ -2,17 +2,11 @@ const {Like,GroupUser,Post}= require('../models');
 class LikeRepository{
     getGroupUser =async({userId,groupId})=>{
         const getGroupUser =await GroupUser.findOne({where :{userId,groupId }})
-        console.log('repo getgroupuser',getGroupUser.userId)
         return getGroupUser
-    }
-    getPostId = async({postId})=>{
-        const getPostId = await Post.findOne({where : {postId}})
-        console.log('repo getPostId', getPostId.postId)
-        return getPostId
     }
 
     createLike = async({groupUserId,postId})=>{
-        const createLike = await Like.create({where :{groupUserId,postId}})
+        const createLike = await Like.create({groupUserId,postId})
         return createLike;
     }
 
