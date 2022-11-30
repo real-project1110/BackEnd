@@ -28,6 +28,7 @@
     "prettier": "^2.7.1",
     "sequelize": "^6.25.7",
     "sequelize-cli": "^6.5.2",
+    "shell": "^0.9.4",
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.6.0",
     "winston": "^3.8.2",
