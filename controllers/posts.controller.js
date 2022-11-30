@@ -64,6 +64,7 @@ class PostController {
   findAllPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
+      const { userId } = res.locals.user;
       const { category, page } = req.query;
       if (!groupId || !category) {
         throw new InvalidParamsError('잘못된 요청입니다.');
@@ -73,6 +74,7 @@ class PostController {
         groupId,
         category,
         page,
+        userId,
       });
       res.status(200).json({
         ok: true,
@@ -88,10 +90,11 @@ class PostController {
   findPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
+      const { userId } = res.locals.user;
       if (!postId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      const findPost = await this.postService.findPost({ postId });
+      const findPost = await this.postService.findPost({ postId, userId });
       res.status(200).json({
         ok: true,
         data: findPost,
