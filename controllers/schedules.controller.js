@@ -27,8 +27,33 @@ class ScheduleController {
       next(error);
     }
   };
-
+  //*그냥 눌러서 수정할 때 요청 받는 곳
   updateSchedule = async (req, res, next) => {
+    try {
+      let { title, description, start, end, color } = req.body;
+      const { scheduleId, groupId } = req.params;
+      const { userId } = res.locals.user;
+      let date = new Date(start);
+      let endDate = new Date(end);
+      // start = date.setHours(date.getHours() + 9);
+      // end = endDate.setHours(endDate.getHours() + 9);
+      const updateschedule = await this.scheduleService.updateSchedule({
+        scheduleId,
+        title,
+        description,
+        userId,
+        groupId,
+        start,
+        end,
+        color,
+      });
+      res.status(200).json({ data: updateschedule });
+    } catch (error) {
+      next(error);
+    }
+  };
+  //*드래그앤드롭 시 요청받는 곳
+  dragUpdateSchedule = async (req, res, next) => {
     try {
       let { title, description, start, end, color } = req.body;
       const { scheduleId, groupId } = req.params;
@@ -67,12 +92,12 @@ class ScheduleController {
 
   destroySchedule = async (req, res, next) => {
     try {
-      const { scheduleId,groupId } = req.params;
+      const { scheduleId, groupId } = req.params;
       const { userId } = res.locals.user;
       const destroySchedule = await this.scheduleService.destroySchedule({
         scheduleId,
         groupId,
-        userId
+        userId,
       });
       res.status(200).json({ data: destroySchedule });
     } catch (error) {

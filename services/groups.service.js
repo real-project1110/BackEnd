@@ -15,11 +15,11 @@ class GroupService {
     return createGroup;
   };
 
-  updateGroupName = async (groupId, groupName,userId) => {
-    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId)
-    const leaderId = findGroupLeader.userId
-    if(leaderId!==userId){
-      throw new ValidationError('권한이 없습니다.')
+  updateGroupName = async (groupId, groupName, userId) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId);
+    const leaderId = findGroupLeader.userId;
+    if (leaderId !== userId) {
+      throw new ValidationError('권한이 없습니다.');
     }
     await this.groupRepository.updateGroupName(groupId, groupName);
     return { message: '수정이 완료되었습니다.' };
@@ -34,13 +34,13 @@ class GroupService {
     }
     const findGroupUser = await this.groupRepository.findGroupUser({
       groupId,
+      userId,
     });
     if (!findGroupUser) {
       throw new ValidationError('잘못된 요청입니다.');
     }
     const updateGroupImg = await this.groupRepository.updateGroupImg({
       groupId,
-      groupUserId: findGroupUser.groupUserId,
       groupImg: resizeUrl,
     });
     return updateGroupImg;
@@ -61,7 +61,6 @@ class GroupService {
         currentPage: groupId,
       });
     }
-    
     const groups = await this.groupRepository.findOneGroup({
       groupId,
       userId,
@@ -110,12 +109,13 @@ class GroupService {
   //     return groups;
   //   };
 
-  destroyGroup = async (groupId,userId) => {
-    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId)
-    const leaderId = findGroupLeader.userId
-    if(leaderId!==userId){
-      throw new ValidationError('권한이 없습니다.')
+  destroyGroup = async (groupId, userId) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId);
+    const leaderId = findGroupLeader.userId;
+    if (leaderId !== userId) {
+      throw new ValidationError('권한이 없습니다.');
     }
+
     await this.groupRepository.destroyGroup(groupId);
   };
   updateNic = async (userId, groupId, groupUserNickname) => {
@@ -298,14 +298,16 @@ class GroupService {
     }
   };
 
-  deletegroupuser = async({userId,groupId})=>{
-    const user = await this.groupRepository.getUserId({userId,groupId})
-    if(!user){
-      throw new Error('유저 정보가 없습니다')
+  deletegroupuser = async ({ userId, groupId }) => {
+    const user = await this.groupRepository.getUserId({ userId, groupId });
+    if (!user) {
+      throw new Error('유저 정보가 없습니다');
     }
-    const deleteGroupUser = await this.groupRepository.deleteGroupUser({groupUserId:user.groupUserId})
-    return deleteGroupUser
-  }
+    const deleteGroupUser = await this.groupRepository.deleteGroupUser({
+      groupUserId: user.groupUserId,
+    });
+    return deleteGroupUser;
+  };
 }
 
 module.exports = GroupService;

@@ -1,4 +1,4 @@
-const { Post, GroupUser, PostImg } = require('../models');
+const { Post, GroupUser, PostImg, Like } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
@@ -18,17 +18,22 @@ class PostRepository extends Post {
     return createPost;
   };
   //*그룹유저 찾기
-  findGroupUserId = async ({ userId }) => {
-    const findGroupUserId = await GroupUser.findOne({ where: { userId } });
+  findGroupUserId = async ({ userId, groupId }) => {
+    const findGroupUserId = await GroupUser.findOne({
+      where: { userId, groupId },
+    });
     return findGroupUserId;
   };
   //*게시글 전체 조회
-  findAllPost = async ({ groupId, category }) => {
-    const posts = await Post.findAll({
+  findAllPost = async ({ groupId, category, offset }) => {
+    const { count, rows } = await Post.findAndCountAll({
       where: { [Op.and]: [{ groupId }, { category }] },
+      offset: offset,
+      limit: 8,
       attributes: [
         'postId',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -36,11 +41,15 @@ class PostRepository extends Post {
       ],
       include: { model: GroupUser, attributes: [] },
       order: [['createdAt', 'DESC']],
+      raw: true,
     });
-    return posts;
+    console.log(count, rows);
+    return rows;
   };
+  // //*좋아요 눌렀는지 체크
+  // findLike = async({});
   //*사진 찾기
-  findPostImg = async ({ postIds, groupId }) => {
+  findPostImg = async ({ postIds, groupId, groupUserId }) => {
     const result = [];
     for (let i = 0; i < postIds.length; i++) {
       let postImg = await PostImg.findAll({
@@ -56,6 +65,7 @@ class PostRepository extends Post {
           'postId',
           'content',
           'commentCount',
+          'likeCount',
           'createdAt',
           [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
           [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -64,15 +74,22 @@ class PostRepository extends Post {
         include: { model: GroupUser, attributes: [] },
         raw: true,
       });
-
-      const Posts = { ...post, postImg };
+      let findLike = await Like.findOne({
+        where: { groupUserId, postId: post.postId },
+      });
+      if (findLike) {
+        findLike = true;
+      } else {
+        findLike = false;
+      }
+      const Posts = { ...post, postImg, findLike };
       result.push(Posts);
     }
     return result;
   };
   //*게시글 상세 조회
   //postImg 추가해야함
-  findPost = async ({ postId }) => {
+  findPost = async ({ postId, groupUserId }) => {
     const result = [];
     const post = await Post.findOne({
       where: { postId },
@@ -81,6 +98,7 @@ class PostRepository extends Post {
         'content',
         'postImg',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -95,7 +113,15 @@ class PostRepository extends Post {
     if (!postImg) {
       return (postImg = null);
     }
-    const Post = { post, postImg };
+    let findLike = await Like.findOne({
+      where: { groupUserId, postId: post.postId },
+    });
+    if (findLike) {
+      findLike = true;
+    } else {
+      findLike = false;
+    }
+    const Post = { post, postImg, findLike };
     result.push(Post);
     return result;
   };

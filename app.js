@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const fs = require('fs');
 const HTTPS = require('https');
+const swaggerFile = require('./swagger-output.json');
+const swaggerUi = require('swagger-ui-express');
 
 // //*fs and https 모듈 가져오기
 // const https = require('https');
@@ -38,7 +40,6 @@ app.use(
     },
   }),
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
@@ -51,9 +52,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(expressSanitizer());
 app.use(cookieParser());
 app.use('/', routes);
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(errorLogger);
 app.use(errorHandler);
-
 
 try {
   const option = {
@@ -70,4 +71,3 @@ try {
     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
   });
 }
-

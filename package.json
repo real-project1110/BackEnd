@@ -28,6 +28,8 @@
     "prettier": "^2.7.1",
     "sequelize": "^6.25.7",
     "sequelize-cli": "^6.5.2",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.6.0",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1"
   },
@@ -37,7 +39,10 @@
   "main": "app.js",
   "scripts": {
     "db:migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "node swagger.js",
+    "start": "node app.js",
+    "start-gendoc": "node swagger.js"
   },
   "repository": {
     "type": "git",
@@ -48,5 +53,8 @@
   "bugs": {
     "url": "https://github.com/real-project1110/BackEnd/issues"
   },
-  "homepage": "https://github.com/real-project1110/BackEnd#readme"
+  "homepage": "https://github.com/real-project1110/BackEnd#readme",
+  "devDependencies": {
+    "artillery": "^2.0.0-27"
+  }
 }

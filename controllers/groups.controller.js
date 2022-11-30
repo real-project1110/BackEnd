@@ -8,7 +8,8 @@ class GroupController {
     try {
       const { groupName } = req.body;
       const { userId, nickname, avatarImg } = res.locals.user;
-      if (!userId || !nickname || !groupName) {
+      console.log(userId, nickname, avatarImg);
+      if (!userId || !nickname || !groupName || !avatarImg) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const createGroup = await this.groupService.createGroup({
@@ -27,11 +28,11 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { groupName } = req.body;
-      const {userId} = res.locals.user
+      const { userId } = res.locals.user;
       const updategroup = await this.groupService.updateGroupName(
         groupId,
         groupName,
-        userId
+        userId,
       );
       res.status(200).json({ data: updategroup });
     } catch (err) {
@@ -112,8 +113,11 @@ class GroupController {
   destroyGroup = async (req, res) => {
     try {
       const { groupId } = req.params;
-      const {userId} = res.locals.user
-      const destroygroup = await this.groupService.destroyGroup(groupId,userId);
+      const { userId } = res.locals.user;
+      const destroygroup = await this.groupService.destroyGroup(
+        groupId,
+        userId,
+      );
       res.status(200).json({ data: destroygroup });
     } catch (err) {
       res.status(400).json(err);
