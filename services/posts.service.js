@@ -48,7 +48,7 @@ class PostService {
 
   //*게시글 전체 조회
   findAllPost = async ({ groupId, category, page }) => {
-    const offset = (parseInt(page) - 1) * 3;
+    const offset = (parseInt(page) - 1) * 8;
     const findAllPost = await this.postRepository.findAllPost({
       groupId,
       category,

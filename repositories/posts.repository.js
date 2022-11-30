@@ -29,7 +29,7 @@ class PostRepository extends Post {
     const { count, rows } = await Post.findAndCountAll({
       where: { [Op.and]: [{ groupId }, { category }] },
       offset: offset,
-      limit: 3,
+      limit: 8,
       attributes: [
         'postId',
         'commentCount',
