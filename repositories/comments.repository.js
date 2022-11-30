@@ -74,6 +74,7 @@ class CommentRepository extends Comment {
         attributes: [
           'commentId',
           'comment',
+          'likeCount',
           'createdAt',
           [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
           [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
