@@ -52,7 +52,7 @@ class GroupRepository {
       if (groupImg == null) {
         findGroup.push({ groupId, groupName, groupImg });
       } else {
-        const originalUrl = image.replace(/\/statUS\//, '/original/');
+        const originalUrl = groupImg.replace(/\/statUS\//, '/original/');
         findGroup.push({ groupId, groupName, groupImg, originalUrl });
       }
       // const originalUrl = groupImg.replace(/\/statUS\//, '/original/');=
