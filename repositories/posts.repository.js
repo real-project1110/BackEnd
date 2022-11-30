@@ -75,8 +75,7 @@ class PostRepository extends Post {
         raw: true,
       });
       let findLike = await Like.findOne({
-        where: groupUserId,
-        postId: post.postId,
+        where: { groupUserId, postId: post.postId },
       });
       if (findLike) {
         findLike = true;
@@ -115,8 +114,7 @@ class PostRepository extends Post {
       return (postImg = null);
     }
     let findLike = await Like.findOne({
-      where: groupUserId,
-      postId: post.postId,
+      where: { groupUserId, postId: post.postId },
     });
     if (findLike) {
       findLike = true;
