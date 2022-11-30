@@ -1,4 +1,4 @@
-const { Comment, Post, GroupUser } = require('../models');
+const { Comment, Post, GroupUser, CommentLike } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
@@ -28,7 +28,8 @@ class CommentRepository extends Comment {
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({ postId, groupId }) => {
+  findAllComment = async ({ postId, groupId, groupUserId }) => {
+    // const result = [];
     const findAllComment = await Comment.findAll({
       where: { postId, groupId },
       attributes: [
@@ -38,10 +39,22 @@ class CommentRepository extends Comment {
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
         [Sequelize.col('GroupUser.groupAvatarImg'), 'groupAvatarImg'],
+        [Sequelize.col('CommentLike.commentId'), 'commentId'],
       ],
       include: [{ model: GroupUser, attributes: [] }],
+      include: [{ model: CommentLike, attributes: [] }],
+      raw: true,
       order: [['createdAt', 'DESC']],
     });
+    console.log(findAllComment);
+    // let findLike = await CommentLike.findOne({
+    //   where: { groupUserId, postId: post.postId },
+    // });
+    // if (findLike) {
+    //   findLike = true;
+    // } else {
+    //   findLike = false;
+    // }
     return findAllComment;
   };
 
