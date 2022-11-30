@@ -71,7 +71,7 @@ class PostService {
     const findPostImg = await this.postRepository.findPostImg({
       postIds,
       groupId,
-      groupUserId,
+      groupUserId: findGroupUserId.groupUserId,
     });
     return findPostImg;
   };
