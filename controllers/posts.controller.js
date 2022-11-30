@@ -64,17 +64,20 @@ class PostController {
   findAllPost = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const { category } = req.query;
+      const { category, page } = req.query;
       if (!groupId || !category) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
+      console.log('컨트롤러에서 page를 조회합니다.', page);
       const findAllPost = await this.postService.findAllPost({
         groupId,
         category,
+        page,
       });
       res.status(200).json({
         ok: true,
         data: findAllPost,
+        currentPage: page,
       });
     } catch (error) {
       next(error);

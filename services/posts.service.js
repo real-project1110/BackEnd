@@ -1,6 +1,8 @@
 const PostRepository = require('../repositories/posts.repository');
 const ValidationError = require('../exceptions/index.exception');
 
+const getPostId = (a) => a.postId;
+
 class PostService {
   postRepository = new PostRepository();
 
@@ -45,10 +47,12 @@ class PostService {
   };
 
   //*게시글 전체 조회
-  findAllPost = async ({ groupId, category }) => {
+  findAllPost = async ({ groupId, category, page }) => {
+    const offset = (parseInt(page) - 1) * 8;
     const findAllPost = await this.postRepository.findAllPost({
       groupId,
       category,
+      offset,
     });
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');

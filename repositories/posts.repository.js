@@ -25,14 +25,15 @@ class PostRepository extends Post {
     return findGroupUserId;
   };
   //*게시글 전체 조회
-  findAllPost = async ({ groupId, category }) => {
+  findAllPost = async ({ groupId, category, offset }) => {
     const { count, rows } = await Post.findAndCountAll({
       where: { [Op.and]: [{ groupId }, { category }] },
-      offset: 0,
-      limit: 3,
+      offset: offset,
+      limit: 8,
       attributes: [
         'postId',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -62,6 +63,7 @@ class PostRepository extends Post {
           'postId',
           'content',
           'commentCount',
+          'likeCount',
           'createdAt',
           [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
           [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -87,6 +89,7 @@ class PostRepository extends Post {
         'content',
         'postImg',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],

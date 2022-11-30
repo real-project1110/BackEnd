@@ -53,5 +53,8 @@
   "bugs": {
     "url": "https://github.com/real-project1110/BackEnd/issues"
   },
-  "homepage": "https://github.com/real-project1110/BackEnd#readme"
+  "homepage": "https://github.com/real-project1110/BackEnd#readme",
+  "devDependencies": {
+    "artillery": "^2.0.0-27"
+  }
 }

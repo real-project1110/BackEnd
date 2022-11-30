@@ -1,6 +1,7 @@
 const { ValidationError } = require('sequelize');
 const PostImgRepository = require('../repositories/postImgs.repository');
 
+// const deduplication = (a) => !image.includes(a.postImg);
 class PostImgService {
   postImgRepository = new PostImgRepository();
 
@@ -30,11 +31,8 @@ class PostImgService {
     const findPostImg = await this.postImgRepository.findPostImg({
       postId,
     });
-    console.log('이미지만', image);
-    console.log('파인드포스트이미지', findPostImg);
     if (findPostImg.length == image.length) return;
     const delet = findPostImg.filter((a) => !image.includes(a.postImg));
-    console.log('필터로 나눈거', delet);
     const deletPostImg = await this.postImgRepository.deletPostImg({
       postImg: delet,
     });
@@ -52,13 +50,11 @@ class PostImgService {
       const postImage = images[i].location;
       postImgs.push(postImage.replace(/\/original\//, '/statUS/'));
     }
-    console.log('포스트이미지스', postImgs);
     const createPostImg = await this.postImgRepository.createPostImg({
       postId,
       postImgs,
       groupId,
     });
-    console.log('이미지서비스', createPostImg);
     return createPostImg;
   };
 }
