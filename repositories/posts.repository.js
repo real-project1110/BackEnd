@@ -46,8 +46,10 @@ class PostRepository extends Post {
     console.log(count, rows);
     return rows;
   };
+  // //*좋아요 눌렀는지 체크
+  // findLike = async({});
   //*사진 찾기
-  findPostImg = async ({ postIds, groupId }) => {
+  findPostImg = async ({ postIds, groupId, groupUserId }) => {
     const result = [];
     for (let i = 0; i < postIds.length; i++) {
       let postImg = await PostImg.findAll({
@@ -72,15 +74,23 @@ class PostRepository extends Post {
         include: { model: GroupUser, attributes: [] },
         raw: true,
       });
-
-      const Posts = { ...post, postImg };
+      let findLike = await Like.findOne({
+        where: groupUserId,
+        postId: post.postId,
+      });
+      if (findLike) {
+        findLike = true;
+      } else {
+        findLike = false;
+      }
+      const Posts = { ...post, postImg, findLike };
       result.push(Posts);
     }
     return result;
   };
   //*게시글 상세 조회
   //postImg 추가해야함
-  findPost = async ({ postId }) => {
+  findPost = async ({ postId, groupUserId }) => {
     const result = [];
     const post = await Post.findOne({
       where: { postId },
@@ -104,7 +114,16 @@ class PostRepository extends Post {
     if (!postImg) {
       return (postImg = null);
     }
-    const Post = { post, postImg };
+    let findLike = await Like.findOne({
+      where: groupUserId,
+      postId: post.postId,
+    });
+    if (findLike) {
+      findLike = true;
+    } else {
+      findLike = false;
+    }
+    const Post = { post, postImg, findLike };
     result.push(Post);
     return result;
   };

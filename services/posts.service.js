@@ -54,6 +54,16 @@ class PostService {
       category,
       offset,
     });
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+      groupId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    // const findLike = await this.postRepository.findLike({
+    //   groupUserId: findGroupUserId.groupUserId,
+    // });
     if (!findAllPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
@@ -61,13 +71,24 @@ class PostService {
     const findPostImg = await this.postRepository.findPostImg({
       postIds,
       groupId,
+      groupUserId,
     });
     return findPostImg;
   };
 
   //*게시글 상세 조회
   findPost = async ({ postId }) => {
-    const findPost = await this.postRepository.findPost({ postId });
+    const findGroupUserId = await this.postRepository.findGroupUserId({
+      userId,
+      groupId,
+    });
+    if (!findGroupUserId) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
+    const findPost = await this.postRepository.findPost({
+      postId,
+      groupUserId: findGroupUserId.groupUserId,
+    });
     if (!findPost) {
       throw new ValidationError('잘못된 요청입니다.');
     }
