@@ -30,7 +30,7 @@ class ColorController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   updateColor = async (req, res, next) => {
     try {
@@ -50,7 +50,7 @@ class ColorController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
 
   deleteColor = async (req, res, next) => {
