@@ -33,6 +33,7 @@ class PostRepository extends Post {
       attributes: [
         'postId',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -62,6 +63,7 @@ class PostRepository extends Post {
           'postId',
           'content',
           'commentCount',
+          'likeCount',
           'createdAt',
           [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
           [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
@@ -87,6 +89,7 @@ class PostRepository extends Post {
         'content',
         'postImg',
         'commentCount',
+        'likeCount',
         'createdAt',
         [Sequelize.col('GroupUser.groupUserId'), 'groupUserId'],
         [Sequelize.col('GroupUser.groupUserNickname'), 'groupUserNickname'],
