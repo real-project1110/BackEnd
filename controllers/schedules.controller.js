@@ -12,7 +12,7 @@ class ScheduleController {
       let date = new Date(start);
       let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
-      end = endDate.setHours(endDate.getHours() + 9);
+      // end = endDate.setHours(endDate.getHours() + 9);
       const createschedule = await this.scheduleService.createSchedule({
         title,
         description,
@@ -36,7 +36,7 @@ class ScheduleController {
       let date = new Date(start);
       let endDate = new Date(end);
       start = date.setHours(date.getHours() + 9);
-      end = endDate.setHours(endDate.getHours() + 9);
+      // end = endDate.setHours(endDate.getHours() + 9);
       const updateschedule = await this.scheduleService.updateSchedule({
         scheduleId,
         title,
@@ -67,12 +67,12 @@ class ScheduleController {
 
   destroySchedule = async (req, res, next) => {
     try {
-      const { scheduleId,groupId } = req.params;
+      const { scheduleId, groupId } = req.params;
       const { userId } = res.locals.user;
       const destroySchedule = await this.scheduleService.destroySchedule({
         scheduleId,
         groupId,
-        userId
+        userId,
       });
       res.status(200).json({ data: destroySchedule });
     } catch (error) {
