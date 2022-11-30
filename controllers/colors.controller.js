@@ -31,6 +31,7 @@ class ColorController {
       next(error);
     }
   };
+
   updateColor = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
@@ -50,6 +51,7 @@ class ColorController {
       next(error);
     }
   };
+
 
   deleteColor = async (req, res, next) => {
     try {

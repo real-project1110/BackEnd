@@ -38,6 +38,9 @@ module.exports = {
       comment: {
         type: Sequelize.STRING,
       },
+      likeCount: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
