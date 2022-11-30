@@ -12,6 +12,11 @@ router.put(
   auth,
   scheduleController.updateSchedule,
 );
+router.put(
+  '/:groupId/schedules/:scheduleId/drag',
+  auth,
+  scheduleController.dragUpdateSchedule,
+);
 
 router.delete(
   '/:groupId/schedules/:scheduleId',
