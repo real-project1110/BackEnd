@@ -41,7 +41,6 @@ class GroupService {
     }
     const updateGroupImg = await this.groupRepository.updateGroupImg({
       groupId,
-      groupUserId: findGroupUser.groupUserId,
       groupImg: resizeUrl,
     });
     return updateGroupImg;
