@@ -1,4 +1,4 @@
-const { Post, GroupUser, PostImg } = require('../models');
+const { Post, GroupUser, PostImg, Like } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
