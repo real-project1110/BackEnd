@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
-const { get } = require('../middlewares/cacheMiddleware');
+// const { get } = require('../middlewares/cacheMiddleware');
 const ScheduleController = require('../controllers/schedules.controller');
 const scheduleController = new ScheduleController();
 router.post('/:groupId/schedules', auth, scheduleController.createSchedule);
@@ -9,7 +9,7 @@ router.post('/:groupId/schedules', auth, scheduleController.createSchedule);
 router.get(
   '/:groupId/schedules',
   auth,
-  get,
+  // get,
   scheduleController.findAllSchedule,
 );
 
