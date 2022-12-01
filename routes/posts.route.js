@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
+const { get } = require('../middlewares/cacheMiddleware');
 const upload = require('../middlewares/multerMiddleware');
 
 const PostController = require('../controllers/posts.controller');
@@ -14,7 +15,7 @@ router.post(
   postController.createPost,
 );
 //*게시글 전체 조회
-router.get('/:groupId/posts', auth, postController.findAllPost);
+router.get('/:groupId/posts', auth, get, postController.findAllPost);
 //*게시글 상세 조회
 router.get('/posts/:postId', auth, postController.findPost);
 //*공지/자유로 등록
