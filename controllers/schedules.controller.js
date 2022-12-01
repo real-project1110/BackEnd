@@ -9,10 +9,11 @@ class ScheduleController {
       let { title, description, start, end, color } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      let date = new Date(start);
-      let endDate = new Date(end);
-      start = date.setHours(date.getHours() + 9);
-      end = endDate.setHours(endDate.getHours() + 9);
+      console.log(start, end);
+      // let date = new Date(start);
+      // let endDate = new Date(end);
+      // start = date.setHours(date.getHours() + 9);
+      // end = endDate.setHours(endDate.getHours() + 9);
       const createschedule = await this.scheduleService.createSchedule({
         title,
         description,
@@ -33,8 +34,9 @@ class ScheduleController {
       let { title, description, start, end, color } = req.body;
       const { scheduleId, groupId } = req.params;
       const { userId } = res.locals.user;
-      let date = new Date(start);
-      let endDate = new Date(end);
+      console.log(start, end);
+      // let date = new Date(start);
+      // let endDate = new Date(end);
       // start = date.setHours(date.getHours() + 9);
       // end = endDate.setHours(endDate.getHours() + 9);
       const updateschedule = await this.scheduleService.updateSchedule({
@@ -58,10 +60,11 @@ class ScheduleController {
       let { title, description, start, end, color } = req.body;
       const { scheduleId, groupId } = req.params;
       const { userId } = res.locals.user;
-      let date = new Date(start);
-      let endDate = new Date(end);
-      start = date.setHours(date.getHours() + 9);
-      end = endDate.setHours(endDate.getHours() + 9);
+      console.log(start, end);
+      // let date = new Date(start);
+      // let endDate = new Date(end);
+      // start = date.setHours(date.getHours() + 9);
+      // end = endDate.setHours(endDate.getHours() + 9);
       const updateschedule = await this.scheduleService.updateSchedule({
         scheduleId,
         title,
