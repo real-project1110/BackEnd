@@ -5,15 +5,15 @@ const expressSanitizer = require('express-sanitizer');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const fs = require('fs');
-const HTTPS = require('https');
+const HTTP = require('http');
 const swaggerFile = require('./swagger-output.json');
 const swaggerUi = require('swagger-ui-express');
-const server = HTTPS.createServer(app)
+const server = HTTP.createServer(app)
 
+const socketIo = require("socket.io");
 // //*fs and https 모듈 가져오기
 // const https = require('https');
 // const fs = require('fs');
-
 const cors = require('cors');
 const {
   errorLogger,
@@ -26,6 +26,43 @@ const passportConfig = require('./passport');
 passportConfig();
 const morganMiddleware = require('./middlewares/morganMiddleware');
 
+
+const io =socketIo(server, {
+  pingInterval: 10000,
+  pingTimeout: 5000,
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+      credentials: true,
+      transports: ["websocket"],
+    },
+  });
+
+io.on("connection",(socket)=>{
+  socket.on("joinroom",async(roomId)=>{
+      const item ={roomId}
+      socket.join(roomId)
+      console.log("roomId: ", `${roomId}에 입장.`)
+  })
+  
+  socket.on("chatting",async(data)=>{
+      const {roomId,groupUserId,message,createdAt} = data
+      const chattingList = new ChattingList()
+      console.log(chattingList)
+      await chattingList.create({roomId,groupUserId,message,createdAt})
+      console.log(data)
+      io.to(roomId).emit("chatting",{
+        roomId,
+        groupUserId,
+          message,
+          createdAt
+      })
+  })
+  
+  // socket.on("disconnect",()=>{
+      //데이터 저장
+  // })
+})
 app.use(
   session({
     resave: false,
@@ -53,7 +90,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(expressSanitizer());
 app.use(cookieParser());
 app.use('/', routes);
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(errorLogger);
 app.use(errorHandler);
 
@@ -64,11 +101,11 @@ try {
     cert: fs.readFileSync(process.env.CERT_URL),
   };
 
-  HTTPS.createServer(option, app).listen(port, () => {
+  server.createServer(option, app).listen(port, () => {
     console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
   });
 } catch (error) {
-  app.listen(port, () => {
+  server.listen(port, () => {
     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
   });
 }
