@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'groupId',
       });
       this.hasMany(models.ChattingList, {
-        foreignKey: roomId,
-        sourceKey: roomId,
+        foreignKey: 'roomId',
+        sourceKey: 'roomId',
       });
     }
   }
