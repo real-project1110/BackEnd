@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
-      this.hasMany(models.chattingroom, {
+      this.hasMany(models.Chattingroom, {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
