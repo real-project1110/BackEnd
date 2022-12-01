@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
+      this.hasMany(models.chattingroom, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
     }
   }
   GroupList.init(

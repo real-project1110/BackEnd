@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ChattingRoom extends Model {
     /**
@@ -11,20 +9,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.GroupList, {
+        foreignKey: 'groupId',
+        targetKey: 'groupId',
+      });
+      this.hasMany(models.ChattingList, {
+        foreignKey: roomId,
+        sourceKey: roomId,
+      });
     }
   }
-  ChattingRoom.init({
-    roomId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
+  ChattingRoom.init(
+    {
+      roomId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      groupId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'GroupList',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
+      },
+      groupUserIds: DataTypes.STRING,
     },
-    groupId: DataTypes.INTEGER,
-    groupUserIds: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'ChattingRoom',
-  });
+    {
+      sequelize,
+      modelName: 'ChattingRoom',
+    },
+  );
   return ChattingRoom;
 };
