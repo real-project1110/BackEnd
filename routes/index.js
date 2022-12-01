@@ -15,4 +15,5 @@ router.use('/', require('./naver.route'));
 router.use('/groups',require('./colors.route'))
 router.use('/groups',require('./postlikes.route'))
 router.use('/groups',require('./commentlikes.route'))
+router.use('/chats',require('./chatting.route'))
 module.exports = router;
