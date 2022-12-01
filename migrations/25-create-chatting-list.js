@@ -12,7 +12,7 @@ module.exports = {
       roomId: {
         type: Sequelize.INTEGER
       },
-      gorupUserId: {
+      groupUserId: {
         type: Sequelize.INTEGER
       },
       message: {

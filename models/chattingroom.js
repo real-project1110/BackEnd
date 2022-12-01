@@ -14,9 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ChattingRoom.init({
+    roomId: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     groupId: DataTypes.INTEGER,
-    gorupUserId1: DataTypes.INTEGER,
-    gorupUserId2: DataTypes.INTEGER
+    groupUserIds: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'ChattingRoom',

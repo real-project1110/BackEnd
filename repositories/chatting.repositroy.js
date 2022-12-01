@@ -2,22 +2,18 @@ const {ChattingList,ChattingRoom} = require('../models')
 const {Op} = require('sequelize')
 
 class ChattingRepository{
-    createRoom = async({groupId,gorupUserId1,gorupUserId2})=>{
-        const createRoom = await ChattingRoom.create({groupId,gorupUserId1,gorupUserId2})
+    createRoom = async({groupId,groupUserIds})=>{
+        const createRoom = await ChattingRoom.create({groupId,groupUserIds})
+        return createRoom
     }
 
-    createChat = async({roomId,gorupUserId,message})=>{
-        const createChat = await ChattingList.create({roomId,gorupUserId,message})
+
+    createChat = async({roomId,groupUserId,message})=>{
+        const createChat = await ChattingList.create({roomId,groupUserId,message})
     }
 
-    findRoom = async({groupId,gorupUserId})=>{
-       const findRoom = await ChattingList.findAll({
-        where:
-        {groupId,
-            [Op.or]:[
-                {gorupUserId1:{gorupUserId}},
-                {gorupUserId2:{gorupUserId}}
-            ]}})
+    findRoom = async({groupId,groupUserIds})=>{
+       const findRoom = await ChattingRoom.findOne({where:{groupId,groupUserIds}})
         return findRoom
     }
 

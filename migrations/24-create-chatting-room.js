@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ChattingRooms', {
-      chattingroomId: {
+      roomId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -12,10 +12,7 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER
       },
-      gorupUserId1: {
-        type: Sequelize.STRING
-      },
-      gorupUserId2: {
+      groupUserIds: {
         type: Sequelize.STRING
       },
       createdAt: {
