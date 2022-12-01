@@ -34,7 +34,12 @@ router.get(
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
 router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);
 router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
-router.get('/:groupId/groupUsers', auth, get, groupcontroller.findAllGroupUser);
+router.get(
+  '/:groupId/groupUsers',
+  auth,
+  //  get,
+  groupcontroller.findAllGroupUser,
+);
 
 router.delete('/:groupId/groupUser', auth, groupcontroller.deleteGroupUser);
 router.delete('/:groupId', auth, groupcontroller.destroyGroup);
