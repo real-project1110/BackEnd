@@ -35,16 +35,16 @@ class ScheduleController {
       const { userId } = res.locals.user;
       let date = new Date(start);
       let endDate = new Date(end);
-      // start = date.setHours(date.getHours() + 9);
-      // end = endDate.setHours(endDate.getHours() + 9);
+      start = date.setHours(date.getHours() + 9);
+      end = endDate.setHours(endDate.getHours() + 9);
       const updateschedule = await this.scheduleService.updateSchedule({
         scheduleId,
         title,
         description,
         userId,
         groupId,
-        start: date,
-        end: endDate,
+        start,
+        end,
         color,
       });
       res.status(200).json({ data: updateschedule });
