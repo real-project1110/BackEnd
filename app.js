@@ -8,7 +8,7 @@ const fs = require('fs');
 const HTTPS = require('https');
 const swaggerFile = require('./swagger-output.json');
 const swaggerUi = require('swagger-ui-express');
-const server = HTTPS.createServer(app);
+// const server = HTTPS.createServer(app);
 
 const cors = require('cors');
 const {
@@ -69,4 +69,4 @@ try {
   });
 }
 
-module.exports = server;
+// module.exports = server;
