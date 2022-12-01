@@ -43,8 +43,8 @@ class ScheduleController {
         description,
         userId,
         groupId,
-        start,
-        end,
+        start: date,
+        end: endDate,
         color,
       });
       res.status(200).json({ data: updateschedule });
