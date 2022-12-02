@@ -12,8 +12,8 @@ class RoomRepository extends Room {
     const findRoomId = await Room.findOrCreate({
       where: { [Op.and]: [{ groupId }, { users }] },
       dafaults: {
-        groupId: groupId,
-        users: users,
+        groupId: 'groupId',
+        users: 'users',
       },
       raw: true,
     });
