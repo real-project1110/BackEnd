@@ -70,13 +70,15 @@ class GroupService {
     if (!findOneGroup) {
       throw new ValidationError('그룹이 없습니다');
     }
+    const roomIds = [...new Set(findRoomId.map((a) => a.roomId))];
+
     const image = findOneGroup.groupImg;
     if (image == null) {
       return {
         groupId: findOneGroup.groupId,
         groupName: findOneGroup.groupName,
         groupImg: findOneGroup.groupImg,
-        roomIds: findRoomId,
+        roomIds: roomIds,
       };
     } else {
       const originalUrl = image.replace(/\/statUS\//, '/original/');
@@ -84,7 +86,7 @@ class GroupService {
         groupId: findOneGroup.groupId,
         groupName: findOneGroup.groupName,
         groupImg: findOneGroup.groupImg,
-        roomIds: findRoomId,
+        roomIds: roomIds,
         originalUrl,
       };
     }
