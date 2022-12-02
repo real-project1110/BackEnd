@@ -74,7 +74,7 @@ module.exports = (server) => {
       const { message, roomId, groupUserId } = data;
       console.log('채팅 확인', data);
       const msg = { message, groupUserId };
-      io.to(roomId).emit('sendChat', msg);
+      io.to(roomId).emit('message', msg);
     });
   });
 };
