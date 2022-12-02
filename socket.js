@@ -70,10 +70,14 @@ module.exports = (server) => {
       socket.leave(roomId);
     });
 
-    socket.on('sendChat', (data) => {
+    socket.on('message', (data) => {
       const { message, roomId, groupUserId } = data;
       console.log('채팅 확인', data);
       const msg = { message, groupUserId };
+      console.log(
+        roomId,
+        '룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?',
+      );
       io.to(roomId).emit('message', msg);
     });
   });
