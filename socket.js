@@ -56,7 +56,7 @@ module.exports = (server) => {
       onlineMap[socket.nsp.name] = {};
     }
     socket.on('joinGroup', (data) => {
-      onlineMap[socket.nsp.name][socket.id] = data.gg;
+      onlineMap[socket.nsp.name][socket.id] = data.groupUserId;
       newNamespace.emit(
         'onlineList',
         Object.values(onlineMap[socket.nsp.name]),
