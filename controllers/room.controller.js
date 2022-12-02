@@ -9,6 +9,10 @@ class RoomController {
       const { groupId } = req.params;
       const { users } = req.query;
       const { userId } = res.locals.user;
+      console.log(
+        'asdjfoiasdjoifjasdoifjoi;asdjfo;iasdjoif;asdjo;ifjasdoihfiuoasdhifuads',
+        users,
+      );
       if (!groupId || !users) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }

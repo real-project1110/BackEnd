@@ -13,6 +13,10 @@ class RoomService {
       throw new ValidationError('잘못된 요청입니다.');
     }
     //users 스플릿해서 findGroupUser.groupUserId가 존재하는지 체크해야함
+    const usersSplit = users.split('');
+    if (!usersSplit.includes(String(findGroupUser.groupUserId))) {
+      throw new ValidationError('잘못된 요청입니다.');
+    }
     const findRoomId = await this.roomRepository.findRoomId({ groupId, users });
     return findRoomId.roomId;
   };
