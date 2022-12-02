@@ -67,7 +67,7 @@ class GroupService {
         groupId,
         userId,
       });
-    if (!groups) {
+    if (!findOneGroup) {
       throw new ValidationError('그룹이 없습니다');
     }
     const image = findOneGroup.groupImg;
