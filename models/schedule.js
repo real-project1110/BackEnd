@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
           model: 'GroupUser',
           key: 'groupuserId',
         },
+        onDelete: 'cascade',
       },
       groupId: {
         allowNull: false,

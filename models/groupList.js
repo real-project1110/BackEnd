@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         sourceKey: 'groupId',
       });
+      this.hasMany(models.Room, {
+        foreignKey: 'groupId',
+        sourceKey: 'groupId',
+      });
     }
   }
   GroupList.init(
@@ -62,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
           model: 'User',
           key: 'userId',
         },
+        onDelete: 'cascade',
       },
       groupName: {
         type: DataTypes.STRING,
