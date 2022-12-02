@@ -51,6 +51,7 @@ module.exports = (server) => {
   // };
   io.on('connection', (socket) => {
     const req = socket.request;
+    console.log('연결완료');
 
     socket.on('disconnect', () => {
       clearInterval(socket.interval);
@@ -62,6 +63,7 @@ module.exports = (server) => {
 
     socket.on('joinRoom', (data) => {
       socket.join(data.roomId);
+      console.log('조인확인', data);
     });
 
     socket.on('leaveRoom', (roomId) => {
@@ -70,6 +72,7 @@ module.exports = (server) => {
 
     socket.on('sendChat', (data) => {
       const { message, roomId, groupUserId } = data;
+      console.log('채팅 확인', data);
       io.to(roomId).emit('message', message);
     });
   });
