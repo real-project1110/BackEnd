@@ -71,9 +71,10 @@ module.exports = (server) => {
     });
 
     socket.on('message', (data) => {
-      const { message, roomId, groupUserId } = data;
+      const { message, roomId, groupUserId, createdAt } = data;
       console.log('채팅 확인', data);
-      const msg = { message, groupUserId };
+      //   const date = new Date()
+      const msg = { message, groupUserId, createdAt };
       console.log(
         roomId,
         '룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?',
