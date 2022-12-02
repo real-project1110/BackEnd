@@ -75,10 +75,6 @@ module.exports = (server) => {
       console.log('채팅 확인', data);
       //   const date = new Date()
       const msg = { message, groupUserId, createdAt };
-      console.log(
-        roomId,
-        '룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?',
-      );
       io.to(roomId).emit('message', msg);
     });
   });

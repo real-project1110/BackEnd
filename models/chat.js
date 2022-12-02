@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'cascade',
       },
-      chat: {
+      message: {
         type: DataTypes.STRING,
       },
       createdAt: {

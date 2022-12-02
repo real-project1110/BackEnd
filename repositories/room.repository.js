@@ -31,7 +31,7 @@ class RoomRepository extends Room {
       where: { roomId },
       offset: offset,
       limit: parseInt(pageSize),
-      attributes: ['groupUserId', 'chat', 'createdAt'],
+      attributes: ['groupUserId', 'message', 'createdAt'],
       order: [['createdAt', 'DESC']],
       raw: true,
     });
@@ -45,7 +45,7 @@ class RoomRepository extends Room {
 
   //*채팅 저장하기
   saveChat = async ({ roomId, groupUserId, message }) => {
-    const saveChat = await Chat.create({ roomId, groupUserId, chat: message });
+    const saveChat = await Chat.create({ roomId, groupUserId, message });
     return saveChat;
   };
 }
