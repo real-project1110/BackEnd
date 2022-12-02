@@ -1,4 +1,4 @@
-const RoomRepository = require('../repositories/room.repositoy');
+const RoomRepository = require('../repositories/room.repository');
 const ValidationError = require('../exceptions/index.exception');
 
 class RoomService {
