@@ -27,7 +27,8 @@ class CommentService {
 
   //*댓글 전체 조회
 
-  findAllComment = async ({ postId, userId, groupId }) => {
+  findAllComment = async ({ postId, userId, groupId, page }) => {
+    const offset = (parseInt(page) - 1) * 3;
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
       groupId,
@@ -44,6 +45,7 @@ class CommentService {
       commentIds,
       postId,
       groupId,
+      offset,
       groupUserId: findGroupUserId.groupUserId,
     });
     return findAllCommentLike;

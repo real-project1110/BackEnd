@@ -57,7 +57,13 @@ class CommentRepository extends Comment {
     // }
     return findAllComment;
   };
-  findAllCommentLike = async ({ commentIds, postId, groupUserId, groupId }) => {
+  findAllCommentLike = async ({
+    commentIds,
+    postId,
+    groupUserId,
+    groupId,
+    offset,
+  }) => {
     const result = [];
     for (let i = 0; i < commentIds.length; i++) {
       let commentLike = await CommentLike.findOne({
@@ -69,8 +75,10 @@ class CommentRepository extends Comment {
       } else {
         commentLike = false;
       }
-      const comment = await Comment.findOne({
+      const { count, rows } = await Comment.findAndCountAll({
         where: { postId, groupId, commentId: commentIds[i] },
+        offset: offset,
+        limit: 3,
         attributes: [
           'commentId',
           'comment',
@@ -84,7 +92,7 @@ class CommentRepository extends Comment {
         raw: true,
         order: [['createdAt', 'DESC']],
       });
-      const comments = { ...comment, commentLike };
+      const comments = { ...rows, commentLike };
       result.push(comments);
     }
     return result;

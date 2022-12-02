@@ -32,15 +32,16 @@ class CommentController {
     try {
       const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
-      if (!postId || !userId) {
+      const { page } = req.query;
+      if (!postId || !userId || !page) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const findAllComment = await this.commentService.findAllComment({
         groupId,
         postId,
         userId,
+        page,
       });
-      console.log('findAllComment', findAllComment);
       res.status(200).json({
         ok: true,
         data: findAllComment,
