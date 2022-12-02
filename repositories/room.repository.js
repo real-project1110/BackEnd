@@ -15,7 +15,6 @@ class RoomRepository extends Room {
         groupId: 'groupId',
         users: 'users',
       },
-      raw: true,
     });
     return findRoomId;
   };
