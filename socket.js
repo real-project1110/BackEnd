@@ -50,7 +50,7 @@ module.exports = (server) => {
   //     };
   //   }
   // };
-  const Nsp = io.of(/^\/dynamic-\d+$/).on('connection', (socket) => {
+  const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
     const newNamespace = socket.nsp;
     if (!onlineMap[socket.nsp.name]) {
       onlineMap[socket.nsp.name] = {};
