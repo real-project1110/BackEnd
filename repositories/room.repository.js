@@ -30,7 +30,7 @@ class RoomRepository extends Room {
     const { count, rows } = await Chat.findAndCountAll({
       where: { roomId },
       offset: offset,
-      limit: pageSize,
+      limit: parseInt(pageSize),
       attributes: ['groupUserId', 'chat', 'createdAt'],
       order: [['createdAt', 'DESC']],
       raw: true,
