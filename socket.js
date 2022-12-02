@@ -78,7 +78,7 @@ module.exports = (server) => {
         roomId,
         '룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?룸아이디볼싸람?',
       );
-      io.to('3').emit('message', msg);
+      io.to(roomId).emit('message', msg);
     });
   });
 };
