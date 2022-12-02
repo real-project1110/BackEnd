@@ -1,4 +1,4 @@
-const { User, GroupList, GroupUser } = require('../models');
+const { User, GroupList, GroupUser, Room } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const RoomController = require('../controllers/room.controller');
