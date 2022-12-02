@@ -92,7 +92,7 @@ class CommentRepository extends Comment {
         raw: true,
         order: [['createdAt', 'DESC']],
       });
-      const comments = { ...rows, commentLike };
+      const comments = { rows, commentLike };
       result.push(comments);
     }
     return result;
