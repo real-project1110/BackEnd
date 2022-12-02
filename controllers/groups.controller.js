@@ -66,7 +66,7 @@ class GroupController {
       next(error);
     }
   };
-
+  //*속해있는roomId 모아주기
   findOneGroup = async (req, res, next) => {
     try {
       const { groupId } = req.params;

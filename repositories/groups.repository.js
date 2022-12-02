@@ -1,6 +1,7 @@
 const { User, GroupList, GroupUser } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
+const RoomController = require('../controllers/room.controller');
 const Sequelize = Sq.Sequelize;
 
 class GroupRepository {
@@ -22,11 +23,17 @@ class GroupRepository {
     await GroupList.update({ groupName }, { where: { groupId } });
   };
 
-  findOneGroup = async ({ userId, groupId }) => {
+  findOneGroup = async ({ userId, groupId, groupUserId }) => {
     const findOneGroup = await GroupList.findOne({
       where: { groupId },
+      raw: true,
     });
-    return findOneGroup;
+    const findRoomId = await Room.findAll({
+      where: { groupUserId },
+      attributes: ['roomId'],
+      raw: true,
+    });
+    return { findOneGroup, findRoomId };
   };
   updatcurrentPage = async ({ userId, currentPage }) => {
     const updatcurrentPage = await User.update(
