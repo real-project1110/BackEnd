@@ -73,7 +73,8 @@ module.exports = (server) => {
     socket.on('sendChat', (data) => {
       const { message, roomId, groupUserId } = data;
       console.log('채팅 확인', data);
-      io.to(roomId).emit('sendChat', message);
+      const msg = { message, groupUserId };
+      io.to(roomId).emit('sendChat', msg);
     });
   });
 };
