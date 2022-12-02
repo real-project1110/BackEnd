@@ -38,6 +38,7 @@ class CommentService {
     }
     const findAllComment = await this.commentRepository.findAllComment({
       postId,
+      offset,
       groupId,
     });
     const commentIds = findAllComment.map((a) => a.commentId);
@@ -45,7 +46,6 @@ class CommentService {
       commentIds,
       postId,
       groupId,
-      offset,
       groupUserId: findGroupUserId.groupUserId,
     });
     return findAllCommentLike;
