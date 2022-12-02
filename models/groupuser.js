@@ -26,14 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'groupUserId',
       });
       this.hasMany(models.Schedule, {
-        foreignKey: 'groupId',
-        sourceKey: 'groupId',
+        foreignKey: 'groupUserId',
+        sourceKey: 'groupUserId',
       });
       this.hasMany(models.PostLike, {
         foreignKey: 'groupUserId',
         sourceKey: 'groupUserId',
       });
       this.hasMany(models.CommentLike, {
+        foreignKey: 'groupUserId',
+        sourceKey: 'groupUserId',
+      });
+      this.hasMany(models.Chat, {
         foreignKey: 'groupUserId',
         sourceKey: 'groupUserId',
       });
