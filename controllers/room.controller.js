@@ -29,7 +29,6 @@ class RoomController {
       const { roomId } = req.params;
       const { page, pageSize } = req.query;
       const getChat = await this.roomService.getChat({
-        groupUserId,
         roomId,
         page,
         pageSize,
