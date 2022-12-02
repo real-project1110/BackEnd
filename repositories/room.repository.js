@@ -9,8 +9,8 @@ class RoomRepository extends Room {
   }
   //*roomId 가져오기 room 없으면 생성
   findRoomId = async ({ groupId, users }) => {
-    const [findRoomId, create] = await Room.findOrCreate({
-      where: { [Op.and]: [{ groupId }, { users }] },
+    const [findRoomId, created] = await Room.findOrCreate({
+      where: { groupId: groupId, users: users },
       dafaults: {
         groupId: groupId,
         users: users,
