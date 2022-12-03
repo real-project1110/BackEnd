@@ -82,8 +82,9 @@ module.exports = (server) => {
       if (!roomMap[data.roomId]) {
         roomMap[data.roomId] = [];
       }
-      roomMap[data.roomId].push(data.groupUserId);
-
+      roomMap[data.roomId] = [
+        ...new Set(roomMap[data.roomId], data.groupUserId),
+      ];
       console.log(
         'roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
@@ -106,7 +107,6 @@ module.exports = (server) => {
         roomMap[data.roomId],
       );
       roomMap[data.roomId].filter((a) => a !== undefined);
-      roomMap[data.roomId] = [...new Set(...roomMap[data.roomId])];
       if (roomMap[data.roomId].length !== 2) {
         newNamespace.to(roomMap[data.roomId][0]).emit('unread');
       }
