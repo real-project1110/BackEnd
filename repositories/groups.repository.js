@@ -1,4 +1,4 @@
-const { User, GroupList, GroupUser, Chat } = require('../models');
+const { User, GroupList, GroupUser, Chat, Room } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const RoomController = require('../controllers/room.controller');
@@ -28,8 +28,8 @@ class GroupRepository {
       where: { groupId },
       raw: true,
     });
-    const findRoomId = await Chat.findAll({
-      where: { groupUserId },
+    const findRoomId = await Room.findAll({
+      where: { [Op.or]: [{ sender: groupUserId }, { receiver: groupUserId }] },
       attributes: ['roomId'],
       raw: true,
     });
