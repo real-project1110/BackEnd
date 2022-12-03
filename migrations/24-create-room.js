@@ -18,8 +18,11 @@ module.exports = {
         },
         onDelete: 'cascade',
       },
-      users: {
-        type: Sequelize.STRING,
+      sender: {
+        type: Sequelize.INTEGER,
+      },
+      receiver: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

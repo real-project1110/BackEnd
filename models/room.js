@@ -36,8 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'cascade',
       },
-      users: {
-        type: DataTypes.STRING,
+      sender: {
+        type: DataTypes.INTEGER,
+      },
+      receiver: {
+        type: DataTypes.INTEGER,
       },
       createdAt: {
         allowNull: false,

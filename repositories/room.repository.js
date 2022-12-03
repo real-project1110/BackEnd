@@ -8,12 +8,13 @@ class RoomRepository extends Room {
     super();
   }
   //*roomId 가져오기 room 없으면 생성
-  findRoomId = async ({ groupId, users }) => {
+  findRoomId = async ({ groupId, sender, receiver }) => {
     const [findRoomId, created] = await Room.findOrCreate({
-      where: { groupId: groupId, users: users },
+      where: { groupId: groupId, sender: sender, receiver: receiver },
       dafaults: {
         groupId: groupId,
-        users: users,
+        sender: sender,
+        receiver: receiver,
       },
     });
     return findRoomId;

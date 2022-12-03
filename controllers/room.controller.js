@@ -7,18 +7,15 @@ class RoomController {
   findRoomId = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const { users } = req.query;
+      const { sender, receiver } = req.query;
       const { userId } = res.locals.user;
-      console.log(
-        'asdjfoiasdjoifjasdoifjoi;asdjfo;iasdjoif;asdjo;ifjasdoihfiuoasdhifuads',
-        users,
-      );
-      if (!groupId || !users) {
+      if (!groupId || !sender || !receiver) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const findRoomId = await this.roomService.findRoomId({
         groupId,
-        users,
+        sender,
+        receiver,
         userId,
       });
       res.status(200).json({ ok: true, data: findRoomId });

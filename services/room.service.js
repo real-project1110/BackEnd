@@ -4,7 +4,7 @@ const ValidationError = require('../exceptions/index.exception');
 class RoomService {
   roomRepository = new RoomRepository();
   //*roomId 찾기 없으면 만들어서 가져오기
-  findRoomId = async ({ groupId, users, userId }) => {
+  findRoomId = async ({ groupId, sender, receiver, userId }) => {
     const findGroupUser = await this.roomRepository.findGroupUser({
       groupId,
       userId,
@@ -12,12 +12,11 @@ class RoomService {
     if (!findGroupUser) {
       throw new ValidationError('잘못된 요청입니다.');
     }
-    //users 스플릿해서 findGroupUser.groupUserId가 존재하는지 체크해야함
-    const usersSplit = users.split('');
-    if (!usersSplit.includes(String(findGroupUser.groupUserId))) {
-      throw new ValidationError('잘못된 요청입니다.');
-    }
-    const findRoomId = await this.roomRepository.findRoomId({ groupId, users });
+    const findRoomId = await this.roomRepository.findRoomId({
+      groupId,
+      sender,
+      receiver,
+    });
     return findRoomId.roomId;
   };
   //*채팅내역 불러오기
