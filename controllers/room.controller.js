@@ -59,7 +59,6 @@ class RoomController {
   };
   unreadChat = async (req, res, next) => {
     try {
-      const 
     } catch (error) {
       next(error);
     }
