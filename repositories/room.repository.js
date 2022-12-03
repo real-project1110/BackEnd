@@ -53,7 +53,10 @@ class RoomRepository extends Room {
   //*안읽은 메세지
   unreadChat = async ({ sender, receiver, timestamps }) => {
     const unreadChat = await Chat.findAll({
-      where: { [Op.and]: [{ sender }, { receiver }], [Op.gt]: { timestamps } },
+      where: {
+        [Op.and]: [{ sender }, { receiver }],
+        [Op.gt]: { timestamps: Date.parse(String(timestamps)) },
+      },
     });
     return unreadChat;
   };
