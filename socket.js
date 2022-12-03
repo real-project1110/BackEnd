@@ -83,8 +83,10 @@ module.exports = (server) => {
         roomMap[data.roomId] = [];
       }
       roomMap[data.roomId].push(data.groupUserId);
-      roomMap[data.roomId].filter((a) => a !== undefined);
-      roomMap[data.roomId].filter(
+      roomMap[data.roomId] = roomMap[data.roomId].filter(
+        (a) => a !== undefined,
+      );
+      roomMap[data.roomId] = roomMap[data.roomId].filter(
         (a, i) => roomMap[data.roomId].indexOf(a) === i,
       );
       console.log(
