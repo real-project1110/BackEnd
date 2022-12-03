@@ -70,6 +70,8 @@ class GroupService {
     if (!findOneGroup) {
       throw new ValidationError('그룹이 없습니다');
     }
+
+    console.log('그룹컨트롤러에서 roomId 조회 :::::::::::', findRoomId);
     const roomIds = [...new Set(findRoomId.map((a) => a.roomId))];
 
     const image = findOneGroup.groupImg;
