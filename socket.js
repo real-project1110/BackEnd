@@ -82,9 +82,9 @@ module.exports = (server) => {
       if (!roomMap[data.roomId]) {
         roomMap[data.roomId] = [];
       }
-      roomMap[data.roomId] = [
-        ...new Set(roomMap[data.roomId], data.groupUserId),
-      ];
+      roomMap[data.roomId].push(data.groupUserId);
+      roomMap[data.roomId].filter((a) => a !== undefined);
+      roomMap[data.roomId].filter((a) => !roomMap[data.roomId].includes(a));
       console.log(
         'roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
@@ -107,7 +107,6 @@ module.exports = (server) => {
         'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
       );
-      roomMap[data.roomId].filter((a) => a !== undefined);
       if (roomMap[data.roomId].length !== 2) {
         newNamespace.to(roomMap[data.roomId][0]).emit('unread');
       }
