@@ -68,7 +68,7 @@ class RoomController {
         receiver,
         timestamps,
       });
-      res.status(200).jsonn({ ok: true, data: unreadChat });
+      res.status(200).json({ ok: true, data: unreadChat });
     } catch (error) {
       next(error);
     }
