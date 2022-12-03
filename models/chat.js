@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class PostLike extends Model {
+  class Chat extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,18 +9,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Room, {
+        foreignKey: 'roomId',
+        targetKey: 'roomId',
+      });
       this.belongsTo(models.GroupUser, {
         foreignKey: 'groupUserId',
         targetKey: 'groupUserId',
       });
-      this.belongsTo(models.Post, {
-        foreignKey: 'postId',
-        targetKey: 'postId',
-      });
     }
   }
-  PostLike.init(
+  Chat.init(
     {
+      chatId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      roomId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Room',
+          key: 'roomId',
+        },
+        onDelete: 'cascade',
+      },
       groupUserId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -30,21 +45,22 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: 'cascade',
       },
-      postId: {
+      message: {
+        type: DataTypes.STRING,
+      },
+      createdAt: {
         allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Post',
-          key: 'postId',
-        },
-        onDelete: 'cascade',
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
       },
     },
     {
       sequelize,
-      modelName: 'PostLike',
+      modelName: 'Chat',
     },
   );
-  PostLike.removeAttribute('id');
-  return PostLike;
+  return Chat;
 };

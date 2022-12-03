@@ -37,11 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       start: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
       end: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
       color: {
         allowNull: true,
@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
           model: 'GroupUser',
           key: 'groupuserId',
         },
+        onDelete: 'cascade',
       },
       groupId: {
         allowNull: false,

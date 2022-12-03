@@ -28,10 +28,12 @@ class CommentRepository extends Comment {
   };
 
   //*댓글 전체 조회
-  findAllComment = async ({ postId, groupId }) => {
+  findAllComment = async ({ postId, groupId, offset }) => {
     // const result = [];
-    const findAllComment = await Comment.findAll({
+    const { count, rows } = await Comment.findAndCountAll({
       where: { postId, groupId },
+      offset: offset,
+      limit: 3,
       attributes: [
         'commentId',
         'comment',
@@ -46,7 +48,6 @@ class CommentRepository extends Comment {
       raw: true,
       order: [['createdAt', 'DESC']],
     });
-    console.log(findAllComment);
     // let findLike = await CommentLike.findOne({
     //   where: { groupUserId, postId: post.postId },
     // });
@@ -55,7 +56,7 @@ class CommentRepository extends Comment {
     // } else {
     //   findLike = false;
     // }
-    return findAllComment;
+    return rows;
   };
   findAllCommentLike = async ({ commentIds, postId, groupUserId, groupId }) => {
     const result = [];

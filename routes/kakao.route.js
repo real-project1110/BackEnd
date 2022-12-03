@@ -57,7 +57,7 @@ const { User } = require('../models');
 // router.get('/auth/kakao/callback', kakaoCallback);
 
 // module.exports = router;
-const kakao = async(req, res, next) => {
+const kakao = async (req, res, next) => {
   // const { code } = req.query;
   try {
     // const
@@ -72,34 +72,29 @@ const kakao = async(req, res, next) => {
     //   },
     // });
     // console.log('1111111111',data)
-      let {authorization}=req.headers;
-      console.log('11111111111',authorization)
-      // const [authType,kakaoAccessToken] = (authorization||'').split(' ');
+    let { authorization } = req.headers;
+    console.log('11111111111', authorization);
+    // const [authType,kakaoAccessToken] = (authorization||'').split(' ');
 
-      const kakaoAccessToken = authorization
+    const kakaoAccessToken = authorization;
 
-    const { data: kakaoUser } = await axios.get('https://kapi.kakao.com/v2/user/me', {
-      headers: {
-        Authorization: `Bearer ${kakaoAccessToken}`,
+    const { data: kakaoUser } = await axios.get(
+      'https://kapi.kakao.com/v2/user/me',
+      {
+        headers: {
+          Authorization: `Bearer ${kakaoAccessToken}`,
+        },
       },
-    }); //유저 정보를 받아온다
+    ); //유저 정보를 받아온다
 
-    console.log('22222222222222',kakaoUser)
+    console.log('22222222222222', kakaoUser);
     let existingMember = null;
     existingMember = await User.findOne({
       where: {
         snsId: kakaoUser.id,
-        provider: 'kakao'
+        provider: 'kakao',
       },
     });
-    
-    const user = await User.findOne({where:{
-    email:kakaoUser.kakao_account.email
-    }})
-    if(user){
-      throw new Error('이미 가입된 유저입니다')
-    }
-
 
     if (existingMember === null) {
       const newMember = await User.create({
@@ -112,20 +107,20 @@ const kakao = async(req, res, next) => {
 
       // const accessToken = await generateToken(newMember);
       const accessToken = jwt.sign(
-      {
-        userId: newMember.userId,
-        email: newMember.email,
-        nickname: newMember.nickname,
-        currentPage: newMember.currentPage,
-        avatarImg: newMember.avatarImg,
-      },
-      process.env.SECRET_KEY,
-      { expiresIn: '7d' },
-    );
+        {
+          userId: newMember.userId,
+          email: newMember.email,
+          nickname: newMember.nickname,
+          currentPage: newMember.currentPage,
+          avatarImg: newMember.avatarImg,
+        },
+        process.env.SECRET_KEY,
+        { expiresIn: '7d' },
+      );
       res.json({
         success: true,
         accessToken,
-        nickname : newMember.nickname
+        nickname: newMember.nickname,
       });
     } else {
       // const accessToken = await generateToken(existingMember);
@@ -143,7 +138,7 @@ const kakao = async(req, res, next) => {
       res.json({
         success: true,
         accessToken,
-        currentPage :existingMember.currentPage
+        currentPage: existingMember.currentPage,
       });
     }
   } catch (error) {
@@ -152,7 +147,7 @@ const kakao = async(req, res, next) => {
 };
 
 // 로그인페이지로 이동
-router.post('/auth/kakao',kakao);
+router.post('/auth/kakao', kakao);
 // 카카오에서 설정한 redicrect url을 통해 요청 재전달
 router.get('/auth/kakao/callback');
 

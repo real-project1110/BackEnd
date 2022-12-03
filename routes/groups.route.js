@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
-const { get } = require('../middlewares/cacheMiddleware');
 const upload = require('../middlewares/multerMiddleware');
 const GroupController = require('../controllers/groups.controller');
 const groupcontroller = new GroupController();
@@ -25,12 +24,12 @@ router.put(
   upload.single('image'),
   groupcontroller.updatGroupAvatarImg,
 );
-router.get('/', auth, get, groupcontroller.findAllGroupList);
+router.get('/', auth, groupcontroller.findAllGroupList);
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
 router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);
 router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
-router.get('/:groupId/groupUsers', auth, get, groupcontroller.findAllGroupUser);
+router.get('/:groupId/groupUsers', auth, groupcontroller.findAllGroupUser);
 
-router.delete('/:groupId/groupUser', auth, groupcontroller.deleteGroupUser);
+router.delete('/:groupId/groupUser',auth,groupcontroller.deleteGroupUser)
 router.delete('/:groupId', auth, groupcontroller.destroyGroup);
 module.exports = router;

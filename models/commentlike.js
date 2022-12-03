@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'groupUserId',
       });
       this.belongsTo(models.Comment, {
-        foreignKey:'commentId',
-        targetKey:'commentId',
-      })
+        foreignKey: 'commentId',
+        targetKey: 'commentId',
+      });
     }
   }
   CommentLike.init(
@@ -28,16 +28,17 @@ module.exports = (sequelize, DataTypes) => {
           model: 'GroupUser',
           key: 'groupUserId',
         },
+        onDelete: 'cascade',
       },
-      commentId:{
-        allowNull:false,
+      commentId: {
+        allowNull: false,
         type: DataTypes.INTEGER,
         references: {
           model: 'Comment',
           key: 'commentId',
         },
         onDelete: 'cascade',
-      }
+      },
     },
     {
       sequelize,

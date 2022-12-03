@@ -25,6 +25,7 @@ module.exports = {
           model: 'GroupUsers',
           key: 'groupUserId',
         },
+        onDelete: 'cascade',
       },
       postId: {
         allowNull: false,
