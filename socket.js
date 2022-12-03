@@ -84,7 +84,9 @@ module.exports = (server) => {
       }
       roomMap[data.roomId].push(data.groupUserId);
       roomMap[data.roomId].filter((a) => a !== undefined);
-      roomMap[data.roomId].filter((a) => !roomMap[data.roomId].includes(a));
+      roomMap[data.roomId].filter(
+        (a, i) => roomMap[data.roomId].indexOf(a) === i,
+      );
       console.log(
         'roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
