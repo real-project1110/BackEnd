@@ -52,7 +52,7 @@ class RoomRepository extends Room {
 
   //*안읽은 메세지
   unreadChat = async ({ sender, receiver }) => {
-    const unreadChat = await Room.findAll({
+    const unreadChat = await Room.findOne({
       where: {
         sender,
         receiver,
