@@ -52,9 +52,11 @@ class RoomService {
       receiver,
       timestamps,
     });
+    const roomId = unreadChat.roomId;
+    const countUnread = await this.roomRepository.countUnread({ roomId });
     let count = 0;
-    if (!unreadChat) return count;
-    count = unreadChat.length;
+    if (!countUnread) return count;
+    count = countUnread.length;
     return count;
   };
 }

@@ -52,15 +52,24 @@ class RoomRepository extends Room {
 
   //*안읽은 메세지
   unreadChat = async ({ sender, receiver, timestamps }) => {
-    const unreadChat = await Chat.findAll({
+    const unreadChat = await Room.findAll({
       where: {
         sender,
         receiver,
-        createdAt: { [Op.gt]: new Date(+timestamps) },
-        //[Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
       },
     });
     return unreadChat;
+  };
+
+  //*안읽은 메세지
+  countUnread = async ({ roomId }) => {
+    const countUnread = await Chat.findAll({
+      where: {
+        roomId,
+        createdAt: { [Op.gt]: new Date(+timestamps) },
+      },
+    });
+    return countUnread;
   };
 }
 module.exports = RoomRepository;
