@@ -59,6 +59,16 @@ class RoomController {
   };
   unreadChat = async (req, res, next) => {
     try {
+      const { sender, receiver, timestamps } = req.query;
+      if (!sender || !receiver || !timestamps) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const unreadChat = await this.roomService.unreadChat({
+        sender,
+        receiver,
+        timestamps,
+      });
+      res.status(200).jsonn({ ok: true, data: unreadChat });
     } catch (error) {
       next(error);
     }
