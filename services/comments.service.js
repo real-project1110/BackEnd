@@ -27,8 +27,8 @@ class CommentService {
 
   //*댓글 전체 조회
 
-  findAllComment = async ({ postId, userId, groupId }) => {
-
+  findAllComment = async ({ postId, userId, groupId, page }) => {
+    const offset = (parseInt(page) - 1) * 3;
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
       groupId,
@@ -38,14 +38,21 @@ class CommentService {
     }
     const findAllComment = await this.commentRepository.findAllComment({
       postId,
+      offset,
       groupId,
     });
-    return findAllComment;
+    const commentIds = findAllComment.map((a) => a.commentId);
+    const findAllCommentLike = await this.commentRepository.findAllCommentLike({
+      commentIds,
+      postId,
+      groupId,
+      groupUserId: findGroupUserId.groupUserId,
+    });
+    return findAllCommentLike;
   };
 
   //*댓글 수정
   updatComment = async ({ commentId, comment, userId, groupId }) => {
-
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
       groupId,
@@ -70,7 +77,6 @@ class CommentService {
 
   //*댓글 삭제
   deletComment = async ({ commentId, userId, groupId }) => {
-
     const findGroupUserId = await this.postRepository.findGroupUserId({
       userId,
       groupId,

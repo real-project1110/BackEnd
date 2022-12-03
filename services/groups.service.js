@@ -61,26 +61,34 @@ class GroupService {
         currentPage: groupId,
       });
     }
-    const groups = await this.groupRepository.findOneGroup({
-      groupId,
-      userId,
-    });
-    if (!groups) {
+    const { findOneGroup, findRoomId } =
+      await this.groupRepository.findOneGroup({
+        groupUserId: findGroupUser.groupUserId,
+        groupId,
+        userId,
+      });
+    if (!findOneGroup) {
       throw new ValidationError('그룹이 없습니다');
     }
-    const image = groups.groupImg;
+
+    console.log('그룹컨트롤러에서 roomId 조회 :::::::::::', findRoomId);
+    const roomIds = [...new Set(findRoomId.map((a) => a.roomId))];
+
+    const image = findOneGroup.groupImg;
     if (image == null) {
       return {
-        groupId: groups.groupId,
-        groupName: groups.groupName,
-        groupImg: groups.groupImg,
+        groupId: findOneGroup.groupId,
+        groupName: findOneGroup.groupName,
+        groupImg: findOneGroup.groupImg,
+        roomIds: roomIds,
       };
     } else {
       const originalUrl = image.replace(/\/statUS\//, '/original/');
       return {
-        groupId: groups.groupId,
-        groupName: groups.groupName,
-        groupImg: groups.groupImg,
+        groupId: findOneGroup.groupId,
+        groupName: findOneGroup.groupName,
+        groupImg: findOneGroup.groupImg,
+        roomIds: roomIds,
         originalUrl,
       };
     }

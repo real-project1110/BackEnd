@@ -55,10 +55,12 @@ class ScheduleRepository {
     await Schedule.destroy({ where: { scheduleId } });
   };
 
-  findCreateGroupUserId = async({scheduleId})=>{
-    const findCreateGroupUserId = await Schedule.findOne({where:{scheduleId}})
-    return findCreateGroupUserId
-  }
+  findCreateGroupUserId = async ({ scheduleId }) => {
+    const findCreateGroupUserId = await Schedule.findOne({
+      where: { scheduleId },
+    });
+    return findCreateGroupUserId;
+  };
 }
 
 module.exports = ScheduleRepository;

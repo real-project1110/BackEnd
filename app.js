@@ -4,10 +4,12 @@ const port = 4000;
 const expressSanitizer = require('express-sanitizer');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const http = require('http');
 const fs = require('fs');
 const HTTPS = require('https');
 const swaggerFile = require('./swagger-output.json');
 const swaggerUi = require('swagger-ui-express');
+const socket = require('./socket');
 
 // //*fs and https 모듈 가져오기
 // const https = require('https');
@@ -56,18 +58,22 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(errorLogger);
 app.use(errorHandler);
 
+let server;
 try {
   const option = {
     ca: fs.readFileSync(process.env.CA_URL),
     key: fs.readFileSync(process.env.KEY_URL),
     cert: fs.readFileSync(process.env.CERT_URL),
   };
-
-  HTTPS.createServer(option, app).listen(port, () => {
+  server = HTTPS.createServer(option, app);
+  server.listen(port, () => {
     console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+    socket(server);
   });
 } catch (error) {
   app.listen(port, () => {
     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
   });
 }
+
+module.exports = server;

@@ -10,15 +10,16 @@ module.exports = {
           model: 'GroupUsers',
           key: 'groupUserId',
         },
+        onDelete: 'cascade',
       },
-      commentId:{
-        allowNull:false,
-        type:Sequelize.INTEGER,
-        references:{
-          model:'Comments',
-          key:'commentId',
+      commentId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Comments',
+          key: 'commentId',
         },
-        onDelete:'cascade',
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,
