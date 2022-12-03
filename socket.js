@@ -98,7 +98,7 @@ module.exports = (server) => {
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
       roomMap[data.roomId] = roomMap[data.roomId].filter(
-        (a) => a != data.groupUserId,
+        (a) => a == data.groupUserId,
       );
       console.log(
         'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
