@@ -1,4 +1,4 @@
-const { Post, GroupUser, PostImg, PostLike } = require('../models');
+const { Post, GroupUser, PostImg, Like } = require('../models');
 const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
@@ -74,7 +74,7 @@ class PostRepository extends Post {
         include: { model: GroupUser, attributes: [] },
         raw: true,
       });
-      let findLike = await PostLike.findOne({
+      let findLike = await Like.findOne({
         where: { groupUserId, postId: post.postId },
       });
       if (findLike) {
@@ -113,7 +113,7 @@ class PostRepository extends Post {
     if (!postImg) {
       return (postImg = null);
     }
-    let findLike = await PostLike.findOne({
+    let findLike = await Like.findOne({
       where: { groupUserId, postId: post.postId },
     });
     if (findLike) {

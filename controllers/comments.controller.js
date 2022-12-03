@@ -1,6 +1,5 @@
 const CommentService = require('../services/comments.service');
 const InvalidParamsError = require('../exceptions/index.exception');
-const { set } = require('../middlewares/cacheMiddleware');
 
 class CommentController {
   commentService = new CommentService();
@@ -33,19 +32,16 @@ class CommentController {
     try {
       const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
-      if (!postId || !userId) {
+      const { page } = req.query;
+      if (!postId || !userId || !page) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const findAllComment = await this.commentService.findAllComment({
         groupId,
         postId,
         userId,
+        page,
       });
-
-      if (findAllComment.length) {
-        set(req.originalUrl, findAllComment);
-        return res.status(200).json({ ok: true, data: findAllComment });
-      }
       res.status(200).json({
         ok: true,
         data: findAllComment,

@@ -8,7 +8,6 @@ const fs = require('fs');
 const HTTPS = require('https');
 const swaggerFile = require('./swagger-output.json');
 const swaggerUi = require('swagger-ui-express');
-const server = HTTPS.createServer(app)
 
 // //*fs and https 모듈 가져오기
 // const https = require('https');
@@ -72,5 +71,3 @@ try {
     console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
   });
 }
-
-module.exports = server

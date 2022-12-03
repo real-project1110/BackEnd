@@ -1,6 +1,5 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
-const { set } = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
@@ -67,7 +66,7 @@ class GroupController {
       next(error);
     }
   };
-
+  //*속해있는roomId 모아주기
   findOneGroup = async (req, res, next) => {
     try {
       const { groupId } = req.params;
@@ -94,10 +93,6 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
-      if (findAllGroupList.length) {
-        set(req.originalUrl, findAllGroupList);
-        return res.status(200).json({ ok: true, data: findAllGroupList });
-      }
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
