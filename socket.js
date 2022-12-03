@@ -75,14 +75,12 @@ module.exports = (server) => {
     });
     socket.on('joinRoom', (data) => {
       socket.join(data.roomId);
-      console.log('조인확인', data);
     });
     socket.on('leaveRoom', (roomId) => {
       socket.leave(roomId);
     });
     socket.on('message', (data) => {
       const { message, roomId, groupUserId, createdAt } = data;
-      console.log('채팅 확인', data);
       const msg = { message, groupUserId, createdAt };
       newNamespace.to(roomId).emit('message', msg);
     });

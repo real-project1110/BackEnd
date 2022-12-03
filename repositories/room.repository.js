@@ -32,7 +32,7 @@ class RoomRepository extends Room {
       offset: offset,
       limit: parseInt(pageSize),
       attributes: ['groupUserId', 'message', 'createdAt'],
-      order: [['createdAt', 'ASC']],
+      order: [['createdAt', 'DESC']],
       raw: true,
     });
     return rows;
