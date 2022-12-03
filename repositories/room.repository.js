@@ -55,7 +55,7 @@ class RoomRepository extends Room {
     const unreadChat = await Chat.findAll({
       where: {
         [Op.and]: [{ sender }, { receiver }],
-        [Op.gt]: { timestamps: Date.parse(String(timestamps)) },
+        [Op.gt]: { timestamps: Date.parse(+timestamps) },
       },
     });
     return unreadChat;
