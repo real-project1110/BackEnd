@@ -1,6 +1,8 @@
 const socketIo = require('socket.io');
 
 const onlineMap = {};
+const roomMap = {};
+
 module.exports = (server) => {
   const io = socketIo(server, { path: '/socket.io' });
   //   const socketIdMap = {};
@@ -50,6 +52,7 @@ module.exports = (server) => {
   //     };
   //   }
   // };
+  //* {보낸사람 , 메세지갯수}
   const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
     const newNamespace = socket.nsp;
     if (!onlineMap[socket.nsp.name]) {
@@ -61,6 +64,7 @@ module.exports = (server) => {
         'onlineList',
         Object.values(onlineMap[socket.nsp.name]),
       );
+      newNamespace.emit('notReadMsg', onlineMap[socket.nsp.name].length);
     });
     socket.on('error', (error) => {
       console.error(error);
@@ -75,18 +79,37 @@ module.exports = (server) => {
     });
     socket.on('joinRoom', (data) => {
       socket.join(data.roomId);
+      if (!roomMap[data.roomId]) {
+        roomMap[data.roomId] = [];
+      }
+      roomMap[data.roomId].push(data.groupUserId);
+      console.log(
+        'roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+      );
     });
-    socket.on('leaveRoom', (roomId) => {
-      socket.leave(roomId);
+    socket.on('leaveRoom', (data) => {
+      socket.leave(data.roomId);
+      roomMap[data.roomId].filter((a) => a !== data.groupUserId);
+      console.log(
+        'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+      );
     });
     socket.on('message', (data) => {
       const { message, roomId, groupUserId, createdAt } = data;
       const msg = { message, groupUserId, createdAt };
       newNamespace.to(roomId).emit('message', msg);
+      console.log(
+        'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+      );
+      if (roomMap[data.roomId].length !== 2) {
+        newNamespace.to(roomMap[data.roomId][0]).emit('unread');
+      }
     });
   });
 };
-
 // io.on('connection', (socket) => {
 //     const req = socket.request;
 //     console.log('연결완료');

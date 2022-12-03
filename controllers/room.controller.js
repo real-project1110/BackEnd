@@ -57,5 +57,12 @@ class RoomController {
       next(error);
     }
   };
+  unreadChat = async (req, res, next) => {
+    try {
+      const 
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 module.exports = RoomController;
