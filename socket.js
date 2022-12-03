@@ -88,6 +88,7 @@ module.exports = (server) => {
       console.log(
         'roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
+        data.groupUserId,
       );
     });
     socket.on('leaveRoom', (data) => {
