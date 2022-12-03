@@ -52,10 +52,14 @@ class RoomRepository extends Room {
 
   //*안읽은 메세지
   unreadChat = async ({ sender, receiver, timestamps }) => {
+    // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
+    // const kr_curr = new Date(utc + KR_TIME_DIFF);
+
     const unreadChat = await Chat.findAll({
       where: {
         [Op.and]: [{ sender }, { receiver }],
-        [Op.gt]: { createdAt: new Date(+timestamps).toString() },
+        [Op.gt]: { createdAt: timestamps },
         //[Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
       },
     });
