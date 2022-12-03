@@ -50,10 +50,12 @@ class RoomService {
     const unreadChat = await this.roomRepository.unreadChat({
       sender,
       receiver,
-      timestamps,
     });
     const roomId = unreadChat.roomId;
-    const countUnread = await this.roomRepository.countUnread({ roomId });
+    const countUnread = await this.roomRepository.countUnread({
+      roomId,
+      timestamps,
+    });
     let count = 0;
     if (!countUnread) return count;
     count = countUnread.length;

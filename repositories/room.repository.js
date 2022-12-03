@@ -51,7 +51,7 @@ class RoomRepository extends Room {
   };
 
   //*안읽은 메세지
-  unreadChat = async ({ sender, receiver, timestamps }) => {
+  unreadChat = async ({ sender, receiver }) => {
     const unreadChat = await Room.findAll({
       where: {
         sender,
@@ -62,7 +62,7 @@ class RoomRepository extends Room {
   };
 
   //*안읽은 메세지
-  countUnread = async ({ roomId }) => {
+  countUnread = async ({ roomId, timestamps }) => {
     const countUnread = await Chat.findAll({
       where: {
         roomId,
