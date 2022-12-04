@@ -57,6 +57,7 @@ class RoomController {
       next(error);
     }
   };
+  //*안읽은 메세지
   unreadChat = async (req, res, next) => {
     try {
       const { sender, receiver, timestamps } = req.query;
