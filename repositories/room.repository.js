@@ -50,7 +50,7 @@ class RoomRepository extends Room {
     return saveChat;
   };
 
-  //*안읽은 메세지
+  //*안읽은 메세지(roomId 조회)
   unreadChat = async ({ sender, receiver }) => {
     const unreadChat = await Room.findOne({
       where: {

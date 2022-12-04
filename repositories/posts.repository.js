@@ -43,7 +43,6 @@ class PostRepository extends Post {
       order: [['createdAt', 'DESC']],
       raw: true,
     });
-    console.log(count, rows);
     return rows;
   };
   // //*좋아요 눌렀는지 체크
