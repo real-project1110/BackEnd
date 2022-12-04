@@ -45,5 +45,21 @@ class RoomService {
     });
     return saveChat;
   };
+  //*안읽은 메세지
+  unreadChat = async ({ sender, receiver, timestamps }) => {
+    const unreadChat = await this.roomRepository.unreadChat({
+      sender,
+      receiver,
+    });
+    const roomId = unreadChat.roomId;
+    const countUnread = await this.roomRepository.countUnread({
+      roomId,
+      timestamps,
+    });
+    let count = 0;
+    if (!countUnread) return count;
+    count = countUnread.length;
+    return count;
+  };
 }
 module.exports = RoomService;

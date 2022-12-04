@@ -49,5 +49,27 @@ class RoomRepository extends Room {
     const saveChat = await Chat.create({ roomId, groupUserId, message });
     return saveChat;
   };
+
+  //*안읽은 메세지
+  unreadChat = async ({ sender, receiver }) => {
+    const unreadChat = await Room.findOne({
+      where: {
+        sender,
+        receiver,
+      },
+    });
+    return unreadChat;
+  };
+
+  //*안읽은 메세지
+  countUnread = async ({ roomId, timestamps }) => {
+    const countUnread = await Chat.findAll({
+      where: {
+        roomId,
+        createdAt: { [Op.gt]: new Date(+timestamps) },
+      },
+    });
+    return countUnread;
+  };
 }
 module.exports = RoomRepository;
