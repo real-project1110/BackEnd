@@ -94,7 +94,7 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
-      await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
+      // await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
