@@ -6,6 +6,8 @@ const redisClient = redis.createClient({
   port: process.env.REDIS_PORT,
 });
 
+await redisClient.connect();
+
 redisClient.on('error', (err) => {
   console.error(err);
 });
@@ -28,7 +30,7 @@ const redisGet = async (req, res, next) => {
   // End-Point의 url을 key로 설정
   let key = req.originalUrl;
 
-  await redisClient.get(key, (error, data) => {
+  await redisClient.get(key, async (error, data) => {
     if (error) {
       res.status(400).send({
         ok: false,
