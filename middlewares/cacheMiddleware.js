@@ -30,19 +30,29 @@ const redisGet = async (req, res, next) => {
   let key = req.originalUrl;
 
   await redisClient.get(key, async (error, data) => {
-    if (error) {
-      res.status(400).send({
-        ok: false,
-        message: error,
-      });
+    try {
+      if (data === null) {
+        next();
+      } else {
+        console.log('data존재한다고합니다.', data);
+        return res.status(200).json({ ok: true, data: JSON.parse(data) });
+      }
+    } catch (error) {
+      next();
     }
-    if (data !== null) {
-      // 데이터가 cache되어 있으면, parsing하여 response
-      res.status(200).send({
-        ok: true,
-        data: JSON.parse(data),
-      });
-    } else next();
+    // if (error) {
+    //   res.status(400).send({
+    //     ok: false,
+    //     message: error,
+    //   });
+    // }
+    // if (data !== null) {
+    //   // 데이터가 cache되어 있으면, parsing하여 response
+    //   res.status(200).send({
+    //     ok: true,
+    //     data: JSON.parse(data),
+    //   });
+    // } else next();
   });
 };
 module.exports = { redisSet, redisGet };
