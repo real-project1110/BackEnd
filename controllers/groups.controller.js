@@ -1,5 +1,6 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
+const { redisSet } = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
