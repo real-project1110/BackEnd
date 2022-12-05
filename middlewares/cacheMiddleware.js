@@ -7,6 +7,7 @@ const redisClient = redis.createClient({
   legacyMode: true,
 });
 
+client.connect().catch(console.error);
 redisClient.on('error', (err) => {
   console.error(err);
 });
