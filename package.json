@@ -10,6 +10,7 @@
     "express-sanitizer": "^1.0.6",
     "express-session": "^1.17.3",
     "harp": "^0.46.0",
+    "jest": "^29.3.1",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mkcert": "^1.5.1",
@@ -41,7 +42,7 @@
   "main": "app.js",
   "scripts": {
     "db:migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "prestart": "node swagger.js",
     "start": "node app.js",
     "start-gendoc": "node swagger.js"

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1670256378695" clover="3.2.0">
+  <project timestamp="1670256378695" name="All files">
+    <metrics statements="219" coveredstatements="188" conditionals="21" coveredconditionals="8" methods="47" coveredmethods="38" elements="287" coveredelements="234" complexity="0" loc="219" ncloc="219" packages="6" files="21" classes="21"/>
+    <package name="config">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="config.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\config\config.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="controllers">
+      <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="colors.controller.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\controllers\colors.controller.js">
+        <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="models">
+      <metrics statements="128" coveredstatements="127" conditionals="9" coveredconditionals="6" methods="33" coveredmethods="33"/>
+      <file name="calendar.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\calendar.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+      </file>
+      <file name="certification.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\certification.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+      </file>
+      <file name="chat.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\chat.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+      </file>
+      <file name="color.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\color.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+      </file>
+      <file name="comment.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\comment.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+      </file>
+      <file name="commentlike.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\commentlike.js">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+      </file>
+      <file name="groupList.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\groupList.js">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+      </file>
+      <file name="groupuser.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\groupuser.js">
+        <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="95" count="2" type="stmt"/>
+      </file>
+      <file name="index.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\index.js">
+        <metrics statements="21" coveredstatements="20" conditionals="9" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="13" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="32" type="stmt"/>
+        <line num="31" count="30" type="stmt"/>
+        <line num="35" count="30" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="30" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="30" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+      </file>
+      <file name="invite.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\invite.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+      </file>
+      <file name="post.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\post.js">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="92" count="2" type="stmt"/>
+      </file>
+      <file name="postimg.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\postimg.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+      </file>
+      <file name="postlike.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\postlike.js">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+      </file>
+      <file name="room.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\room.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+      </file>
+      <file name="schedule.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\schedule.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+      </file>
+      <file name="user.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\models\user.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="repositories">
+      <metrics statements="18" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <file name="colors.repository.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\repositories\colors.repository.js">
+        <metrics statements="18" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="33" coveredstatements="13" conditionals="12" coveredconditionals="2" methods="5" coveredmethods="1"/>
+      <file name="colors.service.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\services\colors.service.js">
+        <metrics statements="33" coveredstatements="13" conditionals="12" coveredconditionals="2" methods="5" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="73" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="78" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="test.fixtures">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="color.fixtures.js" path="C:\Users\TEST\Desktop\sparta\항해99 실전프로젝트\BackEnd\test\fixtures\color.fixtures.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
