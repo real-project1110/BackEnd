@@ -11,14 +11,15 @@ redisClient.connect().catch(console.error);
 redisClient.on('error', (err) => {
   console.error(err);
 });
-
+// redisClient.get = util.promisify(redisClient.get).bind(client);
+// redisClient.set = util.promisify(redisClient.set).bind(client);
 redisClient.on('ready', () => {
   console.log('Redis is Ready');
 });
 
 const redisSet = async (key, values, expire) => {
   try {
-    await redisClient.set(key, values, expire);
+    await redisClient.set(key, values, 'EX', expire);
     return;
   } catch (error) {
     console.log('redisSet', error);
