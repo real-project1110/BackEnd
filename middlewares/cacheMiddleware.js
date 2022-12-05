@@ -4,9 +4,8 @@ require('dotenv').config();
 const redisClient = redis.createClient({
   host: process.env.REDIS_URL,
   port: process.env.REDIS_PORT,
+  legacyMode: true,
 });
-
-await redisClient.connect();
 
 redisClient.on('error', (err) => {
   console.error(err);
