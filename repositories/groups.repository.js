@@ -19,8 +19,12 @@ class GroupRepository {
     return createGroup;
   };
 
-  updateGroupName = async (groupId, groupName) => {
-    await GroupList.update({ groupName }, { where: { groupId } });
+  updateGroupName = async ({ groupId, groupName }) => {
+    const updateGroupName = await GroupList.update(
+      { groupName },
+      { where: { groupId } },
+    );
+    return updateGroupName;
   };
 
   findOneGroup = async ({ userId, groupId, groupUserId }) => {
@@ -98,11 +102,12 @@ class GroupRepository {
   //   return findAllGroup;
   // };
 
-  destroyGroup = async (groupId) => {
-    await GroupList.destroy({ where: { groupId } });
+  destroyGroup = async ({ groupId }) => {
+    const destroyGroup = await GroupList.destroy({ where: { groupId } });
+    return destroyGroup;
   };
 
-  updateNic = async (userId, groupId, groupUserNickname) => {
+  updateNic = async ({ userId, groupId, groupUserNickname }) => {
     const updateNic = await GroupUser.update(
       { groupUserNickname: groupUserNickname },
       { where: { userId, groupId } },

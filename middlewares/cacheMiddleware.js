@@ -18,8 +18,8 @@ const redisSet = async (key, values, expire) => {
   try {
     await redisClient.set(key, values, expire);
     return;
-  } catch (err) {
-    console.log('redisSet', err);
+  } catch (error) {
+    console.log('redisSet', error);
     return;
   }
 };

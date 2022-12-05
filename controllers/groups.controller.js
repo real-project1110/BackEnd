@@ -24,19 +24,19 @@ class GroupController {
     }
   };
 
-  updateGroupName = async (req, res) => {
+  updateGroupName = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const { groupName } = req.body;
       const { userId } = res.locals.user;
-      const updategroup = await this.groupService.updateGroupName(
+      const updategroup = await this.groupService.updateGroupName({
         groupId,
         groupName,
         userId,
-      );
+      });
       res.status(200).json({ data: updategroup });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -93,6 +93,7 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
+      await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
@@ -114,13 +115,13 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const destroygroup = await this.groupService.destroyGroup(
+      const destroygroup = await this.groupService.destroyGroup({
         groupId,
         userId,
-      );
+      });
       res.status(200).json({ data: destroygroup });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -129,11 +130,11 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { groupUserNickname } = req.body;
-      const updateNic = await this.groupService.updateNic(
+      const updateNic = await this.groupService.updateNic({
         userId,
         groupId,
         groupUserNickname,
-      );
+      });
       res.status(200).json({
         data: updateNic.groupUserNickname,
         message: '그룹내 닉네임 변경완료',
