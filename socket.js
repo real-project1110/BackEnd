@@ -75,6 +75,9 @@ module.exports = (server) => {
         findUsers.includes(a[1]),
       );
       console.log(findSocektId);
+      for (let i = 0; i < findSocektId.length; i++) {
+        io.to(findSocektId[i]).emit('invite');
+      }
     });
 
     //* {보낸사람 , 메세지갯수}
