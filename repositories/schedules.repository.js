@@ -51,15 +51,15 @@ class ScheduleRepository {
       where: { groupId },
       raw: true,
     });
-    const data = findAllSchedule.map((schedule) => {
-      return {
-        ...schedule,
-        start: new Date(+schedule.start),
-        end: new Date(+schedule.end),
-      };
-    });
-    console.log('::::::::::::::::::::::::::::::::::', data);
-    return data;
+    // const data = findAllSchedule.map((schedule) => {
+    //   return {
+    //     ...schedule,
+    //     start: new Date(+schedule.start),
+    //     end: new Date(+schedule.end),
+    //   };
+    // });
+    // console.log('::::::::::::::::::::::::::::::::::', data);
+    return findAllSchedule;
   };
 
   destroySchedule = async ({ scheduleId }) => {
