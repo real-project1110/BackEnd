@@ -140,9 +140,9 @@ module.exports = (server) => {
         );
         console.log(
           'targetId[0]::::::::::::::::::::::::::::::::::::::::',
-          targetId[0][0],
+          targetId[0],
         );
-        newNamespace.to(targetId[0][0]).emit('unread', groupUserId);
+        newNamespace.to(targetId[0]).emit('unread', groupUserId);
       }
     });
   });
