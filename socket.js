@@ -131,12 +131,26 @@ module.exports = (server) => {
       //* unreadUserId = 나간유저 = roomMember - roomMap
       const groupUsers = onlineMap[socket.nsp.name];
       // {5:[4,5]}
+      console.log(
+        'roomMap,roomMember::::::::::::::::::::::::::::::::::::::::::',
+        roomMap,
+        roomMember,
+      );
+      console.log('groupUsers:::::::::::::::::::::::::::::', groupUsers);
       if (roomMap[roomId].length === 1) {
         const unreadUserId = roomMember[roomId].filter(
           (a) => a !== roomMap[roomId][0],
         );
+        console.log(
+          'unreadUser::::::::::::::::::::::::::::::::::::::::::::::::::',
+          unreadUserId,
+        );
         const targetId = Object.entries(groupUsers).filter(
           (a) => a[1] === unreadUserId,
+        );
+        console.log(
+          'targetId:::::::::::::::::::::::::::::::::::::::::::::::::::',
+          targetId,
         );
         console.log(
           'targetId[0]::::::::::::::::::::::::::::::::::::::::',
