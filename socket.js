@@ -59,6 +59,7 @@ module.exports = (server) => {
   io.on('connect', (socket) => {
     socket.on('login', (data) => {
       onlineUser[socket.id] = data.userId;
+      console.log('onlineUser::::::::::::::::::::::::::::::', onlineUser);
     });
     //*{키:밸,키:밸,키:밸}
     //*onlineUser[socket.id] = email로 조회한 userId => {asdfhoiuas : 3, asfdasdf : 5}
@@ -76,7 +77,7 @@ module.exports = (server) => {
       const findSocektId = Object.entries(onlineUser).filter((a) =>
         findUsers.includes(a[1]),
       );
-      console.log(findSocektId);
+      console.log('invite:::::::::::::::::findSocketId', findSocektId);
       for (let i = 0; i < findSocektId.length; i++) {
         io.to(findSocektId[i]).emit('invite');
       }
