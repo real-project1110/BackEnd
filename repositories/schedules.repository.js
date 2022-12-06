@@ -48,7 +48,13 @@ class ScheduleRepository {
 
   findAllSchedule = async ({ groupId }) => {
     const findAllSchedule = await Schedule.findAll({ where: { groupId } });
-    return findAllSchedule;
+    const data = findAllSchedule.map((schedule) => {
+      return {
+        start: new Date(+schedule.start),
+        end: new Date(+schedule.end),
+      };
+    });
+    return data;
   };
 
   destroySchedule = async ({ scheduleId }) => {
