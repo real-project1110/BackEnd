@@ -119,7 +119,7 @@ module.exports = (server) => {
         roomMap[roomId].length,
       );
       if (roomMap[roomId].length === 1) {
-        newNamespace.to(roomMap[data.roomId][0]).emit('unread', groupUserId);
+        newNamespace.to(roomMap[roomId][0]).emit('unread', groupUserId);
       }
     });
   });
