@@ -83,113 +83,114 @@ module.exports = (server) => {
   //     }
   //   });
 
-    const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
-      const newNamespace = socket.nsp;
-      if (!onlineMap[socket.nsp.name]) {
-        onlineMap[socket.nsp.name] = {};
-      }
-      socket.on('joinGroup', (data) => {
-        onlineMap[socket.nsp.name][socket.id] = data.groupUserId;
-        newNamespace.emit(
-          'onlineList',
-          Object.values(onlineMap[socket.nsp.name]),
-        );
-        newNamespace.emit('notReadMsg', onlineMap[socket.nsp.name].length);
-      });
-      socket.on('error', (error) => {
-        console.error(error);
-      });
+  const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
+    const newNamespace = socket.nsp;
+    if (!onlineMap[socket.nsp.name]) {
+      onlineMap[socket.nsp.name] = {};
+    }
+    socket.on('joinGroup', (data) => {
+      onlineMap[socket.nsp.name][socket.id] = data.groupUserId;
+      newNamespace.emit(
+        'onlineList',
+        Object.values(onlineMap[socket.nsp.name]),
+      );
+      newNamespace.emit('notReadMsg', onlineMap[socket.nsp.name].length);
+    });
+    socket.on('error', (error) => {
+      console.error(error);
+    });
 
-      socket.on('disconnect', () => {
-        delete onlineMap[socket.nsp.name][socket.id];
-        newNamespace.emit(
-          'onlineList',
-          Object.values(onlineMap[socket.nsp.name]),
-        );
+    socket.on('disconnect', () => {
+      delete onlineMap[socket.nsp.name][socket.id];
+      newNamespace.emit(
+        'onlineList',
+        Object.values(onlineMap[socket.nsp.name]),
+      );
+    });
+    socket.on('joinRoom', async (data) => {
+      socket.join(data.roomId);
+      const findRoom = await Room.findOne({
+        where: { roomId: data.roomId },
+        raw: true,
       });
-      socket.on('joinRoom', async (data) => {
-        socket.join(data.roomId);
-        const findRoom = await Room.findOne({
-          where: { roomId: data.roomId },
-          raw: true,
-        });
-        roomMember[data.roomId] = [findRoom.sender, findRoom.receiver];
-        if (!roomMap[data.roomId]) {
-          roomMap[data.roomId] = [];
-        }
-        roomMap[data.roomId].push(data.groupUserId);
-        roomMap[data.roomId] = roomMap[data.roomId].filter(
-          (a) => a !== undefined,
-        );
-        roomMap[data.roomId] = roomMap[data.roomId].filter(
-          (a, i) => roomMap[data.roomId].indexOf(a) === i,
+      roomMember[data.roomId] = [findRoom.sender, findRoom.receiver];
+      if (!roomMap[data.roomId]) {
+        roomMap[data.roomId] = [];
+      }
+      roomMap[data.roomId].push(data.groupUserId);
+      roomMap[data.roomId] = roomMap[data.roomId].filter(
+        (a) => a !== undefined,
+      );
+      roomMap[data.roomId] = roomMap[data.roomId].filter(
+        (a, i) => roomMap[data.roomId].indexOf(a) === i,
+      );
+      console.log(
+        'roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+        data.groupUserId,
+      );
+    });
+    socket.on('leaveRoom', (data) => {
+      socket.leave(data.roomId);
+      roomMap[data.roomId] = roomMap[data.roomId].filter(
+        (a) => a !== data.groupUserId,
+      );
+      console.log(
+        'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+      );
+    });
+    socket.on('message', (data) => {
+      const { message, roomId, groupUserId, createdAt } = data;
+      const msg = { message, groupUserId, createdAt };
+      newNamespace.to(roomId).emit('message', msg);
+      console.log(
+        'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
+        roomMap[data.roomId],
+      );
+      console.log(
+        'roomMap.length::::::::::::::::::::::::',
+        roomMap,
+        roomMap[roomId].length,
+      );
+      //* roomMap = room에 조인여부
+      //* roomMember = room에 있는 유저
+      //* groupUsers = 그룹내에 있는 모든 유저 = socket.id 를 구하기 위해서 해줌
+      //* unreadUserId = 나간유저 = roomMember - roomMap
+      const groupUsers = onlineMap[socket.nsp.name];
+      // {5:[4,5]}
+      console.log(
+        'roomMap,roomMember::::::::::::::::::::::::::::::::::::::::::',
+        roomMap,
+        roomMember,
+      );
+      console.log('groupUsers:::::::::::::::::::::::::::::', groupUsers);
+      if (roomMap[roomId].length === 1) {
+        const unreadUserId = roomMember[roomId].filter(
+          (a) => a !== roomMap[roomId][0],
         );
         console.log(
-          'roomMap[data.roomId]::::::::::::::::::::::::::',
-          roomMap[data.roomId],
-          data.groupUserId,
+          'unreadUser::::::::::::::::::::::::::::::::::::::::::::::::::',
+          unreadUserId,
         );
-      });
-      socket.on('leaveRoom', (data) => {
-        socket.leave(data.roomId);
-        roomMap[data.roomId] = roomMap[data.roomId].filter(
-          (a) => a !== data.groupUserId,
+        const targetId = Object.entries(groupUsers).filter(
+          (a) => a[1] === unreadUserId[0],
         );
         console.log(
-          'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
-          roomMap[data.roomId],
-        );
-      });
-      socket.on('message', (data) => {
-        const { message, roomId, groupUserId, createdAt } = data;
-        const msg = { message, groupUserId, createdAt };
-        newNamespace.to(roomId).emit('message', msg);
-        console.log(
-          'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
-          roomMap[data.roomId],
+          'targetId:::::::::::::::::::::::::::::::::::::::::::::::::::',
+          targetId,
         );
         console.log(
-          'roomMap.length::::::::::::::::::::::::',
-          roomMap,
-          roomMap[roomId].length,
+          'targetId[0]::::::::::::::::::::::::::::::::::::::::',
+          targetId[0],
         );
-        //* roomMap = room에 조인여부
-        //* roomMember = room에 있는 유저
-        //* groupUsers = 그룹내에 있는 모든 유저 = socket.id 를 구하기 위해서 해줌
-        //* unreadUserId = 나간유저 = roomMember - roomMap
-        const groupUsers = onlineMap[socket.nsp.name];
-        // {5:[4,5]}
-        console.log(
-          'roomMap,roomMember::::::::::::::::::::::::::::::::::::::::::',
-          roomMap,
-          roomMember,
-        );
-        console.log('groupUsers:::::::::::::::::::::::::::::', groupUsers);
-        if (roomMap[roomId].length === 1) {
-          const unreadUserId = roomMember[roomId].filter(
-            (a) => a !== roomMap[roomId][0],
-          );
-          console.log(
-            'unreadUser::::::::::::::::::::::::::::::::::::::::::::::::::',
-            unreadUserId,
-          );
-          const targetId = Object.entries(groupUsers).filter(
-            (a) => a[1] === unreadUserId[0],
-          );
-          console.log(
-            'targetId:::::::::::::::::::::::::::::::::::::::::::::::::::',
-            targetId,
-          );
-          console.log(
-            'targetId[0]::::::::::::::::::::::::::::::::::::::::',
-            targetId[0],
-          );
-          newNamespace.to(targetId[0]).emit('unread', groupUserId);
-        }
-      });
+        newNamespace.to(targetId[0]).emit('unread', groupUserId);
+      }
     });
   });
 };
+//   );
+// };
 //* {1:[] , 2:[]}
 // io.on('connection', (socket) => {
 //     const req = socket.request;
