@@ -119,6 +119,7 @@ module.exports = (server) => {
         roomMap[roomId].length,
       );
       const unreadUserId = roomMap[roomId][0];
+      const groupUsers = onlineMap[socket.nsp.name];
       console.log(
         'unreadUserId:::::::::::::::::::::::::::::::::',
         unreadUserId,
@@ -128,7 +129,14 @@ module.exports = (server) => {
         onlineMap[socket.nsp.name],
       );
       if (roomMap[roomId].length === 1) {
-        newNamespace.to(unreadUserId).emit('unread', groupUserId);
+        const targetId = Object.entries(groupUsers).filter(
+          (a) => a[1] === unreadUserId,
+        );
+        console.log(
+          'targetId[0]::::::::::::::::::::::::::::::::::::::::',
+          targetId[0],
+        );
+        newNamespace.to(targetId[0]).emit('unread', groupUserId);
       }
     });
   });
