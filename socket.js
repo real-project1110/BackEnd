@@ -114,7 +114,7 @@ module.exports = (server) => {
         roomMap[data.roomId],
       );
       if (roomMap[data.roomId].length !== 2) {
-        newNamespace.to(roomMap[data.roomId][0]).emit('unread');
+        newNamespace.to(roomMap[data.roomId][0]).emit('unread', groupUserId);
       }
     });
   });
