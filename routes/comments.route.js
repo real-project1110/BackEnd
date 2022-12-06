@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { redisGet } = require('../middlewares/cacheMiddleware');
 const auth = require('../middlewares/authMiddleware');
 
 const CommentController = require('../controllers/comments.controller');
@@ -16,6 +16,7 @@ router.post(
 router.get(
   '/:groupId/posts/:postId/comments',
   auth,
+  redisGet,
   commentcontroller.findAllComment,
 );
 //*댓글 수정
