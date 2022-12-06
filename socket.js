@@ -113,7 +113,11 @@ module.exports = (server) => {
         'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
       );
-      if (roomMap[data.roomId].length !== 2) {
+      console.log(
+        'roomMap.length::::::::::::::::::::::::',
+        roomMap[data.roomId].length,
+      );
+      if (roomMap[data.roomId].length === 1) {
         newNamespace.to(roomMap[data.roomId][0]).emit('unread', groupUserId);
       }
     });
