@@ -146,7 +146,7 @@ module.exports = (server) => {
           unreadUserId,
         );
         const targetId = Object.entries(groupUsers).filter(
-          (a) => a[1] === unreadUserId,
+          (a) => a[1] === unreadUserId[0],
         );
         console.log(
           'targetId:::::::::::::::::::::::::::::::::::::::::::::::::::',
