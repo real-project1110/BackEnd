@@ -50,6 +50,7 @@ class ScheduleRepository {
     const findAllSchedule = await Schedule.findAll({ where: { groupId } });
     const data = findAllSchedule.map((schedule) => {
       return {
+        ...schedule,
         start: new Date(+schedule.start),
         end: new Date(+schedule.end),
       };
