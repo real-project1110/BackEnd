@@ -56,8 +56,10 @@ module.exports = (server) => {
   //     };
   //   }
   // };
-  io.on('login', (socket) => {
-    onlineUser[socket.id] = data.userId;
+  io.on('connect', (socket) => {
+    socket.on('login', (data) => {
+      onlineUser[socket.id] = data.userId;
+    });
     //*{키:밸,키:밸,키:밸}
     //*onlineUser[socket.id] = email로 조회한 userId => {asdfhoiuas : 3, asfdasdf : 5}
     //*위와 같은 형식으로 하면 socket.id로 보내주기가 가능
@@ -80,7 +82,6 @@ module.exports = (server) => {
       }
     });
 
-    //* {보낸사람 , 메세지갯수}
     const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
       const newNamespace = socket.nsp;
       if (!onlineMap[socket.nsp.name]) {
