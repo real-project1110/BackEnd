@@ -118,8 +118,13 @@ module.exports = (server) => {
         roomMap,
         roomMap[roomId].length,
       );
+      const unreadUserId = roomMap[roomId][0];
+      console.log(
+        'unreadUserId:::::::::::::::::::::::::::::::::',
+        unreadUserId,
+      );
       if (roomMap[roomId].length === 1) {
-        newNamespace.to(roomMap[roomId][0]).emit('unread', groupUserId);
+        newNamespace.to(unreadUserId).emit('unread', groupUserId);
       }
     });
   });
