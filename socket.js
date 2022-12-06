@@ -123,6 +123,10 @@ module.exports = (server) => {
         'unreadUserId:::::::::::::::::::::::::::::::::',
         unreadUserId,
       );
+      console.log(
+        'onlineMap::::::::::::::::::::::::::::::::::::::',
+        onlineMap[socket.nsp.name],
+      );
       if (roomMap[roomId].length === 1) {
         newNamespace.to(unreadUserId).emit('unread', groupUserId);
       }
