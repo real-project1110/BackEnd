@@ -115,14 +115,16 @@ module.exports = (server) => {
       );
       console.log(
         'roomMap.length::::::::::::::::::::::::',
-        roomMap[data.roomId].length,
+        roomMap,
+        roomMap[roomId].length,
       );
-      if (roomMap[data.roomId].length === 1) {
+      if (roomMap[roomId].length === 1) {
         newNamespace.to(roomMap[data.roomId][0]).emit('unread', groupUserId);
       }
     });
   });
 };
+//* {1:[] , 2:[]}
 // io.on('connection', (socket) => {
 //     const req = socket.request;
 //     console.log('연결완료');
