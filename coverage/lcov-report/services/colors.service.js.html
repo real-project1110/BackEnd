@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.39% </span>
+                <span class="strong">19.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/33</span>
+                <span class='fraction'>7/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/12</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.39% </span>
+                <span class="strong">19.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/33</span>
+                <span class='fraction'>7/36</span>
             </div>
         
             
@@ -155,23 +155,24 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,8 +215,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -239,24 +239,25 @@ const ColorRepository = require('../repositories/colors.repository');
 class ColorService {
   colorRepository = new ColorRepository();
 &nbsp;
-  createColor = async ({ userId, groupId, color, content }) =&gt; {
-    const getGroupId = await this.colorRepository.getGroupId({
+  createColor = <span class="fstat-no" title="function not covered" >as</span>ync ({ userId, groupId, color, content }) =&gt; {
+    const getGroupId = <span class="cstat-no" title="statement not covered" >await this.colorRepository.getGroupId({</span>
       groupId,
       userId,
     });
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!getGroupId) {
+<span class="cstat-no" title="statement not covered" >    if (!getGroupId) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error('유저 정보가 없습니다');</span>
     }
-    // if (getGroupId.groupId !== parseInt(groupId)) {
-    //   throw new Error('소속된 그룹이 아닙니다');
-    // }
-    const createColor = await this.colorRepository.createColor({
+<span class="cstat-no" title="statement not covered" >    if (getGroupId.groupId !== parseInt(groupId)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('소속된 그룹이 아닙니다');</span>
+    }
+    const createColor = <span class="cstat-no" title="statement not covered" >await this.colorRepository.createColor({</span>
       groupId,
       color,
       content,
     });
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (createColor.groupId !== groupId) {
-      throw new Error('권한이 없습니다');
+<span class="cstat-no" title="statement not covered" >    console.log(createColor.groupId,groupId)</span>
+<span class="cstat-no" title="statement not covered" >    if (createColor.groupId !== groupId) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('권한이 없습니다');</span>
     }
 <span class="cstat-no" title="statement not covered" >    return {</span>
       groupId: getGroupId.groupId,
@@ -298,25 +299,24 @@ class ColorService {
       color: updateColor.color,
       content: updateColor.content,
     };
-  };
 &nbsp;
-  deleteColor = <span class="fstat-no" title="function not covered" >as</span>ync ({ userId, colorId, groupId }) =&gt; {
-    const getGroupId = <span class="cstat-no" title="statement not covered" >await this.colorRepository.getGroupId({</span>
-      userId,
-      groupId,
-    });
-<span class="cstat-no" title="statement not covered" >    if (!getGroupId) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error('유저 정보가 없습니다');</span>
-    }
+<span class="cstat-no" title="statement not covered" >    deleteColor = <span class="fstat-no" title="function not covered" >as</span>ync ({ userId, colorId, groupId }) =&gt; {</span>
+      const getGroupId = <span class="cstat-no" title="statement not covered" >await this.colorRepository.getGroupId({</span>
+        userId,
+        groupId,
+      });
+<span class="cstat-no" title="statement not covered" >      if (!getGroupId) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error('유저 정보가 없습니다');</span>
+      }
 &nbsp;
-    const deleteColor = <span class="cstat-no" title="statement not covered" >await this.colorRepository.deleteColor({ colorId });</span>
-<span class="cstat-no" title="statement not covered" >    if (!deleteColor) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error('존재하지 않는 컬러입니다');</span>
-    }
-<span class="cstat-no" title="statement not covered" >    return deleteColor;</span>
+      const deleteColor = <span class="cstat-no" title="statement not covered" >await this.colorRepository.deleteColor({ colorId });</span>
+<span class="cstat-no" title="statement not covered" >      if (!deleteColor) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error('존재하지 않는 컬러입니다');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return deleteColor;</span>
+    };
   };
 }
-&nbsp;
 module.exports = ColorService;
 &nbsp;</pre></td></tr></table></pre>
 
@@ -325,7 +325,7 @@ module.exports = ColorService;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-05T16:06:18.535Z
+                at 2022-12-05T16:59:12.889Z
             </div>
         <script src="../prettify.js"></script>
         <script>

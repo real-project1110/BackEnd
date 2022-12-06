@@ -12,14 +12,15 @@ class ColorService {
     if (!getGroupId) {
       throw new Error('유저 정보가 없습니다');
     }
-    // if (getGroupId.groupId !== parseInt(groupId)) {
-    //   throw new Error('소속된 그룹이 아닙니다');
-    // }
+    if (getGroupId.groupId !== parseInt(groupId)) {
+      throw new Error('소속된 그룹이 아닙니다');
+    }
     const createColor = await this.colorRepository.createColor({
       groupId,
       color,
       content,
     });
+    console.log(createColor.groupId,groupId)
     if (createColor.groupId !== groupId) {
       throw new Error('권한이 없습니다');
     }
