@@ -1,7 +1,9 @@
 const socketIo = require('socket.io');
+const { Room } = require('./models');
 
 const onlineMap = {};
 const roomMap = {};
+const roomMember = {};
 
 module.exports = (server) => {
   const io = socketIo(server, { path: '/socket.io' });
@@ -77,8 +79,13 @@ module.exports = (server) => {
         Object.values(onlineMap[socket.nsp.name]),
       );
     });
-    socket.on('joinRoom', (data) => {
+    socket.on('joinRoom', async (data) => {
       socket.join(data.roomId);
+      const findRoom = await Room.findOne({
+        where: { roomId: data.roomId },
+        raw: true,
+      });
+      roomMember[data.roomId] = [findRoom.sender, findRoom.receiver];
       if (!roomMap[data.roomId]) {
         roomMap[data.roomId] = [];
       }
@@ -98,7 +105,7 @@ module.exports = (server) => {
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
       roomMap[data.roomId] = roomMap[data.roomId].filter(
-        (a) => a == data.groupUserId,
+        (a) => a !== data.groupUserId,
       );
       console.log(
         'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
@@ -118,17 +125,16 @@ module.exports = (server) => {
         roomMap,
         roomMap[roomId].length,
       );
-      const unreadUserId = roomMap[roomId][0];
+      //* roomMap = room에 조인여부
+      //* roomMember = room에 있는 유저
+      //* groupUsers = 그룹내에 있는 모든 유저 = socket.id 를 구하기 위해서 해줌
+      //* unreadUserId = 나간유저 = roomMember - roomMap
       const groupUsers = onlineMap[socket.nsp.name];
-      console.log(
-        'unreadUserId:::::::::::::::::::::::::::::::::',
-        unreadUserId,
-      );
-      console.log(
-        'onlineMap::::::::::::::::::::::::::::::::::::::',
-        onlineMap[socket.nsp.name],
-      );
+      // {5:[4,5]}
       if (roomMap[roomId].length === 1) {
+        const unreadUserId = roomMember[roomId].filter(
+          (a) => a !== roomMap[roomId][0],
+        );
         const targetId = Object.entries(groupUsers).filter(
           (a) => a[1] === unreadUserId,
         );
