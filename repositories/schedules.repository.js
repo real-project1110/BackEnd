@@ -58,7 +58,7 @@ class ScheduleRepository {
         end: new Date(+schedule.end),
       };
     });
-    console.log('::::::::::::::::::::::::::::::::::', data.start, data.end);
+    console.log('::::::::::::::::::::::::::::::::::', data);
     return data;
   };
 
