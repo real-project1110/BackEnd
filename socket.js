@@ -56,32 +56,32 @@ module.exports = (server) => {
   //     };
   //   }
   // };
-  io.on('connect', (socket) => {
-    socket.on('login', (data) => {
-      onlineUser[socket.id] = data.userId;
-      console.log('onlineUser::::::::::::::::::::::::::::::', onlineUser);
-    });
-    //*{키:밸,키:밸,키:밸}
-    //*onlineUser[socket.id] = email로 조회한 userId => {asdfhoiuas : 3, asfdasdf : 5}
-    //*위와 같은 형식으로 하면 socket.id로 보내주기가 가능
-    socket.on('invite', async (data) => {
-      const { inviteEmails } = data;
-      const findUsers = [];
-      for (let i = 0; i < inviteEmails.length; i++) {
-        const findUser = await User.findOne({
-          where: { email: inviteEmails[i] },
-          raw: true,
-        });
-        findUsers.push(findUser.userId);
-      }
-      const findSocektId = Object.entries(onlineUser).filter((a) =>
-        findUsers.includes(a[1]),
-      );
-      console.log('invite:::::::::::::::::findSocketId', findSocektId);
-      for (let i = 0; i < findSocektId.length; i++) {
-        io.to(findSocektId[i]).emit('invite');
-      }
-    });
+  // io.on('connect', (socket) => {
+  //   socket.on('login', (data) => {
+  //     onlineUser[socket.id] = data.userId;
+  //     console.log('onlineUser::::::::::::::::::::::::::::::', onlineUser);
+  //   });
+  //   //*{키:밸,키:밸,키:밸}
+  //   //*onlineUser[socket.id] = email로 조회한 userId => {asdfhoiuas : 3, asfdasdf : 5}
+  //   //*위와 같은 형식으로 하면 socket.id로 보내주기가 가능
+  //   socket.on('invite', async (data) => {
+  //     const { inviteEmails } = data;
+  //     const findUsers = [];
+  //     for (let i = 0; i < inviteEmails.length; i++) {
+  //       const findUser = await User.findOne({
+  //         where: { email: inviteEmails[i] },
+  //         raw: true,
+  //       });
+  //       findUsers.push(findUser.userId);
+  //     }
+  //     const findSocektId = Object.entries(onlineUser).filter((a) =>
+  //       findUsers.includes(a[1]),
+  //     );
+  //     console.log('invite:::::::::::::::::findSocketId', findSocektId);
+  //     for (let i = 0; i < findSocektId.length; i++) {
+  //       io.to(findSocektId[i]).emit('invite');
+  //     }
+  //   });
 
     const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
       const newNamespace = socket.nsp;
