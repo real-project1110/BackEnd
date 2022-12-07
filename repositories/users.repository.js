@@ -26,12 +26,12 @@ class UserRepository {
     });
     return findByUser;
   };
-  findByEmail = async (email) => {
+  findByEmail = async ({ email }) => {
     const findEmail = await User.findOne({ where: { email } });
     return findEmail;
   };
 
-  refreshT = async (user, refreshToken) => {
+  refreshT = async ({ user, refreshToken }) => {
     await user.update({ refreshToken }, { where: { userId: user.userId } });
   };
 

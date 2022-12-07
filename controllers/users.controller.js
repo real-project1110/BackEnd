@@ -24,7 +24,7 @@ class UserController {
         });
       }
       const avatarImg = process.env.AWS_IMAGE_URL;
-
+      console.log('signupEmail:::::::::::::::::::::::::::::', email);
       const hashed = await bcrypt.hash(password, 12);
       const users = await Object.create({
         email: email,
@@ -42,7 +42,7 @@ class UserController {
   login = async (req, res, next) => {
     try {
       const { email, password } = await Joi.loginSchema.validateAsync(req.body);
-      const user = await this.userService.userLogin(email, password);
+      const user = await this.userService.userLogin({ email, password });
 
       res.cookie('accessToken', user.accessToken);
       res.cookie('refreshToken', user.refreshToken);

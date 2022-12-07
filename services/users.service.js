@@ -26,8 +26,8 @@ class UserService {
     };
   };
 
-  userLogin = async (email, password) => {
-    const user = await this.userRepository.findByEmail(email);
+  userLogin = async ({ email, password }) => {
+    const user = await this.userRepository.findByEmail({ email });
     if (!user) {
       throw new Error('가입하신 회원이 아닙니다.');
     }
@@ -58,7 +58,7 @@ class UserService {
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
     );
-    await this.userRepository.refreshT(user, refreshToken);
+    await this.userRepository.refreshT({ user, refreshToken });
 
     return { user, accessToken, refreshToken };
   };
