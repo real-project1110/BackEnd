@@ -32,7 +32,7 @@ router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
 router.get(
   '/:groupId/groupUsers',
   auth,
-  redisGet,
+  // redisGet,
   groupcontroller.findAllGroupUser,
 );
 

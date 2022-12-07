@@ -9,7 +9,7 @@ router.post('/:groupId/schedules', auth, scheduleController.createSchedule);
 router.get(
   '/:groupId/schedules',
   auth,
-  redisGet,
+  // redisGet,
   scheduleController.findAllSchedule,
 );
 
