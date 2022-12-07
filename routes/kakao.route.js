@@ -105,7 +105,6 @@ const kakao = async (req, res, next) => {
         email: kakaoUser.kakao_account.email || null,
         provider: 'kakao',
       });
-      await Invite.create({ userId: newMember.userId, groupId: 13 });
 
       // const accessToken = await generateToken(newMember);
       const accessToken = jwt.sign(
@@ -119,6 +118,7 @@ const kakao = async (req, res, next) => {
         process.env.SECRET_KEY,
         { expiresIn: '7d' },
       );
+      await Invite.create({ userId: newMember.userId, groupId: 13 });
       res.json({
         success: true,
         accessToken,
