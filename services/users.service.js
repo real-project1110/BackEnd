@@ -63,14 +63,14 @@ class UserService {
     return { user, accessToken, refreshToken };
   };
 
-  emailCheck = async (email) => {
-    const emailDuplicate = await this.userRepository.findByEmail(email);
+  emailCheck = async ({ email }) => {
+    const emailDuplicate = await this.userRepository.findByEmail({ email });
     if (emailDuplicate) {
       throw new Error('이미 가입된 이메일입니다.');
     }
-    const emailVerified = await this.userRepository.authEmail(email);
+    const emailVerified = await this.userRepository.authEmail({ email });
     if (emailVerified) {
-      await this.userRepository.deleteEmail(email);
+      await this.userRepository.deleteEmail({ email });
     }
     authEmail(email);
   };

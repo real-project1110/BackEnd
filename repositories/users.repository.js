@@ -75,12 +75,12 @@ class UserRepository {
   // }
 
   //----------------------------------------------------------------------------------
-  authEmail = async (email) => {
+  authEmail = async ({ email }) => {
     const authEmail = await Certification.findOne({ where: { email } });
     return authEmail;
   };
 
-  deleteEmail = async (email) => {
+  deleteEmail = async ({ email }) => {
     const destroyEmail = await Certification.destroy({ where: { email } });
     return destroyEmail;
   };

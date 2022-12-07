@@ -61,7 +61,7 @@ class UserController {
   emailCheck = async (req, res, next) => {
     try {
       const { email } = req.body;
-      await this.userService.emailCheck(email);
+      await this.userService.emailCheck({ email });
       res.status(200).send({ message: '인증 메일이 발송되었습니다.' });
     } catch (error) {
       next(error);
