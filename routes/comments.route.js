@@ -16,7 +16,7 @@ router.post(
 router.get(
   '/:groupId/posts/:postId/comments',
   auth,
-  redisGet,
+  // redisGet,
   commentcontroller.findAllComment,
 );
 //*댓글 수정
