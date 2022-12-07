@@ -56,14 +56,15 @@ module.exports = (server) => {
   //     };
   //   }
   // };
-  // io.on('connect', (socket) => {
-  //   socket.on('login', (data) => {
-  //     onlineUser[socket.id] = data.userId;
-  //     console.log('onlineUser::::::::::::::::::::::::::::::', onlineUser);
-  //   });
+
   //   //*{키:밸,키:밸,키:밸}
   //   //*onlineUser[socket.id] = email로 조회한 userId => {asdfhoiuas : 3, asfdasdf : 5}
   //   //*위와 같은 형식으로 하면 socket.id로 보내주기가 가능
+  // io.of('/allUsers').on('connection', (socket) => {
+  //   socket.on('login', (data) => {
+  //     onlineUser[socket.id] = data.userId;
+  //     console.log('onlineUser::::::::::::::::::::', onlineUser);
+  //   });
   //   socket.on('invite', async (data) => {
   //     const { inviteEmails } = data;
   //     const findUsers = [];
@@ -82,6 +83,7 @@ module.exports = (server) => {
   //       io.to(findSocektId[i]).emit('invite');
   //     }
   //   });
+  // });
 
   const Nsp = io.of(/^\/statUS-\d+$/).on('connection', (socket) => {
     const newNamespace = socket.nsp;
@@ -94,7 +96,7 @@ module.exports = (server) => {
         'onlineList',
         Object.values(onlineMap[socket.nsp.name]),
       );
-      newNamespace.emit('notReadMsg', onlineMap[socket.nsp.name].length);
+      // newNamespace.emit('notReadMsg', onlineMap[socket.nsp.name].length);
     });
     socket.on('error', (error) => {
       console.error(error);
