@@ -8,12 +8,12 @@ const ValidationError = require('../exceptions/index.exception');
 class UserService {
   userRepository = new UserRepository();
 
-  createUser = async ({ email, nickname, password, avatarImg }) => {
+  createUser = async ({ users }) => {
     const user = await this.userRepository.createUser({
-      email,
-      nickname,
-      password,
-      avatarImg,
+      email: users.email,
+      nickname: users.nickname,
+      password: users.password,
+      avatarImg: users.avatarImg,
     });
     await this.userRepository.createInvite({
       userId: user.userId,
