@@ -75,8 +75,8 @@ class UserService {
     authEmail(email);
   };
 
-  certification = async (email, certificationNum) => {
-    const checkEmail = await this.userRepository.authEmail(email);
+  certification = async ({ email, certificationNum }) => {
+    const checkEmail = await this.userRepository.authEmail({ email });
     if (!checkEmail) {
       throw new Error('email 정보가 존재하지 않습니다');
     }
@@ -84,7 +84,7 @@ class UserService {
       throw new Error('인증번호가 일치하지 않습니다');
     }
     if (checkEmail.certificationNum === certificationNum) {
-      const auth = await this.userRepository.emailCheck(email);
+      const auth = await this.userRepository.emailCheck({ email });
       return {
         certificationId: auth.certificationId,
         email: auth.email,

@@ -85,7 +85,7 @@ class UserRepository {
     return destroyEmail;
   };
 
-  emailCheck = async (email) => {
+  emailCheck = async ({ email }) => {
     const emailCheck = await Certification.update(
       { certificationCheck: true },
       { where: { email } },
