@@ -15,7 +15,12 @@ router.post(
   postController.createPost,
 );
 //*게시글 전체 조회
-router.get('/:groupId/posts', auth, redisGet, postController.findAllPost);
+router.get(
+  '/:groupId/posts',
+  auth,
+  // redisGet,
+  postController.findAllPost,
+);
 //*게시글 상세 조회
 router.get('/posts/:postId', auth, postController.findPost);
 //*공지/자유로 등록
