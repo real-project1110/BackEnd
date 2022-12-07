@@ -28,6 +28,7 @@
     "passport-naver-v2": "^2.0.8",
     "path": "^0.12.7",
     "prettier": "^2.7.1",
+    "redis": "^4.5.1",
     "sequelize": "^6.25.7",
     "sequelize-cli": "^6.5.2",
     "socket.io": "^4.5.4",
@@ -42,7 +43,7 @@
   "main": "app.js",
   "scripts": {
     "db:migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prestart": "node swagger.js",
     "start": "node app.js",
     "start-gendoc": "node swagger.js"
@@ -58,6 +59,7 @@
   },
   "homepage": "https://github.com/real-project1110/BackEnd#readme",
   "devDependencies": {
-    "artillery": "^2.0.0-27"
+    "artillery": "^2.0.0-27",
+    "jest": "^29.3.1"
   }
 }

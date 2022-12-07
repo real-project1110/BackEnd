@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/authMiddleware');
+const { redisGet } = require('../middlewares/cacheMiddleware');
 
 const RoomController = require('../controllers/room.controller');
 const roomController = new RoomController();

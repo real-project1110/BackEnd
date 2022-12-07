@@ -25,12 +25,22 @@ module.exports = {
         type: Sequelize.STRING,
       },
       groupUserId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupUsers',
+          key: 'groupUserId',
+        },
+        onDelete: 'cascade',
       },
       groupId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'GroupLists',
+          key: 'groupId',
+        },
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,

@@ -15,14 +15,19 @@ class GroupService {
     return createGroup;
   };
 
-  updateGroupName = async (groupId, groupName, userId) => {
-    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId);
+  updateGroupName = async ({ groupId, groupName, userId }) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader({
+      groupId,
+    });
     const leaderId = findGroupLeader.userId;
     if (leaderId !== userId) {
       throw new ValidationError('권한이 없습니다.');
     }
-    await this.groupRepository.updateGroupName(groupId, groupName);
-    return { message: '수정이 완료되었습니다.' };
+    const updateGroupName = await this.groupRepository.updateGroupName({
+      groupId,
+      groupName,
+    });
+    return updateGroupName;
   };
 
   updateGroupImg = async ({ userId, groupId, resizeUrl }) => {
@@ -80,6 +85,7 @@ class GroupService {
         groupId: findOneGroup.groupId,
         groupName: findOneGroup.groupName,
         groupImg: findOneGroup.groupImg,
+        onerId: findOneGroup.userId,
         roomIds: roomIds,
       };
     } else {
@@ -88,8 +94,9 @@ class GroupService {
         groupId: findOneGroup.groupId,
         groupName: findOneGroup.groupName,
         groupImg: findOneGroup.groupImg,
-        roomIds: roomIds,
+        onerId: findOneGroup.userId,
         originalUrl,
+        roomIds: roomIds,
       };
     }
   };
@@ -117,32 +124,35 @@ class GroupService {
   //     return groups;
   //   };
 
-  destroyGroup = async (groupId, userId) => {
-    const findGroupLeader = await this.groupRepository.findGroupLeader(groupId);
+  destroyGroup = async ({ groupId, userId }) => {
+    const findGroupLeader = await this.groupRepository.findGroupLeader({
+      groupId,
+    });
     const leaderId = findGroupLeader.userId;
     if (leaderId !== userId) {
       throw new ValidationError('권한이 없습니다.');
     }
 
-    await this.groupRepository.destroyGroup(groupId);
+    const destroyGroup = await this.groupRepository.destroyGroup({ groupId });
+    return destroyGroup;
   };
-  updateNic = async (userId, groupId, groupUserNickname) => {
-    const updateNic = await this.groupRepository.updateNic(
+  updateNic = async ({ userId, groupId, groupUserNickname }) => {
+    const updateNic = await this.groupRepository.updateNic({
       userId,
       groupId,
       groupUserNickname,
-    );
+    });
     if (!updateNic) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
   };
 
-  updateNic = async (userId, groupId, groupUserNickname) => {
-    const updateNic = await this.groupRepository.updateNic(
+  updateNic = async ({ userId, groupId, groupUserNickname }) => {
+    const updateNic = await this.groupRepository.updateNic({
       userId,
       groupId,
       groupUserNickname,
-    );
+    });
     if (!updateNic) {
       throw new Error('유저 정보가 존재하지 않습니다');
     }
@@ -227,8 +237,8 @@ class GroupService {
     }
   };
 
-  findAllGU = async (groupId) => {
-    const findAllGU = await this.groupRepository.findAllGU(groupId);
+  findAllGU = async ({ groupId }) => {
+    const findAllGU = await this.groupRepository.findAllGU({ groupId });
     if (!findAllGU) {
       throw new Error('유저정보가 존재하지 않습니다.');
     }
@@ -258,41 +268,41 @@ class GroupService {
     return result;
   };
 
-  postStatus = async (userId, groupId, status, statusMessage) => {
-    const poststatus = await this.groupRepository.postStatus(
+  postStatus = async ({ userId, groupId, status, statusMessage }) => {
+    const poststatus = await this.groupRepository.postStatus({
       userId,
       groupId,
       status,
       statusMessage,
-    );
+    });
     return {
       status: poststatus.status,
       statusMessage: poststatus.statusMessage,
     };
   };
 
-  updateStatus = async (userId, groupId, status, statusMessage) => {
-    const updatestatus = await this.groupRepository.updateStatus(
+  updateStatus = async ({ userId, groupId, status, statusMessage }) => {
+    const updatestatus = await this.groupRepository.updateStatus({
       userId,
       groupId,
       status,
       statusMessage,
-    );
+    });
     return {
       status: updatestatus.status,
       statusMessage: updatestatus.status,
     };
   };
 
-  createGroupUser = async (userId, groupId) => {
-    const user = await this.groupRepository.findOneId(userId);
+  createGroupUser = async ({ userId, groupId }) => {
+    const user = await this.groupRepository.findOneId({ userId });
     if (!user) {
       throw new Error('유저 정보가 없습니다.');
     }
-    const groupuserdup = await this.groupRepository.groupuserdup(
+    const groupuserdup = await this.groupRepository.groupuserdup({
       userId,
       groupId,
-    );
+    });
     if (!groupuserdup) {
       const groupUser = {
         groupUserNickname: user.nickname,
@@ -300,7 +310,7 @@ class GroupService {
         groupId,
         groupAvatarImg: user.avatarImg,
       };
-      return await this.groupRepository.createGroupUser(groupUser);
+      return await this.groupRepository.createGroupUser({ groupUser });
     } else {
       return;
     }

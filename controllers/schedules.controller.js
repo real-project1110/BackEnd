@@ -1,5 +1,6 @@
 const { date } = require('joi');
 const ScheduleService = require('../services/schedules.service');
+const { redisSet } = require('../middlewares/cacheMiddleware');
 
 class ScheduleController {
   scheduleService = new ScheduleService();
@@ -87,6 +88,7 @@ class ScheduleController {
       const findschedule = await this.scheduleService.findAllSchedule({
         groupId,
       });
+      await redisSet(req.originalUrl, JSON.stringify(findschedule), 432000);
       res.status(200).json({ data: findschedule });
     } catch (error) {
       next(error);

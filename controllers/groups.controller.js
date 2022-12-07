@@ -1,5 +1,6 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
+const { redisSet } = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
@@ -24,19 +25,19 @@ class GroupController {
     }
   };
 
-  updateGroupName = async (req, res) => {
+  updateGroupName = async (req, res, next) => {
     try {
       const { groupId } = req.params;
       const { groupName } = req.body;
       const { userId } = res.locals.user;
-      const updategroup = await this.groupService.updateGroupName(
+      const updategroup = await this.groupService.updateGroupName({
         groupId,
         groupName,
         userId,
-      );
+      });
       res.status(200).json({ data: updategroup });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -93,6 +94,7 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
+      await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
@@ -114,13 +116,13 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      const destroygroup = await this.groupService.destroyGroup(
+      const destroygroup = await this.groupService.destroyGroup({
         groupId,
         userId,
-      );
+      });
       res.status(200).json({ data: destroygroup });
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -129,11 +131,11 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { groupUserNickname } = req.body;
-      const updateNic = await this.groupService.updateNic(
+      const updateNic = await this.groupService.updateNic({
         userId,
         groupId,
         groupUserNickname,
-      );
+      });
       res.status(200).json({
         data: updateNic.groupUserNickname,
         message: '그룹내 닉네임 변경완료',
@@ -202,7 +204,8 @@ class GroupController {
   findAllGroupUser = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const findAllGU = await this.groupService.findAllGU(groupId);
+      const findAllGU = await this.groupService.findAllGU({ groupId });
+      await redisSet(req.originalUrl, JSON.stringify(findAllGU), 432000);
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
@@ -214,12 +217,12 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { status, statusMessage } = req.body;
-      const poststatus = await this.groupService.postStatus(
+      const poststatus = await this.groupService.postStatus({
         userId,
         groupId,
         status,
         statusMessage,
-      );
+      });
       res.status(201).json({ data: poststatus });
     } catch (error) {
       next(error);
@@ -231,12 +234,12 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { status, statusMessage } = req.body;
-      const updateStatus = await this.groupService.updateStatus(
+      const updateStatus = await this.groupService.updateStatus({
         userId,
         groupId,
         status,
         statusMessage,
-      );
+      });
       res
         .status(200)
         .json({ data: updateStatus.statusMessage, message: '상태변경완료' });
@@ -249,10 +252,10 @@ class GroupController {
     try {
       const { userId } = res.locals.user;
       const { groupId } = req.body;
-      const creategroupuser = await this.groupService.createGroupUser(
+      const creategroupuser = await this.groupService.createGroupUser({
         userId,
         groupId,
-      );
+      });
       res.status(201).json({ data: creategroupuser });
     } catch (error) {
       next(error);

@@ -1,4 +1,5 @@
-const { User, Certification } = require('../models');
+const { InvalidConnectionError } = require('sequelize');
+const { User, Certification, Invite } = require('../models');
 const groupList = require('../models/groupList');
 
 class UserRepository {
@@ -11,6 +12,11 @@ class UserRepository {
     });
     return createUser;
   };
+  createInvite = async ({ userId, groupId }) => {
+    const createInvite = await Invite.create({ userId, groupId });
+    return createInvite;
+  };
+
   findByUser = async ({ userId }) => {
     const findByUser = await User.findOne({
       attributes: {
@@ -20,12 +26,12 @@ class UserRepository {
     });
     return findByUser;
   };
-  findByEmail = async (email) => {
+  findByEmail = async ({ email }) => {
     const findEmail = await User.findOne({ where: { email } });
     return findEmail;
   };
 
-  refreshT = async (user, refreshToken) => {
+  refreshT = async ({ user, refreshToken }) => {
     await user.update({ refreshToken }, { where: { userId: user.userId } });
   };
 
@@ -69,17 +75,17 @@ class UserRepository {
   // }
 
   //----------------------------------------------------------------------------------
-  authEmail = async (email) => {
+  authEmail = async ({ email }) => {
     const authEmail = await Certification.findOne({ where: { email } });
     return authEmail;
   };
 
-  deleteEmail = async (email) => {
+  deleteEmail = async ({ email }) => {
     const destroyEmail = await Certification.destroy({ where: { email } });
     return destroyEmail;
   };
 
-  emailCheck = async (email) => {
+  emailCheck = async ({ email }) => {
     const emailCheck = await Certification.update(
       { certificationCheck: true },
       { where: { email } },

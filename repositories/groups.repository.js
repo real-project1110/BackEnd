@@ -19,8 +19,12 @@ class GroupRepository {
     return createGroup;
   };
 
-  updateGroupName = async (groupId, groupName) => {
-    await GroupList.update({ groupName }, { where: { groupId } });
+  updateGroupName = async ({ groupId, groupName }) => {
+    const updateGroupName = await GroupList.update(
+      { groupName },
+      { where: { groupId } },
+    );
+    return updateGroupName;
   };
 
   findOneGroup = async ({ userId, groupId, groupUserId }) => {
@@ -98,11 +102,12 @@ class GroupRepository {
   //   return findAllGroup;
   // };
 
-  destroyGroup = async (groupId) => {
-    await GroupList.destroy({ where: { groupId } });
+  destroyGroup = async ({ groupId }) => {
+    const destroyGroup = await GroupList.destroy({ where: { groupId } });
+    return destroyGroup;
   };
 
-  updateNic = async (userId, groupId, groupUserNickname) => {
+  updateNic = async ({ userId, groupId, groupUserNickname }) => {
     const updateNic = await GroupUser.update(
       { groupUserNickname: groupUserNickname },
       { where: { userId, groupId } },
@@ -130,7 +135,7 @@ class GroupRepository {
     return getUser;
   };
 
-  findAllGU = async (groupId) => {
+  findAllGU = async ({ groupId }) => {
     const findAllGU = await GroupUser.findAll({
       where: { groupId },
       order: [['groupUserId', 'desc']],
@@ -138,12 +143,12 @@ class GroupRepository {
     return findAllGU;
   };
 
-  postStatus = async (status, statusMessage) => {
+  postStatus = async ({ status, statusMessage }) => {
     const poststatus = await GroupUser.create({ status, statusMessage });
     return poststatus;
   };
 
-  updateStatus = async (userId, groupId, status, statusMessage) => {
+  updateStatus = async ({ userId, groupId, status, statusMessage }) => {
     const updatestatus = await GroupUser.update(
       { status, statusMessage },
       { where: { userId, groupId } },
@@ -151,16 +156,16 @@ class GroupRepository {
     return updatestatus;
   };
 
-  createGroupUser = async (groupUser) => {
+  createGroupUser = async ({ groupUser }) => {
     return await GroupUser.create(groupUser);
   };
 
-  findOneId = async (userId) => {
-    const findOneId = await User.findByPk(userId);
+  findOneId = async ({ userId }) => {
+    const findOneId = await User.findOne({ where: { userId } });
     return findOneId;
   };
 
-  groupuserdup = async (userId, groupId) => {
+  groupuserdup = async ({ userId, groupId }) => {
     const groupuserdup = await GroupUser.findOne({
       where: { [Op.and]: [{ userId }, { groupId }] },
     });

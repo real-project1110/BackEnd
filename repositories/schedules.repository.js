@@ -47,7 +47,18 @@ class ScheduleRepository {
   };
 
   findAllSchedule = async ({ groupId }) => {
-    const findAllSchedule = await Schedule.findAll({ where: { groupId } });
+    const findAllSchedule = await Schedule.findAll({
+      where: { groupId },
+      raw: true,
+    });
+    // const data = findAllSchedule.map((schedule) => {
+    //   return {
+    //     ...schedule,
+    //     start: new Date(+schedule.start),
+    //     end: new Date(+schedule.end),
+    //   };
+    // });
+    // console.log('::::::::::::::::::::::::::::::::::', data);
     return findAllSchedule;
   };
 
