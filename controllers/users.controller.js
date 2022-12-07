@@ -32,7 +32,7 @@ class UserController {
         password: hashed,
         avatarImg,
       });
-      await this.userService.createUser(users);
+      await this.userService.createUser({ users });
       res.status(201).json({ message: '회원가입에 성공하셨습니다.' });
     } catch (error) {
       next(error);

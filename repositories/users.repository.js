@@ -1,4 +1,5 @@
-const { User, Certification } = require('../models');
+const { InvalidConnectionError } = require('sequelize');
+const { User, Certification, Invite } = require('../models');
 const groupList = require('../models/groupList');
 
 class UserRepository {
@@ -11,6 +12,11 @@ class UserRepository {
     });
     return createUser;
   };
+  createInvite = async ({ userId, groupId }) => {
+    const createInvite = await Invite.create({ userId, groupId });
+    return createInvite;
+  };
+
   findByUser = async ({ userId }) => {
     const findByUser = await User.findOne({
       attributes: {

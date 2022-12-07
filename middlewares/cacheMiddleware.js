@@ -26,9 +26,8 @@ const redisSet = async (key, values, expire) => {
     return;
   }
 };
-// 저장 된 데이터를 redis에서 가져오는 미들웨어
+
 const redisGet = async (req, res, next) => {
-  // End-Point의 url을 key로 설정
   let key = req.originalUrl;
 
   await redisClient.get(key, async (error, data) => {
@@ -49,7 +48,6 @@ const redisGet = async (req, res, next) => {
     //   });
     // }
     // if (data !== null) {
-    //   // 데이터가 cache되어 있으면, parsing하여 response
     //   res.status(200).send({
     //     ok: true,
     //     data: JSON.parse(data),
