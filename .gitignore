@@ -1,0 +1,7 @@
+.env
+node_modules
+logs
+loadtest.json
+swagger-output.json
+swagger.js
+data.csv

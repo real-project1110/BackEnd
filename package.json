@@ -1,0 +1,65 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1255.0",
+    "axios": "^1.2.0",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-sanitizer": "^1.0.6",
+    "express-session": "^1.17.3",
+    "file-system": "^2.2.2",
+    "harp": "^0.46.0",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mkcert": "^1.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^2.10.0",
+    "multer-s3-transform": "^2.10.3",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.8.0",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-kakao": "^1.0.1",
+    "passport-naver": "^1.0.6",
+    "passport-naver-v2": "^2.0.8",
+    "path": "^0.12.7",
+    "prettier": "^2.7.1",
+    "redis": "^4.5.1",
+    "sequelize": "^6.25.7",
+    "sequelize-cli": "^6.5.2",
+    "socket.io": "^4.5.4",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.6.0",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "name": "calendar",
+  "description": "node.js",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "db:migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
+    "test": "jest",
+    "prestart": "node swagger.js",
+    "start": "node app.js",
+    "start-gendoc": "node swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/real-project1110/BackEnd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/real-project1110/BackEnd/issues"
+  },
+  "homepage": "https://github.com/real-project1110/BackEnd#readme",
+  "devDependencies": {
+    "artillery": "^2.0.0-27",
+    "jest": "^29.3.1"
+  }
+}
