@@ -65,6 +65,9 @@ module.exports = (server) => {
   //     onlineUser[socket.id] = data.userId;
   //     console.log('onlineUser::::::::::::::::::::', onlineUser);
   //   });
+  // socket.on('error', (error) => {
+  //   console.error(error);
+  // });
   //   socket.on('invite', async (data) => {
   //     const { inviteEmails } = data;
   //     const findUsers = [];
