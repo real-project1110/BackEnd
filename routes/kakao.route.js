@@ -6,7 +6,7 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 // const passport = require('passport');
 require('dotenv').config();
-const { User } = require('../models');
+const { User, Invite } = require('../models');
 const { InvalidConnectionError } = require('sequelize');
 // // const SocialController = require('../controllers/socials.controller');
 // // const socialController = new SocialController();
