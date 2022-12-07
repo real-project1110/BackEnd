@@ -149,26 +149,12 @@ module.exports = (server) => {
       const { message, roomId, groupUserId, createdAt } = data;
       const msg = { message, groupUserId, createdAt };
       newNamespace.to(roomId).emit('message', msg);
-      console.log(
-        'MESSAGE----roomMap[data.roomId]::::::::::::::::::::::::::',
-        roomMap[data.roomId],
-      );
-      console.log(
-        'roomMap.length::::::::::::::::::::::::',
-        roomMap,
-        roomMap[roomId].length,
-      );
       //* roomMap = room에 조인여부
       //* roomMember = room에 있는 유저
       //* groupUsers = 그룹내에 있는 모든 유저 = socket.id 를 구하기 위해서 해줌
       //* unreadUserId = 나간유저 = roomMember - roomMap
       const groupUsers = onlineMap[socket.nsp.name];
       // {5:[4,5]}
-      console.log(
-        'roomMap,roomMember::::::::::::::::::::::::::::::::::::::::::',
-        roomMap,
-        roomMember,
-      );
       console.log('groupUsers:::::::::::::::::::::::::::::', groupUsers);
       if (roomMap[roomId].length === 1) {
         const unreadUserId = roomMember[roomId].filter(
