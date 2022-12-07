@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 // const passport = require('passport');
 require('dotenv').config();
 const { User } = require('../models');
+const { InvalidConnectionError } = require('sequelize');
 // // const SocialController = require('../controllers/socials.controller');
 // // const socialController = new SocialController();
 
@@ -104,6 +105,7 @@ const kakao = async (req, res, next) => {
         email: kakaoUser.kakao_account.email || null,
         provider: 'kakao',
       });
+      await Invite.create({ userId: newMember.userId, groupId: 13 });
 
       // const accessToken = await generateToken(newMember);
       const accessToken = jwt.sign(
