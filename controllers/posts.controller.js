@@ -1,7 +1,7 @@
 const PostService = require('../services/posts.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const PostImgService = require('../services/postImgs.service');
-const { redisSet } = require('../middlewares/cacheMiddleware');
+// const { redisSet } = require('../middlewares/cacheMiddleware');
 const { post } = require('../routes');
 
 class PostController {
@@ -77,11 +77,11 @@ class PostController {
         page,
         userId,
       });
-      await redisSet(
-        req.originalUrl,
-        JSON.stringify({ findAllPost, currentPage: page }),
-        432000,
-      );
+      // await redisSet(
+      //   req.originalUrl,
+      //   JSON.stringify({ findAllPost, currentPage: page }),
+      //   432000,
+      // );
 
       res.status(200).json({
         ok: true,
