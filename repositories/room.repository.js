@@ -76,7 +76,9 @@ class RoomRepository extends Room {
       where: {
         roomId,
         createdAt: {
-          [Op.gt]: new Date(+timestamps).toTimeString(),
+          [Op.gt]: moment(+timestamps)
+            .add(9, 'hour')
+            .format('YYYY-MM-DD HH:mm:ss'),
         },
       },
     });
