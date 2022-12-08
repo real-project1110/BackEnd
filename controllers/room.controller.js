@@ -78,6 +78,7 @@ class RoomController {
         receiver,
         timestamps,
       });
+      console.log('불러온채팅입니다:::::::::::::::::', unreadChat);
       res.status(200).json({ ok: true, data: unreadChat });
     } catch (error) {
       next(error);
