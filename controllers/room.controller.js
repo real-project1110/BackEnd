@@ -71,7 +71,7 @@ class RoomController {
       console.log('받은 timestapms:::::::::::::::::::', timestamps);
       console.log(
         '현재시간이 되어야 합니다.:::::::::::::::::::::::::',
-        moment(timestamps).format('YYYY-MM-DD HH:mm:ss'),
+        new Date(+timestamps).toTimeString(),
       );
       const unreadChat = await this.roomService.unreadChat({
         sender,
