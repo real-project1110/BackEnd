@@ -26,8 +26,8 @@ class ScheduleRepository {
     await Schedule.create({
       title,
       description,
-      start,
-      end,
+      start: moment(+start).format('YYYY-MM-DD HH:mm:ss'),
+      end: moment(+end).format('YYYY-MM-DD HH:mm:ss'),
       color,
       groupUserId,
       groupId,
