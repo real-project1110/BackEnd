@@ -77,7 +77,7 @@ class RoomRepository extends Room {
         roomId,
         createdAt: {
           [Op.gt]: moment(+timestamps)
-            .subtract(9, 'hour')
+            .subtract(9, 'h')
             .format('YYYY-MM-DD HH:mm:ss'),
         },
       },
