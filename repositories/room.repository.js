@@ -55,7 +55,7 @@ class RoomRepository extends Room {
       roomId,
       groupUserId,
       message,
-      createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+      createdAt: moment().subtract(9, 'h').format('YYYY-MM-DD HH:mm:ss'),
     });
     return saveChat;
   };
@@ -77,7 +77,7 @@ class RoomRepository extends Room {
       where: {
         roomId,
         createdAt: {
-          [Op.gt]: new Date(moment(+timestamps).add(9, 'h')),
+          [Op.gt]: new Date(moment(+timestamps)),
         },
       },
       raw: true,
