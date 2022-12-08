@@ -157,7 +157,12 @@ class GroupRepository {
   };
 
   createGroupUser = async ({ groupUser }) => {
-    return await GroupUser.create(groupUser);
+    return await GroupUser.create({
+      groupUserNickname: groupUser.groupUserNickname,
+      userId: groupUser.userId,
+      groupId: groupUser.groupId,
+      groupAvatarImg: groupUser.groupAvatarImg,
+    });
   };
 
   findOneId = async ({ userId }) => {

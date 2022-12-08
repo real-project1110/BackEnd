@@ -1,6 +1,6 @@
 const CommentService = require('../services/comments.service');
 const InvalidParamsError = require('../exceptions/index.exception');
-const { redisSet } = require('../middlewares/cacheMiddleware');
+// const { redisSet } = require('../middlewares/cacheMiddleware');
 
 class CommentController {
   commentService = new CommentService();
@@ -43,7 +43,7 @@ class CommentController {
         userId,
         page,
       });
-      await redisSet(req.originalUrl, JSON.stringify(findAllComment), 432000);
+      // await redisSet(req.originalUrl, JSON.stringify(findAllComment), 432000);
       res.status(200).json({
         ok: true,
         data: findAllComment,

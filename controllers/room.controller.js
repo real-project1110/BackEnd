@@ -1,5 +1,9 @@
 const RoomService = require('../services/room.service');
 const InvalidParamsError = require('../exceptions/index.exception');
+const moment = require('moment');
+
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 
 class RoomController {
   roomService = new RoomService();
@@ -64,6 +68,11 @@ class RoomController {
       if (!sender || !receiver || !timestamps) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
+      console.log('받은 timestapms:::::::::::::::::::', timestamps);
+      console.log(
+        '현재시간이 되어야 합니다.:::::::::::::::::::::::::',
+        moment(+timestamps).format('YYYY-MM-DD HH:mm:ss'),
+      );
       const unreadChat = await this.roomService.unreadChat({
         sender,
         receiver,

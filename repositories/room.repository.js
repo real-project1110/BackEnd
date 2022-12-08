@@ -1,5 +1,9 @@
 const { Room, Chat, GroupUser } = require('../models');
 const { Op } = require('sequelize');
+const moment = require('moment');
+
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
@@ -46,7 +50,12 @@ class RoomRepository extends Room {
 
   //*채팅 저장하기
   saveChat = async ({ roomId, groupUserId, message }) => {
-    const saveChat = await Chat.create({ roomId, groupUserId, message });
+    const saveChat = await Chat.create({
+      roomId,
+      groupUserId,
+      message,
+      createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+    });
     return saveChat;
   };
 
@@ -66,9 +75,12 @@ class RoomRepository extends Room {
     const countUnread = await Chat.findAll({
       where: {
         roomId,
-        createdAt: { [Op.gt]: new Date(+timestamps) },
+        createdAt: {
+          [Op.gt]: moment(+timestamps).format('YYYY-MM-DD HH:mm:ss'),
+        },
       },
     });
+
     return countUnread;
   };
 }
