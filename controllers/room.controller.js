@@ -64,6 +64,11 @@ class RoomController {
       if (!sender || !receiver || !timestamps) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
+      console.log('받은 timestapms:::::::::::::::::::', timestamps);
+      console.log(
+        '현재시간이 되어야 합니다.:::::::::::::::::::::::::',
+        new Date(+timestamps),
+      );
       const unreadChat = await this.roomService.unreadChat({
         sender,
         receiver,

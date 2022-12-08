@@ -69,10 +69,7 @@ class RoomRepository extends Room {
         createdAt: { [Op.gt]: new Date(+timestamps) },
       },
     });
-    console.log(
-      '현재시간이 되어야 합니다.:::::::::::::::::::::::::',
-      new Date(+timestamps),
-    );
+
     return countUnread;
   };
 }
