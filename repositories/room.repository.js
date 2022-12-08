@@ -79,6 +79,7 @@ class RoomRepository extends Room {
           [Op.gt]: moment(+timestamps).format('YYYY-MM-DD HH:mm:ss'),
         },
       },
+      raw: true,
     });
     console.log('dddddddddddddddddddddddddddddddddddddd', countUnread);
     return countUnread;
