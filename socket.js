@@ -139,9 +139,11 @@ module.exports = (server) => {
     });
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
-      roomMap[data.roomId] = roomMap[data.roomId].filter(
-        (a) => a !== data.groupUserId,
-      );
+      if (roomMap[data.roomId].length) {
+        roomMap[data.roomId] = roomMap[data.roomId].filter(
+          (a) => a !== data.groupUserId,
+        );
+      }
       console.log(
         'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
@@ -177,6 +179,7 @@ module.exports = (server) => {
           'targetId[0]::::::::::::::::::::::::::::::::::::::::',
           targetId[0],
         );
+
         newNamespace.to(targetId[0][0]).emit('unread', groupUserId);
       }
     });
