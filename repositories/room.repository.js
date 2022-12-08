@@ -40,6 +40,7 @@ class RoomRepository extends Room {
       order: [['createdAt', 'DESC']],
       raw: true,
     });
+    console.log('bugstop::::::::::::::::::::::::::::', rows);
     return rows;
   };
   //*존재하는 룸 찾기
@@ -54,7 +55,7 @@ class RoomRepository extends Room {
       roomId,
       groupUserId,
       message,
-      createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+      createdAt: moment().subtract(9, 'h').format('YYYY-MM-DD HH:mm:ss'),
     });
     return saveChat;
   };
@@ -76,11 +77,12 @@ class RoomRepository extends Room {
       where: {
         roomId,
         createdAt: {
-          [Op.gt]: moment(+timestamps).format('YYYY-MM-DD HH:mm:ss'),
+          [Op.gt]: new Date(moment(+timestamps)),
         },
       },
+      raw: true,
     });
-
+    console.log('dddddddddddddddddddddddddddddddddddddd', countUnread);
     return countUnread;
   };
 }
