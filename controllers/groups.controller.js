@@ -1,6 +1,6 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
-const { redisSet } = require('../middlewares/cacheMiddleware');
+// const { redisSet } = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
@@ -94,7 +94,7 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
-      await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
+      // await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
@@ -205,7 +205,7 @@ class GroupController {
     try {
       const { groupId } = req.params;
       const findAllGU = await this.groupService.findAllGU({ groupId });
-      await redisSet(req.originalUrl, JSON.stringify(findAllGU), 432000);
+      // await redisSet(req.originalUrl, JSON.stringify(findAllGU), 432000);
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
