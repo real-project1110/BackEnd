@@ -112,6 +112,7 @@ module.exports = (server) => {
         Object.values(onlineMap[socket.nsp.name]),
       );
     });
+
     socket.on('joinRoom', async (data) => {
       socket.join(data.roomId);
       const findRoom = await Room.findOne({
