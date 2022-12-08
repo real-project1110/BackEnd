@@ -11,8 +11,6 @@
 // redisClient.on('error', (err) => {
 //   console.error(err);
 // });
-// // redisClient.get = util.promisify(redisClient.get).bind(client);
-// // redisClient.set = util.promisify(redisClient.set).bind(client);
 // redisClient.on('ready', () => {
 //   console.log('Redis is Ready');
 // });
@@ -27,8 +25,9 @@
 //   }
 // };
 
-// const redisGet = async (req, res, next) => {
-//   let key = req.originalUrl;
+// const groupListGet = async (req, res, next) => {
+//   const { userId } = res.locals.user;
+//   let key = `userId:${userId}:GroupList`;
 
 //   await redisClient.get(key, async (error, data) => {
 //     try {
@@ -41,18 +40,23 @@
 //     } catch (error) {
 //       next();
 //     }
-//     // if (error) {
-//     //   res.status(400).send({
-//     //     ok: false,
-//     //     message: error,
-//     //   });
-//     // }
-//     // if (data !== null) {
-//     //   res.status(200).send({
-//     //     ok: true,
-//     //     data: JSON.parse(data),
-//     //   });
-//     // } else next();
 //   });
 // };
-// module.exports = { redisSet, redisGet };
+// const groupUserListGet = async (req, res, next) => {
+//   const { userId } = res.locals.user;
+//   let key = `userId:${userId}:GroupUserList`;
+
+//   await redisClient.get(key, async (error, data) => {
+//     try {
+//       if (data === null) {
+//         next();
+//       } else {
+//         console.log('data존재한다고합니다.', data);
+//         return res.status(200).json({ ok: true, data: JSON.parse(data) });
+//       }
+//     } catch (error) {
+//       next();
+//     }
+//   });
+// };
+// module.exports = { redisSet, groupListGet, groupUserListGet };
