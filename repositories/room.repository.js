@@ -40,6 +40,7 @@ class RoomRepository extends Room {
       order: [['createdAt', 'DESC']],
       raw: true,
     });
+    console.log('bugstop::::::::::::::::::::::::::::', rows);
     return rows;
   };
   //*존재하는 룸 찾기
