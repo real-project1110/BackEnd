@@ -94,11 +94,11 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
-      await redisSet(
-        `userId:${userId}:GroupList`,
-        JSON.stringify(findAllGroupList),
-        60,
-      );
+      // await redisSet(
+      //   `userId:${userId}:GroupList`,
+      //   JSON.stringify(findAllGroupList),
+      //   30,
+      // );
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
@@ -210,11 +210,11 @@ class GroupController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const findAllGU = await this.groupService.findAllGU({ groupId });
-      await redisSet(
-        `userId:${userId}:GroupUserList`,
-        JSON.stringify(findAllGU),
-        60,
-      );
+      // await redisSet(
+      //   `userId:${userId}:GroupUserList`,
+      //   JSON.stringify(findAllGU),
+      //   60,
+      // );
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
