@@ -3,17 +3,35 @@ const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const RoomController = require('../controllers/room.controller');
 const Sequelize = Sq.Sequelize;
+const {
+  redisSet,
+  redisPut,
+  groupListGet,
+  groupUserListGet,
+} = require('../middlewares/cacheMiddleware');
 
 class GroupRepository {
   createGroup = async ({ groupUserNickname, groupName, userId, avatarImg }) => {
-    const createGroup = await GroupList.create({ groupName, userId });
-    const groupId = createGroup.groupId;
     const userCount = 1;
+    const createGroup = await GroupList.create({
+      groupName,
+      userId,
+      userCount,
+    });
+    const getData = await groupListGet(`userId:${userId}:GroupList`);
+    if (getData.length) {
+      await redisSet(
+        `userId:${userId}:GroupList`,
+        getData.push(createGroup),
+        3600,
+      );
+    }
+    const groupId = createGroup.groupId;
     await GroupUser.create({
       userId,
       groupId,
       groupUserNickname,
-      userCount,
+
       groupAvatarImg: avatarImg,
     });
     return createGroup;

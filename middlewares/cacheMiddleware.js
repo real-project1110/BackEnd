@@ -24,6 +24,15 @@ const redisSet = async (key, values, expire) => {
     return;
   }
 };
+const redisPut = async (key, values, expire) => {
+  try {
+    await redisClient.rename(key, values, 'EX', expire);
+    return;
+  } catch (error) {
+    console.log('redisPut', error);
+    return;
+  }
+};
 
 const groupListGet = async (req, res, next) => {
   const { userId } = res.locals.user;
@@ -44,7 +53,8 @@ const groupListGet = async (req, res, next) => {
 };
 const groupUserListGet = async (req, res, next) => {
   const { userId } = res.locals.user;
-  let key = `userId:${userId}:GroupUserList`;
+  const { groupId } = req.params;
+  let key = `userId:${userId}:groupId:${groupId}GroupUserList`;
 
   await redisClient.get(key, async (error, data) => {
     try {
@@ -59,4 +69,5 @@ const groupUserListGet = async (req, res, next) => {
     }
   });
 };
-module.exports = { redisSet, groupListGet, groupUserListGet };
+
+module.exports = { redisSet, redisPut, groupListGet, groupUserListGet };
