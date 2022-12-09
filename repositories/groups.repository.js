@@ -18,14 +18,14 @@ class GroupRepository {
       userId,
       userCount,
     });
-    const getData = await groupListGet(`userId:${userId}:GroupList`);
-    if (getData.length) {
-      await redisSet(
-        `userId:${userId}:GroupList`,
-        getData.push(createGroup),
-        3600,
-      );
-    }
+    // const getData = await groupListGet(`userId:${userId}:GroupList`);
+    // if (getData.length) {
+    //   await redisSet(
+    //     `userId:${userId}:GroupList`,
+    //     getData.push(createGroup),
+    //     3600,
+    //   );
+    // }
     const groupId = createGroup.groupId;
     await GroupUser.create({
       userId,
