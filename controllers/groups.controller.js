@@ -1,6 +1,11 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
-const { redisSet } = require('../middlewares/cacheMiddleware');
+const {
+  redisSet,
+  redisPut,
+  groupListGet,
+  groupUserListGet,
+} = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
@@ -19,6 +24,7 @@ class GroupController {
         nickname,
         avatarImg,
       });
+
       res.status(201).json({ data: createGroup.groupId });
     } catch (error) {
       next(error);
@@ -97,7 +103,7 @@ class GroupController {
       await redisSet(
         `userId:${userId}:GroupList`,
         JSON.stringify(findAllGroupList),
-        60,
+        3600,
       );
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
@@ -210,11 +216,11 @@ class GroupController {
       const { groupId } = req.params;
       const { userId } = res.locals.user;
       const findAllGU = await this.groupService.findAllGU({ groupId });
-      await redisSet(
-        `userId:${userId}:GroupUserList`,
-        JSON.stringify(findAllGU),
-        60,
-      );
+      // await redisSet(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      //   JSON.stringify(findAllGU),
+      //   3600,
+      // );
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
@@ -265,6 +271,14 @@ class GroupController {
         userId,
         groupId,
       });
+      // const getData = await groupUserListGet.get(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      // );
+      // await redisPut(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      //   JSON.stringify(getData.push(creategroupuser)),
+      //   3600,
+      // );
       res.status(201).json({ data: creategroupuser });
     } catch (error) {
       next(error);
@@ -279,6 +293,7 @@ class GroupController {
         userId,
         groupId,
       });
+
       res.status(200).json({ data: deletegroupuser });
     } catch (error) {
       next(error);

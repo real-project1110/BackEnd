@@ -63,6 +63,7 @@ class PostRepository extends Post {
         attributes: [
           'postId',
           'content',
+          'category',
           'commentCount',
           'likeCount',
           'createdAt',
