@@ -28,7 +28,12 @@ router.put(
   upload.single('image'),
   groupcontroller.updatGroupAvatarImg,
 );
-router.get('/', auth, groupListGet, groupcontroller.findAllGroupList);
+router.get(
+  '/',
+  auth,
+  // groupListGet,
+  groupcontroller.findAllGroupList,
+);
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
 router.get('/:groupId/profile', auth, groupcontroller.findGroupProfile);
 router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
