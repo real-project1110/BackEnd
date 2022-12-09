@@ -85,5 +85,22 @@ class RoomRepository extends Room {
     console.log('dddddddddddddddddddddddddddddddddddddd', countUnread);
     return countUnread;
   };
+  //*본인 groupUser정보
+  findUser = async ({ groupId, userId }) => {
+    const findUser = await GroupUser.findOne({ where: { groupId, userId } });
+    return findUser;
+  };
+  //*상대유저 groupUserId찾기
+  opponentUser = async ({ roomId }) => {
+    const opponentUser = await Room.findOne({ where: { roomId } });
+    return opponentUser;
+  };
+  //*상대유저 정보 가져오기
+  findUserInfo = async ({ getGroupUserId }) => {
+    const findUserInfo = await GroupUser.findOne({
+      where: { groupUserId: getGroupUserId },
+    });
+    return findUserInfo;
+  };
 }
 module.exports = RoomRepository;

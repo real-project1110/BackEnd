@@ -1,6 +1,7 @@
 const RoomService = require('../services/room.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const moment = require('moment');
+// const { invalidParameterError } = require('sharp/lib/is');
 
 require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
@@ -80,6 +81,24 @@ class RoomController {
       });
       console.log('불러온채팅입니다:::::::::::::::::', unreadChat);
       res.status(200).json({ ok: true, data: unreadChat });
+    } catch (error) {
+      next(error);
+    }
+  };
+  //*상대 유저 정보 보내주기(groupUserId,img(ori포함),nick)
+  findChatUser = async (req, res, netx) => {
+    try {
+      const { groupId, roomId } = req.params;
+      const { userId } = res.locals.user;
+      if (!groupId || !roomId || !userId) {
+        throw new InvalidParamsError('잘못된 요청입니다.');
+      }
+      const findChatUser = await this.roomService.findChatUser({
+        groupId,
+        roomId,
+        userId,
+      });
+      res.status(200).json({ ok: true, data: findChatUser });
     } catch (error) {
       next(error);
     }

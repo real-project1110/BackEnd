@@ -1,6 +1,5 @@
 // const redis = require('redis');
 // require('dotenv').config();
-
 // const redisClient = redis.createClient({
 //   host: process.env.REDIS_URL,
 //   port: process.env.REDIS_PORT,
@@ -69,5 +68,12 @@
 //     }
 //   });
 // };
+// const getGroupList = redisClient.get();
 
-// module.exports = { redisSet, redisPut, groupListGet, groupUserListGet };
+// module.exports = {
+//   redisSet,
+//   redisPut,
+//   groupListGet,
+//   groupUserListGet,
+//   getGroupList,
+// };
