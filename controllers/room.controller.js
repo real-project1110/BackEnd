@@ -1,7 +1,7 @@
 const RoomService = require('../services/room.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const moment = require('moment');
-const { invalidParameterError } = require('sharp/lib/is');
+// const { invalidParameterError } = require('sharp/lib/is');
 
 require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
@@ -91,7 +91,7 @@ class RoomController {
       const { groupId, roomId } = req.params;
       const { userId } = res.locals.user;
       if (!groupId || !roomId || !userId) {
-        throw new invalidParameterError('잘못된 요청입니다.');
+        throw new InvalidParamsError('잘못된 요청입니다.');
       }
       const findChatUser = await this.roomService.findChatUser({
         groupId,
