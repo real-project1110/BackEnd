@@ -61,5 +61,40 @@ class RoomService {
     count = countUnread.length;
     return count;
   };
+  //*상대 유저 정보 보내주기(groupUserId,img(ori포함),nick)
+  findChatUser = async ({ groupId, roomId, userId }) => {
+    //*본인 groupUserId 가져오기
+    const findUser = await this.roomRepository.findUser({ groupId, userId });
+    if (!findUser) {
+      throw new ValidationError('유저정보가 없습니다.');
+    }
+    const groupUserId = findUser.groupUserId;
+    //*상대유저 groupUserId찾기
+    const opponentUser = await this.roomRepository.opponentUser({
+      roomId,
+    });
+    if (!opponentUser) {
+      throw new ValidationError('룸정보가 존재하지 않습니다.');
+    }
+    let getGroupUserId;
+    if (opponentUser.sender === groupUserId) {
+      getGroupUserId = opponentUser.receiver;
+    } else {
+      getGroupUserId = opponentUser.sender;
+    }
+    //*상대유저 정보 가져오기
+    const findUserInfo = await this.roomRepository.findUserInfo({
+      getGroupUserId,
+    });
+    const image = findUserInfo.groupAvatarImg;
+    const originalUrl = image.replace(/\/statUS\//, '/original/');
+    const result = {
+      groupUserId: findUserInfo.groupUserId,
+      groupUserNickname: findUserInfo.groupUserNickname,
+      groupAvatarImg: image,
+      originalUrl,
+    };
+    return result;
+  };
 }
 module.exports = RoomService;
