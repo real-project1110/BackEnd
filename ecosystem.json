@@ -1,9 +1,0 @@
-{
-  "apps": [
-    {
-      "name": "BackEnd",
-      "script": "./app.js",
-      "watch": true
-    }
-  ]
-}
