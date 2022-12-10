@@ -98,7 +98,7 @@ class RoomController {
     }
   };
   //*상대 유저 정보 보내주기(groupUserId,img(ori포함),nick)
-  findChatUser = async (req, res, netx) => {
+  findChatUser = async (req, res, next) => {
     try {
       const { groupId, roomId } = req.params;
       const { userId } = res.locals.user;
@@ -114,7 +114,7 @@ class RoomController {
         roomId,
         userId,
       });
-      await redisSet(`groupId:${groupId}:roomId:${roomId}`, findChatUser, 3600);
+      await redisSet(`groupId:${groupId}:roomId:${roomId}`, findChatUser, 60);
       res.status(200).json({ ok: true, data: findChatUser });
     } catch (error) {
       next(error);
