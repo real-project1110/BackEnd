@@ -116,7 +116,7 @@ class PostController {
     try {
       const { postId, groupId } = req.params;
       const { userId } = res.locals.user;
-      const { content, image } = req.body;
+      let { content, image } = req.body;
       const images = req.files;
       if (!postId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
@@ -127,9 +127,10 @@ class PostController {
         content,
         groupId,
       });
-      if (image) {
-        await this.postImgService.confirmPostImg({ postId, image, groupId });
+      if (!image) {
+        image = [];
       }
+      await this.postImgService.confirmPostImg({ postId, image, groupId });
       console.log('컨트롤러 이미지', images);
       if (images) {
         await this.postImgService.updatPostImg({
