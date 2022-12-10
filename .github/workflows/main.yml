@@ -35,8 +35,8 @@ jobs:
           cat << EOF >> .env
           ${{ secrets.ENV_FILE }}
 
-      - name: build server files
-        working-directory: ./
-        run: |
-          yarn
-          yarn run build
+#       - name: build server files
+#         working-directory: ./
+#         run: |
+#           yarn
+#           yarn run build
