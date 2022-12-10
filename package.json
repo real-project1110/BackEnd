@@ -11,6 +11,7 @@
     "express-sanitizer": "^1.0.6",
     "express-session": "^1.17.3",
     "file-system": "^2.2.2",
+    "google-auth-library": "^8.7.0",
     "harp": "^0.46.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
