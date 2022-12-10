@@ -33,7 +33,6 @@ class RoomController {
       await redisSet(
         `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
         findRoomId,
-        'EX',
         3600,
       );
       res.status(200).json({ ok: true, data: findRoomId });
