@@ -1,6 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 4000;
+const moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 const expressSanitizer = require('express-sanitizer');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');

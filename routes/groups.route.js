@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { redisGet } = require('../middlewares/cacheMiddleware');
+const {
+  groupListGet,
+  groupUserListGet,
+} = require('../middlewares/cacheMiddleware');
 const auth = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/multerMiddleware');
 const GroupController = require('../controllers/groups.controller');
@@ -28,7 +31,7 @@ router.put(
 router.get(
   '/',
   auth,
-  // redisGet,
+  // groupListGet,
   groupcontroller.findAllGroupList,
 );
 router.get('/:groupId', auth, groupcontroller.findOneGroup);
@@ -37,7 +40,7 @@ router.get('/groupUsers/:groupUserId', auth, groupcontroller.findGroupUser);
 router.get(
   '/:groupId/groupUsers',
   auth,
-  // redisGet,
+  // groupUserListGet,
   groupcontroller.findAllGroupUser,
 );
 

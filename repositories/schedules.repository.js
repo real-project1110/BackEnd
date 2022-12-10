@@ -1,5 +1,9 @@
 const { Schedule, GroupUser } = require('../models');
 const { Op } = require('sequelize');
+const moment = require('moment');
+
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
@@ -22,8 +26,8 @@ class ScheduleRepository {
     await Schedule.create({
       title,
       description,
-      start,
-      end,
+      start: moment(+start).format('YYYY-MM-DD HH:mm:ss'),
+      end: moment(+end).format('YYYY-MM-DD HH:mm:ss'),
       color,
       groupUserId,
       groupId,
@@ -40,7 +44,13 @@ class ScheduleRepository {
     groupUserId,
   }) => {
     const updateSchedule = await Schedule.update(
-      { title, description, start, end, color },
+      {
+        title,
+        description,
+        start: moment(+start).format('YYYY-MM-DD HH:mm:ss'),
+        end: moment(+end).format('YYYY-MM-DD HH:mm:ss'),
+        color,
+      },
       { where: { [Op.and]: [{ scheduleId }, { groupUserId }] } },
     );
     return updateSchedule;

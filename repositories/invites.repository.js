@@ -18,9 +18,9 @@ class InviteRepository {
       });
     }
   };
-  findGroup = async (userId) => {
+  findGroup = async ({ userId }) => {
     const findGroup = [];
-    const find = await Invite.findAll({ where: userId });
+    const find = await Invite.findAll({ where: { userId } });
     for (let i = 0; i < find.length; i++) {
       findGroup.push(find[i].groupId);
     }
@@ -41,7 +41,7 @@ class InviteRepository {
     return group;
   };
   findUserId = async ({ userId }) => {
-    const findUserId = await User.findByPk(userId);
+    const findUserId = await User.findOne({ where: { userId } });
     return findUserId;
   };
 

@@ -1,6 +1,11 @@
 const { InvalidParamsError } = require('../exceptions/index.exception');
 const GroupService = require('../services/groups.service');
-const { redisSet } = require('../middlewares/cacheMiddleware');
+const {
+  redisSet,
+  redisPut,
+  groupListGet,
+  groupUserListGet,
+} = require('../middlewares/cacheMiddleware');
 
 class GroupController {
   groupService = new GroupService();
@@ -19,6 +24,7 @@ class GroupController {
         nickname,
         avatarImg,
       });
+
       res.status(201).json({ data: createGroup.groupId });
     } catch (error) {
       next(error);
@@ -94,7 +100,11 @@ class GroupController {
       const findAllGroupList = await this.groupService.findAllGroupList({
         userId,
       });
-      await redisSet(req.originalUrl, JSON.stringify(findAllGroupList), 432000);
+      // await redisSet(
+      //   `userId:${userId}:GroupList`,
+      //   JSON.stringify(findAllGroupList),
+      //   3600,
+      // );
       res.status(200).json({ ok: true, data: findAllGroupList });
     } catch (error) {
       next(error);
@@ -204,8 +214,13 @@ class GroupController {
   findAllGroupUser = async (req, res, next) => {
     try {
       const { groupId } = req.params;
-      const findAllGU = await this.groupService.findAllGU(groupId);
-      await redisSet(req.originalUrl, JSON.stringify(findAllGU), 432000);
+      const { userId } = res.locals.user;
+      const findAllGU = await this.groupService.findAllGU({ groupId });
+      // await redisSet(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      //   JSON.stringify(findAllGU),
+      //   3600,
+      // );
       res.status(200).json({ data: findAllGU });
     } catch (error) {
       next(error);
@@ -217,12 +232,12 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { status, statusMessage } = req.body;
-      const poststatus = await this.groupService.postStatus(
+      const poststatus = await this.groupService.postStatus({
         userId,
         groupId,
         status,
         statusMessage,
-      );
+      });
       res.status(201).json({ data: poststatus });
     } catch (error) {
       next(error);
@@ -234,12 +249,12 @@ class GroupController {
       const { userId } = res.locals.user;
       const { groupId } = req.params;
       const { status, statusMessage } = req.body;
-      const updateStatus = await this.groupService.updateStatus(
+      const updateStatus = await this.groupService.updateStatus({
         userId,
         groupId,
         status,
         statusMessage,
-      );
+      });
       res
         .status(200)
         .json({ data: updateStatus.statusMessage, message: '상태변경완료' });
@@ -252,10 +267,18 @@ class GroupController {
     try {
       const { userId } = res.locals.user;
       const { groupId } = req.body;
-      const creategroupuser = await this.groupService.createGroupUser(
+      const creategroupuser = await this.groupService.createGroupUser({
         userId,
         groupId,
-      );
+      });
+      // const getData = await groupUserListGet.get(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      // );
+      // await redisPut(
+      //   `userId:${userId}:groupId:${groupId}GroupUserList`,
+      //   JSON.stringify(getData.push(creategroupuser)),
+      //   3600,
+      // );
       res.status(201).json({ data: creategroupuser });
     } catch (error) {
       next(error);
@@ -270,6 +293,7 @@ class GroupController {
         userId,
         groupId,
       });
+
       res.status(200).json({ data: deletegroupuser });
     } catch (error) {
       next(error);

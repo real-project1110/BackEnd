@@ -3,17 +3,35 @@ const { Op } = require('sequelize');
 const Sq = require('sequelize');
 const RoomController = require('../controllers/room.controller');
 const Sequelize = Sq.Sequelize;
+const {
+  redisSet,
+  redisPut,
+  groupListGet,
+  groupUserListGet,
+} = require('../middlewares/cacheMiddleware');
 
 class GroupRepository {
   createGroup = async ({ groupUserNickname, groupName, userId, avatarImg }) => {
-    const createGroup = await GroupList.create({ groupName, userId });
-    const groupId = createGroup.groupId;
     const userCount = 1;
+    const createGroup = await GroupList.create({
+      groupName,
+      userId,
+      userCount,
+    });
+    // const getData = await groupListGet(`userId:${userId}:GroupList`);
+    // if (getData.length) {
+    //   await redisSet(
+    //     `userId:${userId}:GroupList`,
+    //     getData.push(createGroup),
+    //     3600,
+    //   );
+    // }
+    const groupId = createGroup.groupId;
     await GroupUser.create({
       userId,
       groupId,
       groupUserNickname,
-      userCount,
+
       groupAvatarImg: avatarImg,
     });
     return createGroup;
@@ -135,7 +153,7 @@ class GroupRepository {
     return getUser;
   };
 
-  findAllGU = async (groupId) => {
+  findAllGU = async ({ groupId }) => {
     const findAllGU = await GroupUser.findAll({
       where: { groupId },
       order: [['groupUserId', 'desc']],
@@ -143,12 +161,12 @@ class GroupRepository {
     return findAllGU;
   };
 
-  postStatus = async (status, statusMessage) => {
+  postStatus = async ({ status, statusMessage }) => {
     const poststatus = await GroupUser.create({ status, statusMessage });
     return poststatus;
   };
 
-  updateStatus = async (userId, groupId, status, statusMessage) => {
+  updateStatus = async ({ userId, groupId, status, statusMessage }) => {
     const updatestatus = await GroupUser.update(
       { status, statusMessage },
       { where: { userId, groupId } },
@@ -156,16 +174,21 @@ class GroupRepository {
     return updatestatus;
   };
 
-  createGroupUser = async (groupUser) => {
-    return await GroupUser.create(groupUser);
+  createGroupUser = async ({ groupUser }) => {
+    return await GroupUser.create({
+      groupUserNickname: groupUser.groupUserNickname,
+      userId: groupUser.userId,
+      groupId: groupUser.groupId,
+      groupAvatarImg: groupUser.groupAvatarImg,
+    });
   };
 
-  findOneId = async (userId) => {
-    const findOneId = await User.findByPk(userId);
+  findOneId = async ({ userId }) => {
+    const findOneId = await User.findOne({ where: { userId } });
     return findOneId;
   };
 
-  groupuserdup = async (userId, groupId) => {
+  groupuserdup = async ({ userId, groupId }) => {
     const groupuserdup = await GroupUser.findOne({
       where: { [Op.and]: [{ userId }, { groupId }] },
     });

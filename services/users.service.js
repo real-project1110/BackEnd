@@ -8,13 +8,17 @@ const ValidationError = require('../exceptions/index.exception');
 class UserService {
   userRepository = new UserRepository();
 
-  createUser = async (email, nickname, password, avatarImg) => {
-    const user = await this.userRepository.createUser(
-      email,
-      nickname,
-      password,
-      avatarImg,
-    );
+  createUser = async ({ users }) => {
+    const user = await this.userRepository.createUser({
+      email: users.email,
+      nickname: users.nickname,
+      password: users.password,
+      avatarImg: users.avatarImg,
+    });
+    await this.userRepository.createInvite({
+      userId: user.userId,
+      groupId: 13,
+    });
     return {
       email: user.email,
       nickname: user.nickname,
@@ -22,8 +26,8 @@ class UserService {
     };
   };
 
-  userLogin = async (email, password) => {
-    const user = await this.userRepository.findByEmail(email);
+  userLogin = async ({ email, password }) => {
+    const user = await this.userRepository.findByEmail({ email });
     if (!user) {
       throw new Error('가입하신 회원이 아닙니다.');
     }
@@ -54,25 +58,25 @@ class UserService {
       process.env.SECRET_KEY,
       { expiresIn: '14d' },
     );
-    await this.userRepository.refreshT(user, refreshToken);
+    await this.userRepository.refreshT({ user, refreshToken });
 
     return { user, accessToken, refreshToken };
   };
 
-  emailCheck = async (email) => {
-    const emailDuplicate = await this.userRepository.findByEmail(email);
+  emailCheck = async ({ email }) => {
+    const emailDuplicate = await this.userRepository.findByEmail({ email });
     if (emailDuplicate) {
       throw new Error('이미 가입된 이메일입니다.');
     }
-    const emailVerified = await this.userRepository.authEmail(email);
+    const emailVerified = await this.userRepository.authEmail({ email });
     if (emailVerified) {
-      await this.userRepository.deleteEmail(email);
+      await this.userRepository.deleteEmail({ email });
     }
     authEmail(email);
   };
 
-  certification = async (email, certificationNum) => {
-    const checkEmail = await this.userRepository.authEmail(email);
+  certification = async ({ email, certificationNum }) => {
+    const checkEmail = await this.userRepository.authEmail({ email });
     if (!checkEmail) {
       throw new Error('email 정보가 존재하지 않습니다');
     }
@@ -80,7 +84,7 @@ class UserService {
       throw new Error('인증번호가 일치하지 않습니다');
     }
     if (checkEmail.certificationNum === certificationNum) {
-      const auth = await this.userRepository.emailCheck(email);
+      const auth = await this.userRepository.emailCheck({ email });
       return {
         certificationId: auth.certificationId,
         email: auth.email,

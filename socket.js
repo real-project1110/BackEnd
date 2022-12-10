@@ -95,6 +95,7 @@ module.exports = (server) => {
     }
     socket.on('joinGroup', (data) => {
       onlineMap[socket.nsp.name][socket.id] = data.groupUserId;
+      console.log('joingroup시 onlineMap:::::::::::::::::::::::', onlineMap);
       newNamespace.emit(
         'onlineList',
         Object.values(onlineMap[socket.nsp.name]),
@@ -112,6 +113,7 @@ module.exports = (server) => {
         Object.values(onlineMap[socket.nsp.name]),
       );
     });
+
     socket.on('joinRoom', async (data) => {
       socket.join(data.roomId);
       const findRoom = await Room.findOne({
@@ -137,9 +139,11 @@ module.exports = (server) => {
     });
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
-      roomMap[data.roomId] = roomMap[data.roomId].filter(
-        (a) => a !== data.groupUserId,
-      );
+      if (roomMap[data.roomId].length) {
+        roomMap[data.roomId] = roomMap[data.roomId].filter(
+          (a) => a !== data.groupUserId,
+        );
+      }
       console.log(
         'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
         roomMap[data.roomId],
@@ -175,7 +179,8 @@ module.exports = (server) => {
           'targetId[0]::::::::::::::::::::::::::::::::::::::::',
           targetId[0],
         );
-        newNamespace.to(targetId[0]).emit('unread', groupUserId);
+
+        newNamespace.to(targetId[0][0]).emit('unread', groupUserId);
       }
     });
   });

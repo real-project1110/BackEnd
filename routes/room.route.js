@@ -14,4 +14,6 @@ router.get('/room/:roomId', auth, roomController.getChat);
 router.post('/room/:roomId', auth, roomController.saveChat);
 //*안읽은 메세지
 router.get('/room', auth, roomController.unreadChat);
+//*상대 유저 정보 보내주기
+router.get('/groups/:groupId/room/:roomId', auth, roomController.findChatUser);
 module.exports = router;

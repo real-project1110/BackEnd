@@ -24,7 +24,7 @@ class UserController {
         });
       }
       const avatarImg = process.env.AWS_IMAGE_URL;
-
+      console.log('signupEmail:::::::::::::::::::::::::::::', email);
       const hashed = await bcrypt.hash(password, 12);
       const users = await Object.create({
         email: email,
@@ -32,7 +32,7 @@ class UserController {
         password: hashed,
         avatarImg,
       });
-      await this.userService.createUser(users);
+      await this.userService.createUser({ users });
       res.status(201).json({ message: '회원가입에 성공하셨습니다.' });
     } catch (error) {
       next(error);
@@ -42,7 +42,7 @@ class UserController {
   login = async (req, res, next) => {
     try {
       const { email, password } = await Joi.loginSchema.validateAsync(req.body);
-      const user = await this.userService.userLogin(email, password);
+      const user = await this.userService.userLogin({ email, password });
 
       res.cookie('accessToken', user.accessToken);
       res.cookie('refreshToken', user.refreshToken);
@@ -61,7 +61,7 @@ class UserController {
   emailCheck = async (req, res, next) => {
     try {
       const { email } = req.body;
-      await this.userService.emailCheck(email);
+      await this.userService.emailCheck({ email });
       res.status(200).send({ message: '인증 메일이 발송되었습니다.' });
     } catch (error) {
       next(error);
@@ -71,7 +71,7 @@ class UserController {
   certification = async (req, res, next) => {
     try {
       const { email, certificationNum } = req.body;
-      await this.userService.certification(email, certificationNum);
+      await this.userService.certification({ email, certificationNum });
       res.status(200).json({ message: '인증 확인되었습니다' });
     } catch (error) {
       next(error);

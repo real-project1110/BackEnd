@@ -1,5 +1,9 @@
 const { Room, Chat, GroupUser } = require('../models');
 const { Op } = require('sequelize');
+const moment = require('moment');
+
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 const Sq = require('sequelize');
 const Sequelize = Sq.Sequelize;
 
@@ -36,6 +40,7 @@ class RoomRepository extends Room {
       order: [['createdAt', 'DESC']],
       raw: true,
     });
+    console.log('bugstop::::::::::::::::::::::::::::', rows);
     return rows;
   };
   //*존재하는 룸 찾기
@@ -46,7 +51,12 @@ class RoomRepository extends Room {
 
   //*채팅 저장하기
   saveChat = async ({ roomId, groupUserId, message }) => {
-    const saveChat = await Chat.create({ roomId, groupUserId, message });
+    const saveChat = await Chat.create({
+      roomId,
+      groupUserId,
+      message,
+      createdAt: moment().subtract(9, 'h').format('YYYY-MM-DD HH:mm:ss'),
+    });
     return saveChat;
   };
 
@@ -66,10 +76,31 @@ class RoomRepository extends Room {
     const countUnread = await Chat.findAll({
       where: {
         roomId,
-        createdAt: { [Op.gt]: new Date(+timestamps) },
+        createdAt: {
+          [Op.gt]: new Date(moment(+timestamps)),
+        },
       },
+      raw: true,
     });
+    console.log('dddddddddddddddddddddddddddddddddddddd', countUnread);
     return countUnread;
+  };
+  //*본인 groupUser정보
+  findUser = async ({ groupId, userId }) => {
+    const findUser = await GroupUser.findOne({ where: { groupId, userId } });
+    return findUser;
+  };
+  //*상대유저 groupUserId찾기
+  opponentUser = async ({ roomId }) => {
+    const opponentUser = await Room.findOne({ where: { roomId } });
+    return opponentUser;
+  };
+  //*상대유저 정보 가져오기
+  findUserInfo = async ({ getGroupUserId }) => {
+    const findUserInfo = await GroupUser.findOne({
+      where: { groupUserId: getGroupUserId },
+    });
+    return findUserInfo;
   };
 }
 module.exports = RoomRepository;
