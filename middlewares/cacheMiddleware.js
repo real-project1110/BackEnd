@@ -32,7 +32,7 @@ const redisSet = async (key, values, expire) => {
 //     }
 // };
 function redisGet(key) {
-  redisClient.get(key, async (error, data, next) => {
+  redisClient.get(key, async (error, data) => {
     try {
       if (data === null) {
         return;
@@ -41,7 +41,7 @@ function redisGet(key) {
         return JSON.parse(data);
       }
     } catch (error) {
-      console.log(error);
+      console.log('asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf', error);
     }
   });
 }
