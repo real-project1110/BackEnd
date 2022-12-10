@@ -1,6 +1,7 @@
 const RoomService = require('../services/room.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const moment = require('moment');
+const { redisSet, redisGet } = require('../middlewares/cacheMiddleware');
 // const { invalidParameterError } = require('sharp/lib/is');
 
 require('moment-timezone');
@@ -14,6 +15,12 @@ class RoomController {
       const { groupId } = req.params;
       const { sender, receiver } = req.query;
       const { userId } = res.locals.user;
+      const getData = redisGet(
+        `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
+      );
+      if (getData) {
+        return res.staus(200).json({ ok: true, data: getData });
+      }
       if (!groupId || !sender || !receiver) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -23,6 +30,12 @@ class RoomController {
         receiver,
         userId,
       });
+      await redisSet(
+        `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
+        findRoomId,
+        'EX',
+        3600,
+      );
       res.status(200).json({ ok: true, data: findRoomId });
     } catch (error) {
       next(error);
@@ -90,6 +103,7 @@ class RoomController {
     try {
       const { groupId, roomId } = req.params;
       const { userId } = res.locals.user;
+
       if (!groupId || !roomId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
