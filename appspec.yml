@@ -3,3 +3,9 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/final
+
+    hooks:
+  AfterInstall:
+    - location: scripts/after-deploy.sh
+      timeout: 180
+      runas: ubuntu
