@@ -2,8 +2,7 @@
   "apps": [
     {
       "name": "BackEnd",
-      "script": "./node_modules/.bin/ts-node",
-      "args": "./src/index.ts",
+      "script": "./app.js",
       "watch": true
     }
   ]
