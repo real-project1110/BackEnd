@@ -102,10 +102,10 @@ class RoomController {
     try {
       const { groupId, roomId } = req.params;
       const { userId } = res.locals.user;
-      const getData = redisGet(`groupId:${groupId}:roomId:${roomId}`);
-      if (getData) {
-        return res.staus(200).json({ ok: true, data: getData });
-      }
+      // const getData = redisGet(`groupId:${groupId}:roomId:${roomId}`);
+      // if (getData) {
+      //   return res.staus(200).json({ ok: true, data: getData });
+      // }
       if (!groupId || !roomId || !userId) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -114,7 +114,7 @@ class RoomController {
         roomId,
         userId,
       });
-      await redisSet(`groupId:${groupId}:roomId:${roomId}`, findChatUser, 60);
+      // await redisSet(`groupId:${groupId}:roomId:${roomId}`, findChatUser, 60);
       res.status(200).json({ ok: true, data: findChatUser });
     } catch (error) {
       next(error);
