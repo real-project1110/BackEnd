@@ -35,13 +35,13 @@ function redisGet(key) {
   redisClient.get(key, async (error, data, next) => {
     try {
       if (data === null) {
-        next();
+        return;
       } else {
         console.log('data존재한다고합니다.', data);
         return JSON.parse(data);
       }
     } catch (error) {
-      next();
+      console.log(error);
     }
   });
 }
