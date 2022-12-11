@@ -131,11 +131,6 @@ module.exports = (server) => {
       roomMap[data.roomId] = roomMap[data.roomId].filter(
         (a, i) => roomMap[data.roomId].indexOf(a) === i,
       );
-      console.log(
-        'roomMap[data.roomId]::::::::::::::::::::::::::',
-        roomMap[data.roomId],
-        data.groupUserId,
-      );
     });
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
@@ -144,77 +139,22 @@ module.exports = (server) => {
           (a) => a !== data.groupUserId,
         );
       }
-      console.log(
-        'LEAVEROOM---roomMap[data.roomId]::::::::::::::::::::::::::',
-        roomMap[data.roomId],
-      );
     });
     socket.on('message', (data) => {
       const { message, roomId, groupUserId, createdAt } = data;
       const msg = { message, groupUserId, createdAt };
       newNamespace.to(roomId).emit('message', msg);
-      //* roomMap = room에 조인여부
-      //* roomMember = room에 있는 유저
-      //* groupUsers = 그룹내에 있는 모든 유저 = socket.id 를 구하기 위해서 해줌
-      //* unreadUserId = 나간유저 = roomMember - roomMap
+
       const groupUsers = onlineMap[socket.nsp.name];
-      // {5:[4,5]}
-      console.log('groupUsers:::::::::::::::::::::::::::::', groupUsers);
       if (roomMap[roomId].length === 1) {
         const unreadUserId = roomMember[roomId].filter(
           (a) => a !== roomMap[roomId][0],
         );
-        console.log(
-          'unreadUser::::::::::::::::::::::::::::::::::::::::::::::::::',
-          unreadUserId,
-        );
         const targetId = Object.entries(groupUsers).filter(
           (a) => a[1] === unreadUserId[0],
         );
-        console.log(
-          'targetId:::::::::::::::::::::::::::::::::::::::::::::::::::',
-          targetId,
-        );
-        console.log(
-          'targetId[0]::::::::::::::::::::::::::::::::::::::::',
-          targetId[0],
-        );
-
         newNamespace.to(targetId[0][0]).emit('unread', groupUserId);
       }
     });
   });
 };
-//   );
-// };
-//* {1:[] , 2:[]}
-// io.on('connection', (socket) => {
-//     const req = socket.request;
-//     console.log('연결완료');
-
-//     socket.on('disconnect', () => {
-//       clearInterval(socket.interval);
-//     });
-
-//     socket.on('error', (error) => {
-//       console.error(error);
-//     });
-
-//     let newRoom = io.of('');
-//     socket.on('joinRoom', (data) => {
-//       socket.join(data.roomId);
-//       console.log('조인확인', data);
-//     });
-
-//     socket.on('leaveRoom', (roomId) => {
-//       socket.leave(roomId);
-//     });
-
-//     socket.on('message', (data) => {
-//       const { message, roomId, groupUserId, createdAt } = data;
-//       console.log('채팅 확인', data);
-//       const msg = { message, groupUserId, createdAt };
-//       io.to(roomId).emit('message', msg);
-//     });
-//   });
-// };
