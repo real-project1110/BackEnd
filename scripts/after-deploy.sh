@@ -1,5 +1,5 @@
 #!/bin/bash
-REPOSITORY=/home/ubuntu/final
+REPOSITORY=/home/ubuntu/BackEnd
 
 
 cd $REPOSITORY
