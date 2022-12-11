@@ -68,7 +68,10 @@ class ScheduleRepository {
     //     end: new Date(+schedule.end),
     //   };
     // });
-    // console.log('::::::::::::::::::::::::::::::::::', data);
+    console.log(
+      '레포에서findAllSchedule::::::::::::::::::::::::::::::::::',
+      findAllSchedule,
+    );
     return findAllSchedule;
   };
 

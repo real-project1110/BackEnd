@@ -10,7 +10,12 @@ class ScheduleController {
       let { title, description, start, end, color } = req.body;
       const { groupId } = req.params;
       const { userId } = res.locals.user;
-      console.log(start, end);
+      console.log(
+        'start::::::::::::::::::::::end:::::::::::::::::::::',
+        start,
+        end,
+      );
+
       // let date = new Date(start);
       // let endDate = new Date(end);
       // start = date.setHours(date.getHours() + 9);
@@ -24,6 +29,7 @@ class ScheduleController {
         userId,
         groupId,
       });
+
       res.status(201).json({ data: createschedule });
     } catch (error) {
       next(error);
@@ -88,6 +94,7 @@ class ScheduleController {
       const findschedule = await this.scheduleService.findAllSchedule({
         groupId,
       });
+      console.log('스케쥴만들고 보여줍니다!!!!!!!!!!', findschedule);
       // await redisSet(req.originalUrl, JSON.stringify(findschedule), 432000);
       res.status(200).json({ data: findschedule });
     } catch (error) {
