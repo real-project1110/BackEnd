@@ -34,7 +34,7 @@ class UserService {
 
     const isEqual = await bcrypt.compare(password, user.password);
     if (!isEqual) {
-      throw new ValidationError(401, '비밀번호가 다릅니다.');
+      throw new ValidationError(400, '비밀번호가 다릅니다.');
     }
     const accessToken = jwt.sign(
       {
