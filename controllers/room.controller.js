@@ -51,7 +51,7 @@ class RoomController {
         page,
         pageSize,
       });
-      res.status(200).json({ ok: true, data: getChat });
+      res.status(200).json({ ok: true, getChat });
     } catch (error) {
       next(error);
     }
