@@ -2,9 +2,16 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/final
+    destination: /home/ubuntu/BackEnd
+    overwrite: yes
 
-    hooks:
+permissions:
+  - object: /home/ubuntu
+    pattern: '**'
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
   AfterInstall:
     - location: scripts/after-deploy.sh
       timeout: 180
