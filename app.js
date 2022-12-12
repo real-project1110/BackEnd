@@ -1,7 +1,11 @@
 require('dotenv').config();
 const express = require('express');
-const app = express();
-const port = 4000;
+const app1 = express();
+const app2 = express();
+const app3 = express();
+const port1 = 4010;
+const port2 = 4020;
+const port3 = 4030;
 const moment = require('moment');
 require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
@@ -48,19 +52,39 @@ const morganMiddleware = require('./middlewares/morganMiddleware');
 // );
 // app.use(passport.initialize());
 // app.use(passport.session());
-app.use(cors());
+app1.use(cors());
+app2.use(cors());
+app3.use(cors());
 //*morgan 따로 사용시 주석 풀기 (tiny,common,combined,dev) 네종류  // morgan/winston 미들웨어 사용시 주석
 // app.use(morgan('dev'));
 //*morgan 따로 사용시 밑에 주석 // morgan/winston 미들웨어 사용시 주석풀기
-app.use(morganMiddleware);
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(expressSanitizer());
-app.use(cookieParser());
-app.use('/', routes);
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-app.use(errorLogger);
-app.use(errorHandler);
+app1.use(morganMiddleware);
+app2.use(morganMiddleware);
+app3.use(morganMiddleware);
+app1.use(express.json());
+app2.use(express.json());
+app3.use(express.json());
+app1.use(express.urlencoded({ extended: false }));
+app2.use(express.urlencoded({ extended: false }));
+app3.use(express.urlencoded({ extended: false }));
+app1.use(expressSanitizer());
+app2.use(expressSanitizer());
+app3.use(expressSanitizer());
+app1.use(cookieParser());
+app2.use(cookieParser());
+app3.use(cookieParser());
+app1.use('/', routes(1));
+app2.use('/', routes(2));
+app3.use('/', routes(3));
+app1.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app2.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app3.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app1.use(errorLogger);
+app2.use(errorLogger);
+app3.use(errorLogger);
+app1.use(errorHandler);
+app2.use(errorHandler);
+app3.use(errorHandler);
 
 let server;
 try {
@@ -69,14 +93,28 @@ try {
     key: fs.readFileSync(process.env.KEY_URL),
     cert: fs.readFileSync(process.env.CERT_URL),
   };
-  server = HTTPS.createServer(option, app);
-  server.listen(port, () => {
-    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port);
+  server = HTTPS.createServer(option, app1);
+  server.listen(port1, () => {
+    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port1);
     socket(server);
   });
+  server = HTTPS.createServer(option, app2);
+  server.listen(port2, () => {
+    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port2);
+  });
+  server = HTTPS.createServer(option, app3);
+  server.listen(port3, () => {
+    console.log('HTTPS 서버가 실행되었습니다. 포트 :: ' + port3);
+  });
 } catch (error) {
-  app.listen(port, () => {
-    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port);
+  app1.listen(port1, () => {
+    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port1);
+  });
+  app2.listen(port2, () => {
+    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port2);
+  });
+  app3.listen(port3, () => {
+    console.log('HTTP 서버가 실행되었습니다. 포트 :: ' + port3);
   });
 }
 
