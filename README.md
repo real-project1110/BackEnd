@@ -76,9 +76,9 @@
 
 |Role|Name|Github|
 |---|---|---|
-|FE*팀장|한세준|---|
-|FE|안치영|---|
-|BE*부팀장|김정현|---|
-|BE|정현진|---|
-|BE|유동희|---|
-|UX/UI|문예진|---|
+|FE*팀장|한세준|https://github.com/hansejun|
+|FE|안치영|https://github.com/Returnmakdo|
+|BE*부팀장|김정현|https://github.com/1005jh|
+|BE|정현진|https://github.com/hyunjin9603|
+|BE|유동희|https://github.com/donghee44|
+|UX/UI|문예진||
