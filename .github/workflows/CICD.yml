@@ -1,0 +1,56 @@
+name: action name
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: create env file
+        working-directory: ./
+        run: |
+          touch .env
+          cat << EOF >> .env
+          ${{ secrets.ENV_FILE }}
+
+      - name: build client files
+        working-directory: ./
+        run: |
+          npm install
+#          npm build
+
+      - name: zip file
+        run: zip -r cicdtest.zip ./config ./controllers ./scripts ./exceptions ./middlewares ./migrations ./models ./passport ./repositories ./routes ./seeders ./services ./util ./.gitignore ./.prettierrc.js ./app.js ./socket.js ./swagger-output.json ./swagger.js ./appspec.yml ./.env ./package.json ./package-lock.json
+
+      - name: AWS connect
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./cicdtest.zip s3://shitlambda/public/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name lastCD
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name lastCD
+          --s3-location bucket=shitlambda,bundleType=zip,key=public/cicdtest.zip

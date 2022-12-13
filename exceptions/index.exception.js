@@ -12,8 +12,8 @@ class ValidationError extends Error {
     super(message);
     this.status = status || 400;
     this.name = 'ValidationError';
+    if (!message) this.message = '요청한 데이터 형식이 올바르지 않습니다.';
   }
 }
 
 module.exports = { InvalidParamsError, ValidationError };
-
