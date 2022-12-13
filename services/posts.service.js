@@ -4,8 +4,9 @@ const ValidationError = require('../exceptions/index.exception');
 const getPostId = (a) => a.postId;
 
 class PostService {
-  postRepository = new PostRepository();
-
+  constructor() {
+    this.postRepository = new PostRepository();
+  }
   //*게시글 작성
   createPost = async ({ groupId, userId, content, category }) => {
     const findGroupUserId = await this.postRepository.findGroupUserId({
