@@ -165,7 +165,6 @@
 <details>
   <summary>Lambda Access denied</summary>
 
-
 - **문제 상황**
   - S3 버켓에 이미지가 올라가지만 lambda 트리거가 작동을 하지 않고 access denied 403 에러를 띄움
 - **첫번째 접근**
@@ -265,3 +264,16 @@
   - passport전략을 사용하지말고 백엔드에서 axios를 활용해 소셜로그인 방식을 해보자는 의견이 나와 시도함
 - **네번째 접근** - axios를 활용해 유저정보를 받아 온 후 소셜로그인에 성공
 </details>
+
+<details>
+  <summary>응답이 느려지는 문제</summary>
+
+- **문제 상황**
+  - 서버의 부하로 응답이 느려지는 문제가 발생
+- **첫번째 접근**
+  - AWS의 Elastic Load Balancer 생각해보기
+- **두번째 접근**
+  - Nginx를 Load Balancer로 이욯하기 → 성공
+- **두번째 접근 선택 그리고 이유**
+  > AWS ELB를 찾아봤을 때 현재 서비스의 크기와 테스트 결과에 따라 예상되는 사용자 수 , 그리고 비용적인 면에서 너무 과한 느낌이 들었습니다. 그래서 AWS ELB를 사용하기보다는 Nginx를 Load Balancer로 사용하는게 더 좋을 것 같다고 판단을 했습니다. 적용 이후 응답이 느려지는 문제를 효과적으로 해결할 수 있었습니다.
+  </details>
