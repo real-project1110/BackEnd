@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         sourceKey: 'userId',
       });
+      this.hasMany(models.Invite,{
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+      });
     }
   }
   User.init(
