@@ -5,3 +5,5 @@ loadtest.json
 swagger-output.json
 swagger.js
 data.csv
+fixtures 
+jest-grammars
