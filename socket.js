@@ -134,10 +134,12 @@ module.exports = (server) => {
     });
     socket.on('leaveRoom', (data) => {
       socket.leave(data.roomId);
-      if (roomMap[data.roomId].length) {
-        roomMap[data.roomId] = roomMap[data.roomId].filter(
-          (a) => a !== data.groupUserId,
-        );
+      if (roomMap[data.roomId]) {
+        if (roomMap[data.roomId].length) {
+          roomMap[data.roomId] = roomMap[data.roomId].filter(
+            (a) => a !== data.groupUserId,
+          );
+        }
       }
     });
     socket.on('message', (data) => {
