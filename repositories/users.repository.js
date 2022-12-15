@@ -12,10 +12,10 @@ class UserRepository {
     });
     return createUser;
   };
-  createInvite = async ({ userId, groupId }) => {
-    const createInvite = await Invite.create({ userId, groupId });
-    return createInvite;
-  };
+  // createInvite = async ({ userId, groupId }) => {
+  //   const createInvite = await Invite.create({ userId, groupId });
+  //   return createInvite;
+  // };
 
   findByUser = async ({ userId }) => {
     const findByUser = await User.findOne({

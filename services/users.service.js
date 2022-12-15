@@ -15,10 +15,10 @@ class UserService {
       password: users.password,
       avatarImg: users.avatarImg,
     });
-    await this.userRepository.createInvite({
-      userId: user.userId,
-      groupId: 13,
-    });
+    // await this.userRepository.createInvite({
+    //   userId: user.userId,
+    //   groupId: 13,
+    // });
     return {
       email: user.email,
       nickname: user.nickname,
