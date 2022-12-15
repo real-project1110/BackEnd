@@ -3,7 +3,9 @@ const PostImgRepository = require('../repositories/postImgs.repository');
 
 // const deduplication = (a) => !image.includes(a.postImg);
 class PostImgService {
-  postImgRepository = new PostImgRepository();
+  constructor() {
+    this.postImgRepository = new PostImgRepository();
+  }
 
   //*게시글 사진 생성
   createPostImg = async ({ postId, images, groupId }) => {

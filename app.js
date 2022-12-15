@@ -4,6 +4,7 @@ const app = express();
 const port = 4000;
 const moment = require('moment');
 require('moment-timezone');
+const helmet = require('helmet');
 moment.tz.setDefault('Asia/Seoul');
 const expressSanitizer = require('express-sanitizer');
 const cookieParser = require('cookie-parser');
@@ -49,6 +50,7 @@ const morganMiddleware = require('./middlewares/morganMiddleware');
 // app.use(passport.initialize());
 // app.use(passport.session());
 app.use(cors());
+app.use(helmet());
 //*morgan 따로 사용시 주석 풀기 (tiny,common,combined,dev) 네종류  // morgan/winston 미들웨어 사용시 주석
 // app.use(morgan('dev'));
 //*morgan 따로 사용시 밑에 주석 // morgan/winston 미들웨어 사용시 주석풀기

@@ -2,11 +2,12 @@ const PostService = require('../services/posts.service');
 const InvalidParamsError = require('../exceptions/index.exception');
 const PostImgService = require('../services/postImgs.service');
 // const { redisSet } = require('../middlewares/cacheMiddleware');
-const { post } = require('../routes');
 
 class PostController {
-  postService = new PostService();
-  postImgService = new PostImgService();
+  constructor() {
+    this.postService = new PostService();
+    this.postImgService = new PostImgService();
+  }
 
   //*게시글 작성
   createPost = async (req, res, next) => {

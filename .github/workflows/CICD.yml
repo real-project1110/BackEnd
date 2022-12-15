@@ -36,7 +36,7 @@ jobs:
 #          npm build
 
       - name: zip file
-        run: zip -r cicdtest.zip ./config ./controller ./scripts ./exceptions ./middlewares ./migrations ./models ./passport ./repositories ./routes ./service ./util ./.gitignore ./.prettierrc.js ./app.js ./socket.js ./swagger-output.json ./swagger.js ./appspec.yml ./.env ./package.json ./package-lock.json
+        run: zip -r cicdtest.zip ./config ./controllers ./scripts ./exceptions ./middlewares ./migrations ./models ./passport ./repositories ./routes ./seeders ./services ./util ./.gitignore ./.prettierrc.js ./app.js ./socket.js ./swagger-output.json ./swagger.js ./appspec.yml ./.env ./package.json ./package-lock.json
 
       - name: AWS connect
         uses: aws-actions/configure-aws-credentials@v1
