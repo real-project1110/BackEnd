@@ -1,4 +1,3 @@
-const { CloudFormation } = require('aws-sdk');
 const ColorRepository = require('../repositories/colors.repository');
 
 class ColorService {
@@ -20,7 +19,6 @@ class ColorService {
       color,
       content,
     });
-    console.log(createColor.groupId,groupId)
     if (createColor.groupId !== groupId) {
       throw new Error('권한이 없습니다');
     }
@@ -64,7 +62,7 @@ class ColorService {
       color: updateColor.color,
       content: updateColor.content,
     };
-
+  }
     deleteColor = async ({ userId, colorId, groupId }) => {
       const getGroupId = await this.colorRepository.getGroupId({
         userId,
@@ -80,6 +78,6 @@ class ColorService {
       }
       return deleteColor;
     };
-  };
+  
 }
 module.exports = ColorService;

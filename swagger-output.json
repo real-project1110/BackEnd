@@ -96,12 +96,18 @@
             "description": "Unauthorized"
           }
         }
-      }
-    },
-    "/groups/schedules/{scheduleId}": {
+      },
       "delete": {
         "description": "",
         "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "scheduleId",
             "in": "path",
@@ -125,10 +131,53 @@
         }
       }
     },
-    "/groups/posts/{postId}/comments": {
+    "/groups/{groupId}/schedules/{scheduleId}/drag": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scheduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/posts/{postId}/comments": {
       "post": {
         "description": "",
         "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "postId",
             "in": "path",
@@ -155,6 +204,14 @@
         "description": "",
         "parameters": [
           {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "postId",
             "in": "path",
             "required": true,
@@ -177,10 +234,18 @@
         }
       }
     },
-    "/groups/comments/{commentId}": {
+    "/groups/{groupId}/posts/comments/{commentId}": {
       "put": {
         "description": "",
         "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "commentId",
             "in": "path",
@@ -206,6 +271,14 @@
       "delete": {
         "description": "",
         "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "commentId",
             "in": "path",
@@ -306,35 +379,20 @@
             "description": "Unauthorized"
           }
         }
-      },
+      }
+    },
+    "/groups/{groupId}/posts/{postId}/notice": {
       "put": {
         "description": "",
         "parameters": [
           {
-            "name": "postId",
+            "name": "groupId",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
           {
             "name": "postId",
             "in": "path",
@@ -360,6 +418,39 @@
     },
     "/groups/{groupId}/posts/{postId}": {
       "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
         "description": "",
         "parameters": [
           {
@@ -1123,14 +1214,169 @@
             "description": "Unauthorized"
           }
         }
-      }
-    },
-    "/groups/color/{colorId}": {
+      },
       "delete": {
         "description": "",
         "parameters": [
           {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "colorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/posts/{postId}/likes": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/posts/comments/{commentId}/likes": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/chats/{groupId}/room": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/chats/{roomId}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "roomId",
             "in": "path",
             "required": true,
             "schema": {

@@ -26,6 +26,24 @@ exports.data={
 }
 
 
-exports.data2={
-    groupId: 1,
+exports.data2=[
+    {
+        colorId:1,
+        groupId:1,
+        color:"fff",
+        content:"휴가"
+    },
+    {
+        colorId:2,
+        groupId:1,
+        color:"ff0",
+        content:"출장"
+    }
+]
+
+exports.data3={
+    colorId:1,
+    groupId:1,
+    color:"fff",
+    content:"휴가"
 }

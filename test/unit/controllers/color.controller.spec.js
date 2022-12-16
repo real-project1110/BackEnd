@@ -76,7 +76,6 @@ describe('color Test',()=>{
     test('colorsController Method getColor sucess case',async()=>{
         mockColorRequest.params= requestParams
 
-        const arr = []
         colorController.colorService.getColor=jest.fn(()=>{
             return data
         })
