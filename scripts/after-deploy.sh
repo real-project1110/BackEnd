@@ -1,8 +1,7 @@
 #!/bin/bash
-REPOSITORY=/home/ubuntu/BackEnd
 
 
-cd $REPOSITORY
+cd /home/ubuntu/drcloud-deploy
 
 npm install
 
