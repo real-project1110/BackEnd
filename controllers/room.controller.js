@@ -15,12 +15,12 @@ class RoomController {
       const { groupId } = req.params;
       const { sender, receiver } = req.query;
       const { userId } = res.locals.user;
-      const getData = redisGet(
-        `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
-      );
-      if (getData) {
-        return res.staus(200).json({ ok: true, data: getData });
-      }
+//       const getData = redisGet(
+//         `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
+//       );
+//       if (getData) {
+//         return res.staus(200).json({ ok: true, data: getData });
+//       }
       if (!groupId || !sender || !receiver) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
@@ -30,11 +30,11 @@ class RoomController {
         receiver,
         userId,
       });
-      await redisSet(
-        `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
-        findRoomId,
-        180,
-      );
+//       await redisSet(
+//         `groupId:${groupId}:sender:${sender}:receiver:${receiver}`,
+//         findRoomId,
+//         180,
+//       );
       res.status(200).json({ ok: true, data: findRoomId });
     } catch (error) {
       next(error);
@@ -81,17 +81,11 @@ class RoomController {
       if (!sender || !receiver || !timestamps) {
         throw new InvalidParamsError('잘못된 요청입니다.');
       }
-      console.log('받은 timestapms:::::::::::::::::::', timestamps);
-      console.log(
-        '현재시간이 되어야 합니다.:::::::::::::::::::::::::',
-        moment(+timestamps).format('YYYY-MM-DD HH:mm:ss'),
-      );
       const unreadChat = await this.roomService.unreadChat({
         sender,
         receiver,
         timestamps,
       });
-      console.log('불러온채팅입니다:::::::::::::::::', unreadChat);
       res.status(200).json({ ok: true, data: unreadChat });
     } catch (error) {
       next(error);
