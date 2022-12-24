@@ -95,7 +95,6 @@ module.exports = (server) => {
     }
     socket.on('joinGroup', (data) => {
       onlineMap[socket.nsp.name][socket.id] = data.groupUserId;
-      console.log('joingroup시 onlineMap:::::::::::::::::::::::', onlineMap);
       newNamespace.emit(
         'onlineList',
         Object.values(onlineMap[socket.nsp.name]),
