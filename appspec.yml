@@ -1,18 +1,11 @@
 version: 0.0
 os: linux
+
 files:
   - source: /
-    destination: /home/ubuntu/BackEnd
-    overwrite: yes
-
+    destination: /home/ubuntu/drcloud-deploy
 permissions:
-  - object: /home/ubuntu
-    pattern: '**'
+  - object: /home/ubuntu/drcloud-deploy
     owner: ubuntu
     group: ubuntu
-
-hooks:
-  AfterInstall:
-    - location: scripts/after-deploy.sh
-      timeout: 180
-      runas: ubuntu
+    mode: 755
