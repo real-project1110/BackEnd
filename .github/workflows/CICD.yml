@@ -33,8 +33,9 @@ jobs:
         working-directory: ./
         run: |
           npm install
-          npm build
           npm test
+          npm build
+          
       - name: zip file
         run: zip -r cicdtest.zip ./config ./controllers ./scripts ./exceptions ./middlewares ./migrations ./models ./passport ./repositories ./routes ./seeders ./services ./util ./.gitignore ./.prettierrc.js ./app.js ./socket.js ./swagger-output.json ./swagger.js ./appspec.yml ./.env ./package.json ./package-lock.json
 
