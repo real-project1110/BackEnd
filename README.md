@@ -21,7 +21,7 @@
 - 운영 기간: 2022년 12월 07일 ~ 2022년 12월 15일
 ---
 
-![브로셔](https://i.ibb.co/hM5xjnM/image.png)
+![브로셔](![image](https://user-images.githubusercontent.com/113870221/220305221-fab8464c-c07e-4a22-9fe6-75270766142b.png))
 
 ---
 
