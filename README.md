@@ -2,7 +2,7 @@
 
 ![브로셔](https://user-images.githubusercontent.com/86880916/206968459-29afd585-0182-40a0-baeb-624c45adce27.png)
 
----
+
 
 ### 📖 프로젝트 소개
 
@@ -21,7 +21,8 @@
 - 운영 기간: 2022년 12월 07일 ~ 2022년 12월 15일
 ---
 
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d460e99-9cc1-4e9e-b282-b12ebb74bd1f/Untitled.png" width="80%" >
+---
+<img width="706" alt="스크린샷 2023-02-21 오후 6 27 19" src="https://user-images.githubusercontent.com/113870221/220306941-7c449096-bd99-476e-a96f-4f6664fef2ad.png">
 
 ---
 
