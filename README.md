@@ -21,7 +21,7 @@
 - 운영 기간: 2022년 12월 07일 ~ 2022년 12월 15일
 ---
 
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d460e99-9cc1-4e9e-b282-b12ebb74bd1f/Untitled.png" >
+<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d460e99-9cc1-4e9e-b282-b12ebb74bd1f/Untitled.png" width="80%" >
 
 ---
 
